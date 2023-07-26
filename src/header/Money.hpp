@@ -1,6 +1,3 @@
-//
-// Created by folosuru on 2023/07/17.
-//
 #pragma once
 #ifndef PLUGIN_MONEY_HPP
 #define PLUGIN_MONEY_HPP
@@ -31,4 +28,4 @@ public:
     Money() = delete;
 };
 }
-#endif // PLUGIN_MONEY_HPP
+#endif  // PLUGIN_MONEY_HPP

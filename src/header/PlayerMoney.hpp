@@ -10,7 +10,6 @@ namespace tes {
 
 class DLL PlayerMoney {
 public:
-
     inline bool has(const Money& money);
 
     inline void remove(const Money& money_);

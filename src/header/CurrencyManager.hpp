@@ -6,6 +6,7 @@
 #include <string>
 #include "Currency.hpp"
 #include "api.hpp"
+
 namespace tes {
 class DLL CurrencyManager {
 public:
@@ -14,8 +15,6 @@ public:
 private:
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
 };
-
-
 }  // tes
 
 #endif  // PLUGIN_CURRENCYMANAGER_HPP

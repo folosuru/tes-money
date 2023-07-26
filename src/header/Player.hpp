@@ -24,8 +24,8 @@ public:
      */
 //    T getJson();
 
-    Player & operator = ( const tes::Player & ) = delete;
-    Player( const tes::Player & ) = delete;
+    Player& operator=(const tes::Player&) = delete;
+    Player(const tes::Player&) = delete;
 
 private:
     Types::country country{};

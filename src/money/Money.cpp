@@ -1,6 +1,6 @@
 #include "../header/Money.hpp"
 
-namespace tes{
+namespace tes {
 
     Money::Money(int value_, Types::currency currency_) : value(value_), currency(std::move(currency_)) {
         if (value_ < 0) {

@@ -17,4 +17,4 @@ namespace tes {
     DLL std::shared_ptr<CurrencyManager> getCurrencyManager();
 
 }
-#endif //PLUGIN_API_HPP
+#endif  // PLUGIN_API_HPP
