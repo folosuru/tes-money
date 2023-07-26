@@ -2,15 +2,15 @@
  * @file plugin.cpp
  * @brief The main file of the plugin
  */
-
-#include <string>
 #include <llapi/LoggerAPI.h>
-#include <llapi/MC/CommandOrigin.hpp>
-#include <llapi/MC/CommandOutput.hpp>
 #include <llapi/EventAPI.h>
 #include <llapi/GlobalServiceAPI.h>
 #include <llapi/FormUI.h>
 #include <llapi/DynamicCommandAPI.h>
+#include <string>
+#include <llapi/MC/CommandOrigin.hpp>
+#include <llapi/MC/CommandOutput.hpp>
+
 
 #include "version.h"
 #include "./header/api.hpp"
