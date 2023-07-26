@@ -48,6 +48,5 @@ void PluginInit() {
             CommandOrigin const& origin,
             CommandOutput& output,
             std::unordered_map<std::string, DynamicCommand::Result>& results
-        ) {}  // The callback function
-    );
+        ) {}  /*The callback function*/);
 }

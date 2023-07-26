@@ -25,7 +25,7 @@ public:
 //    T getJson();
 
     Player& operator=(const tes::Player&) = delete;
-    Player(const tes::Player&) = delete;
+    Player(const tes::Player&) = delete;  // NOLINT
 
 private:
     Types::country country{};
