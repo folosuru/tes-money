@@ -7,4 +7,4 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
       - run: pip install cpplint
-      - run: cpplint  --linelength=120 --exclude=*.h --filter=-legal/copyright,-whitespace/indent,-readability/namespace,-build/include_subdir --recursive . 
+      - run: cpplint  --linelength=120 --exclude_files=*\.h$--filter=-legal/copyright,-whitespace/indent,-readability/namespace,-build/include_subdir --recursive . 
