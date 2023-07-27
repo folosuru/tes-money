@@ -6,9 +6,8 @@
 #else
 #define DLL __declspec(dllimport)
 #endif
-
 #include <memory>
-class PlayerManager;
+#include "PlayerManager.hpp"
 class CurrencyManager;
 namespace tes {
 

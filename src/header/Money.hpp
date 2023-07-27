@@ -8,7 +8,7 @@
 namespace tes {
 class DLL Money {
 public:
-    const int value;
+    const Types::money_value value;
     const Types::currency currency;
 
     Money(int value_, Types::currency currency_);

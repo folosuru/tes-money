@@ -8,12 +8,18 @@
 #include <llapi/FormUI.h>
 #include <llapi/DynamicCommandAPI.h>
 #include <string>
+#include <fstream>
 #include <llapi/MC/CommandOrigin.hpp>
 #include <llapi/MC/CommandOutput.hpp>
+#include <Nlohmann/json.hpp>
 
 
 #include "version.h"
 #include "./header/api.hpp"
+#include "./header/PlayerManager.hpp"
+#include "./header/PlayerMoney.hpp"
+#include "./header/CurrencyManager.hpp"
+#include "./Util/types.hpp"
 
 // We recommend using the global logger.
 extern Logger logger;
@@ -28,6 +34,25 @@ void PluginInit() {
     logger.info("Hello, world!");
 
     Translation::load("plugins/tes/lang/");
+
+    std::shared_ptr<tes::PlayerManager> player_mng;
+    std::shared_ptr<tes::CurrencyManager> currency_mng;
+
+    for (const auto& entry : std::filesystem::directory_iterator("plugins/tes/money/player")) {
+        if (!std::filesystem::is_regular_file(entry)) continue;
+
+        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
+        std::string player_name = entry.path().stem().string();
+
+        std::shared_ptr<tes::PlayerMoney> player_money;
+
+        for (const auto& item : j["money"].items()){
+            tes::Types::money_value value = item.value().get<int>();
+            tes::Types::currency currency = currency_mng->getCurrency(item.key());
+            player_money->add(tes::Money(value,currency));
+        }
+        tes::getPlayerManager()->addPlayer(player_name,player_money);
+    }
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
         return true;

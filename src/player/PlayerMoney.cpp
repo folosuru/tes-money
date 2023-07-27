@@ -9,7 +9,7 @@ namespace tes {
 
     bool PlayerMoney::has(const tes::Money &money_) {
         if (money.find(money_.currency) != money.end()) {
-            return (*money[money_.currency] > money_);
+            return (*money[money_.currency] >= money_);
         } else {
             return false;
         }
@@ -35,5 +35,9 @@ namespace tes {
             money[cur] = std::make_shared<Money>(Money(0, cur));
         }
         return money[cur];
+    }
+
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& PlayerMoney::getAll() {
+        return money;
     }
 }

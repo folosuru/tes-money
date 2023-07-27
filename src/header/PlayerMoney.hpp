@@ -10,6 +10,8 @@ namespace tes {
 
 class DLL PlayerMoney {
 public:
+    PlayerMoney() = default;
+
     inline bool has(const Money& money);
 
     inline void remove(const Money& money_);
@@ -18,10 +20,12 @@ public:
 
     inline void send(const std::shared_ptr<PlayerMoney>& to, const Money& money_);
 
+    inline std::shared_ptr<Money> get(const Types::currency& cur);
+
+    inline const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll();
+
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;
-
-    inline std::shared_ptr<Money> get(const Types::currency& cur);
 };
 
 }

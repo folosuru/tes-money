@@ -16,5 +16,6 @@ namespace tes::Types {
     typedef std::vector<std::string> player_list;
     typedef std::pair<int, int> posXZ;
     typedef int country;
+    typedef int money_value;
 }
 #endif  // PLUGIN_TYPES_HPP
