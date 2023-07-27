@@ -13,7 +13,7 @@
 #include <llapi/MC/CommandOutput.hpp>
 #include <Nlohmann/json.hpp>
 
-
+#include "Util/mc_Util.hpp"
 #include "version.h"
 #include "./header/api.hpp"
 #include "./header/PlayerManager.hpp"
@@ -46,15 +46,16 @@ void PluginInit() {
 
         std::shared_ptr<tes::PlayerMoney> player_money;
 
-        for (const auto& item : j["money"].items()){
+        for (const auto& item : j["money"].items()) {
             tes::Types::money_value value = item.value().get<int>();
             tes::Types::currency currency = currency_mng->getCurrency(item.key());
-            player_money->add(tes::Money(value,currency));
+            player_money->add(tes::Money(value, currency));
         }
-        tes::getPlayerManager()->addPlayer(player_name,player_money);
+        player_mng->addPlayer(player_name, player_money);
     }
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
+        sendText(event.mPlayer,"hoge")
         return true;
     });
 

@@ -10,7 +10,7 @@
 
 namespace tes::Types {
     // typedef std::string currency;
-    typedef std::shared_ptr<Currency> currency;
+    typedef std::shared_ptr<tes::Currency> currency;
     typedef std::string player_name;
     typedef const std::string& player_name_view;
     typedef std::vector<std::string> player_list;

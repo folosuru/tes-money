@@ -4,8 +4,9 @@
 
 #include <unordered_map>
 #include <memory>
-#include "Money.hpp"
+#include "./Money.hpp"
 #include "../Util/types.hpp"
+#include "api.hpp"
 namespace tes {
 
 class DLL PlayerMoney {

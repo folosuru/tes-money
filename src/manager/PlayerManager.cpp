@@ -6,14 +6,14 @@ namespace tes {
 
     void PlayerManager::newPlayer(const std::string& name) {
         if (players.find(name) == players.end()) {
-            players[name] = std::make_shared<tes::Player>(name);
+            players[name] = std::make_shared<PlayerMoney>();
             return;
         } else {
             throw std::invalid_argument("already exist!");
         }
     }
 
-    std::shared_ptr<Player> PlayerManager::getPlayer(Types::player_name name) {
+    std::shared_ptr<PlayerMoney> PlayerManager::getPlayer(Types::player_name name) {
         if (players.find(name) != players.end()) {
             return players[name];
         } else {
@@ -21,7 +21,7 @@ namespace tes {
         }
     }
 
-    void PlayerManager::addPlayer(const std::string& name, std::shared_ptr<tes::Player> player) {
+    void PlayerManager::addPlayer(const std::string& name, std::shared_ptr<PlayerMoney> player) {
         if (players.find(name) == players.end()) {
             players[name] = std::move(player);
             return;
@@ -30,7 +30,7 @@ namespace tes {
         }
     }
 
-    const std::unordered_map<std::string, std::shared_ptr<tes::Player>> &PlayerManager::getAllPlayer() {
+    const std::unordered_map<std::string, std::shared_ptr<tes::PlayerMoney>> &PlayerManager::getAllPlayer() {
         return players;
     }
 

@@ -6,7 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include "PlayerMoney.hpp"
-
+#include "api.hpp"
 namespace tes {
 class DLL PlayerManager {
 public:
