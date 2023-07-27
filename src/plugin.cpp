@@ -55,7 +55,6 @@ void PluginInit() {
     }
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
-        sendText(event.mPlayer,"hoge")
         return true;
     });
 
