@@ -1,7 +1,7 @@
 #pragma once
 #ifndef PLUGIN_API_HPP
 #define PLUGIN_API_HPP
-#ifdef plugin_EXPORTS
+#ifdef tes_money_EXPORTS
 #define DLL __declspec(dllexport)
 #else
 #define DLL __declspec(dllimport)
