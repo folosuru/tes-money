@@ -4,14 +4,14 @@
 
 #ifdef TEST
 
-#define DLL
+#define TES_MONEY_DLL
 
 #else
 
 #ifdef tes_money_EXPORTS
 #define TES_MONEY_DLL __declspec(dllexport)
 #else
-#define DLL __declspec(dllimport)
+#define TES_MONEY_DLL __declspec(dllimport)
 #endif
 
 #endif
