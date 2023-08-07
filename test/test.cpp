@@ -1,8 +1,25 @@
 #define tes_money_EXPORTS
 #include "../src/header/api.hpp"
 #include <iostream>
+#include <stdexcept>
+
+void checkLoadJson(){
+    std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>();
+    currency->addCurrency(std::make_shared<tes::Currency>("JPY"));
+    currency->addCurrency(std::make_shared<tes::Currency>("ACP"));
+
+    auto money = tes::PlayerMoney(
+        nlohmann::json::parse(R"({"money" : { "JPY" : 130, "ACP" : 254 }})"),
+        currency);
+    if (money.get(currency->getCurrency("jpy"))->value != 130 ||
+        money.get(currency->getCurrency("acp"))->value != 254){
+        std::cout << "load json failed" << std::endl;
+        throw std::exception("");
+    }
+}
 
 int main() {
+    checkLoadJson();
 	std::shared_ptr<tes::PlayerManager> player_manager = tes::getPlayerManager();
     std::shared_ptr<tes::CurrencyManager> currency_manager = tes::getCurrencyManager();
 
@@ -29,8 +46,6 @@ int main() {
             return 1;
         }
     }
-
-
     player_manager->addPlayer("Yoshida",std::make_shared<tes::PlayerMoney>());
     std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
 

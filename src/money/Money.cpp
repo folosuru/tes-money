@@ -1,9 +1,8 @@
 #include "../header/Money.hpp"
 #include <format>
-
 namespace tes {
 
-    Money::Money(int value_, Types::currency currency_) : value(value_), currency(std::move(currency_)) {
+    Money::Money(Types::money_value value_, Types::currency currency_) : value(value_), currency(std::move(currency_)) {
         if (value_ < 0) {
             throw std::invalid_argument("money cannot be under 0");
         }

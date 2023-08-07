@@ -5,17 +5,21 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
+#include <Nlohmann/json.hpp>
 #include "./Money.hpp"
 #include "../Util/types.hpp"
 #include "../Util/dll_declspec.hpp"
+#include "CurrencyManager.hpp"
 
 namespace tes {
 class Money;
 class DLL PlayerMoney {
 public:
-    bool edited;
+    bool edited = false;
 
     PlayerMoney();
+
+    PlayerMoney(const nlohmann::json& json, const std::shared_ptr<CurrencyManager>& currency_manager);
 
     bool has(const Money& money) const;
 

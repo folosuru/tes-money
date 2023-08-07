@@ -13,7 +13,7 @@ public:
     const Types::money_value value;
     const Types::currency currency;
 
-    Money(int value_, Types::currency currency_);
+    Money(Types::money_value value_, Types::currency currency_);
 
     Money(const Money& m) = default;
 

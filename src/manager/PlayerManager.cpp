@@ -73,11 +73,6 @@ namespace tes {
 
             std::shared_ptr<tes::PlayerMoney> player_money;
 
-            for (const auto& item : j["money"].items()) {
-                tes::Types::money_value value = item.value().get<int>();
-                tes::Types::currency currency = currency_manager_->getCurrency(item.key());
-                player_money->add(tes::Money(value, currency));
-            }
             this->addPlayer(player_name, player_money);
         }
 

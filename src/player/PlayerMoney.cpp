@@ -4,6 +4,14 @@
 
 namespace tes {
 
+    PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager) {
+        for (const auto& item : j["money"].items()) {
+            tes::Types::money_value value = item.value().get<tes::Types::money_value>();
+            tes::Types::currency currency = currency_manager->getCurrency(item.key());
+            this->add(tes::Money(value, currency));
+        }
+    }
+
     bool PlayerMoney::has(const tes::Money &money_) const{
         if (money.find(money_.currency) != money.end()) {
             return (*money.at(money_.currency) >= money_);
