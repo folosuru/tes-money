@@ -4,26 +4,32 @@
 
 #include <unordered_map>
 #include <memory>
+#include <string>
 #include "./Money.hpp"
 #include "../Util/types.hpp"
-#include "api.hpp"
-namespace tes {
+#include "../Util/dll_declspec.hpp"
 
+namespace tes {
+class Money;
 class DLL PlayerMoney {
 public:
-    PlayerMoney() = default;
+    bool edited;
 
-    inline bool has(const Money& money);
+    PlayerMoney();
 
-    inline void remove(const Money& money_);
+    bool has(const Money& money) const;
 
-    inline void add(const Money& money_);
+    void remove(const Money& money_);
 
-    inline void send(const std::shared_ptr<PlayerMoney>& to, const Money& money_);
+    void add(const Money& money_);
 
-    inline std::shared_ptr<Money> get(const Types::currency& cur);
+    void set(const Money& money_);
 
-    inline const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll();
+    void send(const std::shared_ptr<PlayerMoney>& to, const Money& money_);
+
+    std::shared_ptr<Money> get(const Types::currency& cur);
+
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const;
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;

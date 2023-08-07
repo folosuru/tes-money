@@ -1,4 +1,5 @@
 #include "../header/Money.hpp"
+#include <format>
 
 namespace tes {
 
@@ -40,5 +41,9 @@ namespace tes {
     Money Money::operator-(const Money &money) const {
         if (!isSameCurrency(money)) throw std::invalid_argument("different currency");
         return Money(value - money.value, currency);
+    }
+
+    std::string Money::getText() const {
+        return std::format("{0} {1}", value, currency->currency_name);
     }
 }

@@ -3,8 +3,10 @@
 #define PLUGIN_MONEY_HPP
 #include <utility>
 #include <stdexcept>
+#include <string>
 #include "../Util/types.hpp"
-#include "api.hpp"
+#include "./Currency.hpp"
+#include "../Util/dll_declspec.hpp"
 namespace tes {
 class DLL Money {
 public:
@@ -14,6 +16,8 @@ public:
     Money(int value_, Types::currency currency_);
 
     Money(const Money& m) = default;
+
+    std::string getText() const;
 
     [[nodiscard]]
     inline bool isSameCurrency(const Money& money) const;

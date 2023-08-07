@@ -7,6 +7,7 @@
 #include <llapi/GlobalServiceAPI.h>
 #include <llapi/FormUI.h>
 #include <llapi/DynamicCommandAPI.h>
+#include <llapi/mc/Level.hpp>
 #include <string>
 #include <fstream>
 #include <llapi/MC/CommandOrigin.hpp>
@@ -16,12 +17,9 @@
 #include "Util/mc_Util.hpp"
 #include "version.h"
 #include "./header/api.hpp"
-#include "./header/PlayerManager.hpp"
-#include "./header/PlayerMoney.hpp"
-#include "./header/CurrencyManager.hpp"
-#include "./Util/types.hpp"
 
-// We recommend using the global logger.
+
+ // We recommend using the global logger.
 extern Logger logger;
 
 /**
@@ -29,49 +27,177 @@ extern Logger logger;
  *
  */
 void PluginInit() {
+
+    using tes::Types::player_money;
+    using tes::Types::currency;
+
     // Your code here
     Logger logger(PLUGIN_NAME);
-    logger.info("Hello, world!");
+    logger.info("Hello, world!!");
 
-    Translation::load("plugins/tes/lang/");
+    //Translation::load("plugins/tes/lang/");
 
-    std::shared_ptr<tes::PlayerManager> player_mng;
-    std::shared_ptr<tes::CurrencyManager> currency_mng;
+    std::shared_ptr<tes::PlayerManager> player_mng = tes::getPlayerManager();
+    std::shared_ptr<tes::CurrencyManager> currency_mng = tes::getCurrencyManager();
 
-    for (const auto& entry : std::filesystem::directory_iterator("plugins/tes/money/player")) {
-        if (!std::filesystem::is_regular_file(entry)) continue;
-
-        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-        std::string player_name = entry.path().stem().string();
-
-        std::shared_ptr<tes::PlayerMoney> player_money;
-
-        for (const auto& item : j["money"].items()) {
-            tes::Types::money_value value = item.value().get<int>();
-            tes::Types::currency currency = currency_mng->getCurrency(item.key());
-            player_money->add(tes::Money(value, currency));
-        }
-        player_mng->addPlayer(player_name, player_money);
-    }
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
-        return true;
-    });
 
-    Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event){
-        return true;
-    });
+        sendTextToPlayer(event.mPlayer, "hoge")
 
-    DynamicCommand::setup(
-        "hub",  // The command
-        "return to hub.",  // The description
-        {},  // The enumeration
-        {},  // The parameters
-        {{}, },  // The overloads
+        if (event.mPlayer != nullptr) {
+            event.mPlayer->sendText("hoge");
+        }
+        tes::getPlayerManager()->newPlayer(event.mPlayer->getRealName());
+        return true;
+        });
+
+    Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event) {
+        return true;
+        });
+
+
+    using ParamType = DynamicCommand::ParameterType;
+    using Param = DynamicCommand::ParameterData;
+//    LIAPI bool addSoftEnumValues(std::string const& name, std::vector<std::string> const& values) const;
+
+
+    /*const auto*  money_edit = */  DynamicCommand::setup(
+        "money_edit", // The command
+        "Example description", // The description
+        {
+            {"enum_2", {"set"}},
+            {"enum_3", {"show"}},
+            {"currency name", {currency_mng->getAllCurrencyList()}},
+        }, // The enumeration
+        {
+            Param("mode", ParamType::Enum, false, "enum_2"),
+            Param("mode", ParamType::Enum, false, "enum_3"),
+            Param("currency", ParamType::SoftEnum, false, "currency name"),
+            Param("value", ParamType::Int, false),
+            Param("to", ParamType::String, false)
+        }, // The parameters
+        {
+            // overloads{ (type == Enum ? enumOptions : name) ...}
+            {"enum_2", "to", "value", "currency name"},  // money_edit [String: to] [Int: value] <currency>
+            {"enum_3", "to", "currency name"},  // money show [to] <currency>
+        }, // The overloads
         [](
             DynamicCommand const& command,
             CommandOrigin const& origin,
             CommandOutput& output,
             std::unordered_map<std::string, DynamicCommand::Result>& results
-        ) {}  /*The callback function*/);
+            ) {
+                auto action = results["mode"].get<std::string>();
+
+                player_money target_money;
+                if (!tes::getPlayerManager()->exists(results["to"].getRaw<std::string>())) {
+                    output.error("could not find target player...");
+                    return;
+                }
+                target_money = tes::getPlayerManager()->getPlayer(results["to"].getRaw<std::string>());
+                currency input_currency;
+                if (!results["currency"].isSet) {
+                    input_currency = tes::getCurrencyManager()
+                        ->getCurrency(results["currency"].getRaw<std::string>());
+                }
+
+                switch (do_hash(action.c_str())) {
+                case do_hash("show"): {
+                    output.success(target_money->get(input_currency)->getText());
+                    break;
+                }
+
+                case do_hash("set"): {
+                    target_money->set(tes::Money(results["value"].getRaw<int>(), input_currency));
+                    break;
+                }
+                default:
+                    break;
+                }
+        }, // The callback function
+        CommandPermissionLevel::Console  // The permission level
+            );
+
+
+    const auto* p =  DynamicCommand::setup(
+        "money", // The command
+        "Example description", // The description
+        {
+                {"enum_2", {"list"}},
+                {"enum_3", {"show"}},
+                {"enum_4", {"send"}},
+                {"currency name", {currency_mng->getAllCurrencyList()}},
+        }, // The enumeration
+        {
+                Param("mode", ParamType::Enum, false, "enum_2"),
+                Param("mode", ParamType::Enum, false, "enum_3"),
+                Param("mode", ParamType::Enum, false, "enum_4"),
+                Param("currency", ParamType::SoftEnum, false, "currency name"),
+                Param("value", ParamType::Int, false),
+                Param("to", ParamType::String, false)
+        }, // The parameters
+        {
+            // overloads{ (type == Enum ? enumOptions : name) ...}
+            {"enum_2"},  // money <list>
+            {"enum_3", "currency name"},  // money show <currency>
+            {"enum_4", "to", "value", "currency name"}  // money send <player> [value] <currency>
+        }, // The overloads
+        [](
+            DynamicCommand const& command,
+            CommandOrigin const& origin,
+            CommandOutput& output,
+            std::unordered_map<std::string, DynamicCommand::Result>& results
+            ) {
+                auto action = results["mode"].get<std::string>();
+
+                player_money origin_money;
+                if (!tes::getPlayerManager()->exists(origin.getPlayer()->getRealName())) {
+                    return;
+                }
+                origin_money = tes::getPlayerManager()->getPlayer(origin.getPlayer()->getRealName());
+                currency input_currency;
+                if (!results["currency"].isSet){
+                    input_currency = tes::getCurrencyManager()
+                                        ->getCurrency(results["currency"].getRaw<std::string>());
+                }
+
+                switch (do_hash(action.c_str())) {
+                    case do_hash("list"): {
+                        for (const auto& item : origin_money->getAll()) {
+                            output.success(item.second->getText());
+                        }
+                        break;
+                    }
+
+                    case do_hash("show"): {
+                        output.success(origin_money->get(input_currency)->getText());
+                        break;
+                    }
+
+                    case do_hash("send"): {
+                        std::string to_name = results["to"].getRaw<std::string>();
+
+                        if (!tes::getPlayerManager()->exists(to_name)) {
+                            break;
+                        }
+                        tes::Types::player_money to = tes::getPlayerManager()->getPlayer(to_name);
+                        tes::Money request_money = tes::Money(results["value"].getRaw<int>(), input_currency);
+                        if (!origin_money->has(request_money)) {
+                            break;
+                        }
+                        origin_money->send(to, request_money);
+                        sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
+                        break;
+                    }
+                    default:
+                        break;
+                }
+        }, // The callback function
+        CommandPermissionLevel::Any // The permission level
+        );
+
+
+    currency_mng->addCurrency(std::make_shared<tes::Currency>("euc"));
+    p->setSoftEnum("currency name", currency_mng->getAllCurrencyList());
 }

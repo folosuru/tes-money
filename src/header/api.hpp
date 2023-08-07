@@ -1,16 +1,14 @@
 #pragma once
 #ifndef PLUGIN_API_HPP
 #define PLUGIN_API_HPP
-#ifdef tes_money_EXPORTS
-#define DLL __declspec(dllexport)
-#else
-#define DLL __declspec(dllimport)
-#endif
 #include <memory>
+#include "PlayerManager.hpp"
+#include "CurrencyManager.hpp"
+#include "../Util/dll_declspec.hpp"
+
+namespace tes {
 class PlayerManager;
 class CurrencyManager;
-namespace tes {
-
     DLL std::shared_ptr<PlayerManager> getPlayerManager();
 
     DLL std::shared_ptr<CurrencyManager> getCurrencyManager();

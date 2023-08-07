@@ -3,7 +3,8 @@
 #define PLUGIN_CURRENCY_HPP
 #include <string>
 #include <utility>
-#include "api.hpp"
+#include "../Util/dll_declspec.hpp"
+
 namespace tes {
 class DLL Currency {
 public:
