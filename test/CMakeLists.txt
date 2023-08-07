@@ -17,5 +17,6 @@ file(GLOB_RECURSE TES_FILES_DIR
 
 add_compile_options(
         /utf-8
+        /D TEST
 )
 add_executable(tester ${TES_FILES_DIR} "${CMAKE_SOURCE_DIR}/test.cpp")

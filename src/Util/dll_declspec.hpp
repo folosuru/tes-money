@@ -1,10 +1,17 @@
-#ifndef TES_DLL_DECLSPEC_HPP
-#define TES_DLL_DECLSPEC_HPP
+#ifndef SRC_DLL_DECLSPEC_HPP
+#define SRC_DLL_DECLSPEC_HPP
 
-// #ifdef tes_money_EXPORTS
-// #define DLL __declspec(dllexport)
-// #else
-// #define DLL __declspec(dllimport)
-// #endif
+#ifdef TEST
+
 #define DLL
-#endif  // TES_DLL_DECLSPEC_HPP
+
+#else
+
+#ifdef tes_money_EXPORTS
+#define DLL __declspec(dllexport)
+#else
+#define DLL __declspec(dllimport)
+#endif
+
+#endif
+#endif  // SRC_DLL_DECLSPEC_HPP
