@@ -59,20 +59,11 @@ namespace tes {
     void PlayerManager::loadAll() {
 
         for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
-            /*
-             * {
-             *      "money" : {
-             *          "currency" : 100,...
-             *      }
-             * }
-             */
-            if (!std::filesystem::is_regular_file(entry)) continue;
 
+            if (!std::filesystem::is_regular_file(entry)) continue;
             nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
             std::string player_name = entry.path().stem().string();
-
-            std::shared_ptr<tes::PlayerMoney> player_money;
-
+            std::shared_ptr<tes::PlayerMoney> player_money(new PlayerMoney(j, currency_manager_));
             this->addPlayer(player_name, player_money);
         }
 

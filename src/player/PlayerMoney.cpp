@@ -5,6 +5,13 @@
 namespace tes {
 
     PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager) {
+        /*
+         * {
+         *      "money" : {
+         *          "currency" : [value],...
+         *      }
+         * }
+         */
         for (const auto& item : j["money"].items()) {
             tes::Types::money_value value = item.value().get<tes::Types::money_value>();
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
