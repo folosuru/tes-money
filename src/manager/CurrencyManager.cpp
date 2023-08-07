@@ -17,7 +17,7 @@ namespace tes {
 
     void CurrencyManager::addCurrency(const std::shared_ptr<Currency>& c) {
         std::string key = c->currency_name;
-        std::transform(key.begin(),key.end(), key.begin(), tolower);
+        std::transform(key.begin(), key.end(), key.begin(), tolower);
         cur[key] = c;
     }
 

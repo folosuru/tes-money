@@ -2,6 +2,8 @@
  * @file plugin.cpp
  * @brief The main file of the plugin
  */
+#include <string>
+#include <fstream>
 #include <llapi/LoggerAPI.h>
 #include <llapi/EventAPI.h>
 #include <llapi/GlobalServiceAPI.h>
@@ -12,8 +14,6 @@
 #include <llapi/MC/CommandOutput.hpp>
 #include <Nlohmann/json.hpp>
 
-#include <string>
-#include <fstream>
 #include "Util/mc_Util.hpp"
 #include "version.h"
 #include "./header/api.hpp"
@@ -114,8 +114,7 @@ void PluginInit() {
                     break;
                 }
         },  // The callback function
-        CommandPermissionLevel::Console  // The permission level
-            );
+        CommandPermissionLevel::Console);  // The permission level
 
 
     const auto* p =  DynamicCommand::setup(
@@ -140,7 +139,7 @@ void PluginInit() {
             {"enum_2"},  // money <list>
             {"enum_3", "currency name"},  // money show <currency>
             {"enum_4", "to", "value", "currency name"}  // money send <player> [value] <currency>
-        }, // The overloads
+        },  // The overloads
         [](
             DynamicCommand const& command,
             CommandOrigin const& origin,
@@ -155,7 +154,7 @@ void PluginInit() {
                 }
                 origin_money = tes::getPlayerManager()->getPlayer(origin.getPlayer()->getRealName());
                 currency input_currency;
-                if (!results["currency"].isSet){
+                if (!results["currency"].isSet) {
                     input_currency = tes::getCurrencyManager()
                                         ->getCurrency(results["currency"].getRaw<std::string>());
                 }
@@ -191,9 +190,8 @@ void PluginInit() {
                     default:
                         break;
                 }
-        }, // The callback function
-        CommandPermissionLevel::Any // The permission level
-        );
+        },  // The callback function
+        CommandPermissionLevel::Any);  // The permission level
 
 
     currency_mng->addCurrency(std::make_shared<tes::Currency>("euc"));

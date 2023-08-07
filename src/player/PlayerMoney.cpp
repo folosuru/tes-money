@@ -19,7 +19,7 @@ namespace tes {
         }
     }
 
-    bool PlayerMoney::has(const tes::Money &money_) const{
+    bool PlayerMoney::has(const tes::Money &money_) const {
         if (money.find(money_.currency) != money.end()) {
             return (*money.at(money_.currency) >= money_);
         } else {
