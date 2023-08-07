@@ -8,12 +8,12 @@
 #include <llapi/FormUI.h>
 #include <llapi/DynamicCommandAPI.h>
 #include <llapi/mc/Level.hpp>
-#include <string>
-#include <fstream>
 #include <llapi/MC/CommandOrigin.hpp>
 #include <llapi/MC/CommandOutput.hpp>
 #include <Nlohmann/json.hpp>
 
+#include <string>
+#include <fstream>
 #include "Util/mc_Util.hpp"
 #include "version.h"
 #include "./header/api.hpp"
@@ -27,7 +27,6 @@ extern Logger logger;
  *
  */
 void PluginInit() {
-
     using tes::Types::player_money;
     using tes::Types::currency;
 
@@ -35,14 +34,13 @@ void PluginInit() {
     Logger logger(PLUGIN_NAME);
     logger.info("Hello, world!!");
 
-    //Translation::load("plugins/tes/lang/");
+    // Translation::load("plugins/tes/lang/");
 
     std::shared_ptr<tes::PlayerManager> player_mng = tes::getPlayerManager();
     std::shared_ptr<tes::CurrencyManager> currency_mng = tes::getCurrencyManager();
 
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
-
         sendTextToPlayer(event.mPlayer, "hoge")
 
         if (event.mPlayer != nullptr) {
@@ -63,25 +61,25 @@ void PluginInit() {
 
 
     /*const auto*  money_edit = */  DynamicCommand::setup(
-        "money_edit", // The command
-        "Example description", // The description
+        "money_edit",  // The command
+        "Example description",  // The description
         {
             {"enum_2", {"set"}},
             {"enum_3", {"show"}},
             {"currency name", {currency_mng->getAllCurrencyList()}},
-        }, // The enumeration
+        },  // The enumeration
         {
             Param("mode", ParamType::Enum, false, "enum_2"),
             Param("mode", ParamType::Enum, false, "enum_3"),
             Param("currency", ParamType::SoftEnum, false, "currency name"),
             Param("value", ParamType::Int, false),
             Param("to", ParamType::String, false)
-        }, // The parameters
+        },  // The parameters
         {
             // overloads{ (type == Enum ? enumOptions : name) ...}
             {"enum_2", "to", "value", "currency name"},  // money_edit [String: to] [Int: value] <currency>
             {"enum_3", "to", "currency name"},  // money show [to] <currency>
-        }, // The overloads
+        },  // The overloads
         [](
             DynamicCommand const& command,
             CommandOrigin const& origin,
@@ -115,20 +113,20 @@ void PluginInit() {
                 default:
                     break;
                 }
-        }, // The callback function
+        },  // The callback function
         CommandPermissionLevel::Console  // The permission level
             );
 
 
     const auto* p =  DynamicCommand::setup(
-        "money", // The command
-        "Example description", // The description
+        "money",  // The command
+        "Example description",  // The description
         {
                 {"enum_2", {"list"}},
                 {"enum_3", {"show"}},
                 {"enum_4", {"send"}},
                 {"currency name", {currency_mng->getAllCurrencyList()}},
-        }, // The enumeration
+        },  // The enumeration
         {
                 Param("mode", ParamType::Enum, false, "enum_2"),
                 Param("mode", ParamType::Enum, false, "enum_3"),
@@ -136,7 +134,7 @@ void PluginInit() {
                 Param("currency", ParamType::SoftEnum, false, "currency name"),
                 Param("value", ParamType::Int, false),
                 Param("to", ParamType::String, false)
-        }, // The parameters
+        },  // The parameters
         {
             // overloads{ (type == Enum ? enumOptions : name) ...}
             {"enum_2"},  // money <list>

@@ -1,5 +1,6 @@
-#ifndef SRC_DLL_DECLSPEC_HPP
-#define SRC_DLL_DECLSPEC_HPP
+#pragma once
+#ifndef SRC_UTIL_DLL_DECLSPEC_HPP_
+#define SRC_UTIL_DLL_DECLSPEC_HPP_
 
 #ifdef TEST
 
@@ -14,4 +15,4 @@
 #endif
 
 #endif
-#endif  // SRC_DLL_DECLSPEC_HPP
+#endif  // SRC_UTIL_DLL_DECLSPEC_HPP_

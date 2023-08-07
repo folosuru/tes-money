@@ -1,9 +1,8 @@
-#define tes_money_EXPORTS
-#include "../src/header/api.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "../src/header/api.hpp"
 
-void checkLoadJson(){
+void checkLoadJson() {
     std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>();
     currency->addCurrency(std::make_shared<tes::Currency>("JPY"));
     currency->addCurrency(std::make_shared<tes::Currency>("ACP"));
@@ -12,7 +11,7 @@ void checkLoadJson(){
         nlohmann::json::parse(R"({"money" : { "JPY" : 130, "ACP" : 254 }})"),
         currency);
     if (money.get(currency->getCurrency("jpy"))->value != 130 ||
-        money.get(currency->getCurrency("acp"))->value != 254){
+        money.get(currency->getCurrency("acp"))->value != 254) {
         std::cout << "load json failed" << std::endl;
         throw std::exception("");
     }
@@ -20,7 +19,7 @@ void checkLoadJson(){
 
 int main() {
     checkLoadJson();
-	std::shared_ptr<tes::PlayerManager> player_manager = tes::getPlayerManager();
+    std::shared_ptr<tes::PlayerManager> player_manager = tes::getPlayerManager();
     std::shared_ptr<tes::CurrencyManager> currency_manager = tes::getCurrencyManager();
 
     {
@@ -46,7 +45,7 @@ int main() {
             return 1;
         }
     }
-    player_manager->addPlayer("Yoshida",std::make_shared<tes::PlayerMoney>());
+    player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
     std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
 
     currency_manager->addCurrency(std::make_shared<tes::Currency>("JPY"));
@@ -61,14 +60,13 @@ int main() {
     }
 
     {
-        money->remove(tes::Money(50,cur));
+        money->remove(tes::Money(50, cur));
         if (money->get(cur)->value != 50) {
             return 1;
         }
-
     }
 
-    player_manager->addPlayer("Shinada",std::make_shared<tes::PlayerMoney>());
+    player_manager->addPlayer("Shinada", std::make_shared<tes::PlayerMoney>());
     std::shared_ptr<tes::PlayerMoney> money2 = player_manager->getPlayer("Shinada");
     {
         money->send(money2, tes::Money(10, cur));

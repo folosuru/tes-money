@@ -22,7 +22,7 @@ public:
 
 private:
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
-    std::vector<std::string> currency_name_list{"acp","jpy","usd"};
+    std::vector<std::string> currency_name_list;
 };
 }  // tes
 
