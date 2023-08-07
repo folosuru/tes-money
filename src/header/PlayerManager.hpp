@@ -20,7 +20,7 @@ public:
 
     std::shared_ptr<PlayerMoney> getPlayer(Types::player_name name);
 
-    inline bool exists(Types::player_name name);
+    inline bool exists(Types::player_name_view name);
 
     void addPlayer(const std::string& name, std::shared_ptr<PlayerMoney>);
 

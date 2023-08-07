@@ -40,19 +40,15 @@ namespace tes {
         return players;
     }
 
-    bool PlayerManager::exists(Types::player_name name) {
+    bool PlayerManager::exists(Types::player_name_view name) {
         return players.contains(name);
     }
 
     void PlayerManager::saveAll() {
-        for (const auto& item : players) {
+        for (const auto& item : players) {  // ここリファクタリングの余地
             if (!item.second->edited) continue;
-            const auto& list = item.second->getAll();
-            nlohmann::json data;
-            for (const auto& money : list) {
-                data[money.first->currency_name] = money.second->value;
-            }
-            std::ofstream() << data << std::endl;
+            nlohmann::json data = item.second->get_json();
+            std::ofstream(std::format("{}/{}.json",file_export_path,item.first)) << data << std::endl;
         }
     }
 
