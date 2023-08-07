@@ -9,7 +9,7 @@
 #include "../Util/dll_declspec.hpp"
 
 namespace tes {
-class DLL CurrencyManager {
+class TES_MONEY_DLL CurrencyManager {
 public:
     CurrencyManager() = default;
     std::shared_ptr<Currency> getCurrency(std::string str);

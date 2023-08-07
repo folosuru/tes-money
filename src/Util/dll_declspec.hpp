@@ -9,7 +9,7 @@
 #else
 
 #ifdef tes_money_EXPORTS
-#define DLL __declspec(dllexport)
+#define TES_MONEY_DLL __declspec(dllexport)
 #else
 #define DLL __declspec(dllimport)
 #endif

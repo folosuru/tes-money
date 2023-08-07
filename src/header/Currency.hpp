@@ -6,7 +6,7 @@
 #include "../Util/dll_declspec.hpp"
 
 namespace tes {
-class DLL Currency {
+class TES_MONEY_DLL Currency {
 public:
     explicit Currency(std::string name) : currency_name(std::move(name)) {}
     const std::string currency_name;

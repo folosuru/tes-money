@@ -8,7 +8,7 @@
 #include "./Currency.hpp"
 #include "../Util/dll_declspec.hpp"
 namespace tes {
-class DLL Money {
+class TES_MONEY_DLL Money {
 public:
     const Types::money_value value;
     const Types::currency currency;

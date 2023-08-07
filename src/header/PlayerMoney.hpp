@@ -13,7 +13,7 @@
 
 namespace tes {
 class Money;
-class DLL PlayerMoney {
+class TES_MONEY_DLL PlayerMoney {
 public:
     bool edited = false;
 
