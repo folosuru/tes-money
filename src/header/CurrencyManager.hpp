@@ -18,9 +18,13 @@ public:
 
     bool exists(std::string str);
 
-    const std::vector<std::string> & getAllCurrencyList();
+    const std::vector<std::string>& getAllCurrencyList();
+
+    void loadAll();
+    void save(const std::string& key);
 
 private:
+    const std::string file_export_path = "plugins/tes/money/currency";
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
     std::vector<std::string> currency_name_list;
 };
