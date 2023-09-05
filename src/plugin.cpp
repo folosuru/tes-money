@@ -7,6 +7,7 @@
 #include <llapi/GlobalServiceAPI.h>
 #include <llapi/FormUI.h>
 #include <llapi/DynamicCommandAPI.h>
+#include <llapi/I18nAPI.h>
 
 #include <string>
 #include <fstream>
@@ -37,13 +38,9 @@ void PluginInit() {
 
     // Translation::load("plugins/tes/lang/");
 
-    std::shared_ptr<tes::PlayerManager> player_mng = tes::getPlayerManager();
-    std::shared_ptr<tes::CurrencyManager> currency_mng = tes::getCurrencyManager();
-
 
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
         sendTextToPlayer(event.mPlayer, "hoge")
-
         if (event.mPlayer != nullptr) {
             event.mPlayer->sendText("hoge");
         }
@@ -58,34 +55,34 @@ void PluginInit() {
 
     using ParamType = DynamicCommand::ParameterType;
     using Param = DynamicCommand::ParameterData;
-//    LIAPI bool addSoftEnumValues(std::string const& name, std::vector<std::string> const& values) const;
-
-
-    /*const auto*  money_edit = */  DynamicCommand::setup(
-        "money_edit",  // The command
-        "Example description",  // The description
-        {
-            {"enum_2", {"set"}},
-            {"enum_3", {"show"}},
-            {"currency name", {currency_mng->getAllCurrencyList()}},
-        },  // The enumeration
-        {
-            Param("mode", ParamType::Enum, false, "enum_2"),
-            Param("mode", ParamType::Enum, false, "enum_3"),
-            Param("currency", ParamType::SoftEnum, false, "currency name"),
-            Param("value", ParamType::Int, false),
-            Param("to", ParamType::String, false)
-        },  // The parameters
-        {
-            // overloads{ (type == Enum ? enumOptions : name) ...}
-            {"enum_2", "to", "value", "currency name"},  // money_edit [String: to] [Int: value] <currency>
-            {"enum_3", "to", "currency name"},  // money show [to] <currency>
-        },  // The overloads
-        [](
-            DynamicCommand const& command,
-            CommandOrigin const& origin,
-            CommandOutput& output,
-            std::unordered_map<std::string, DynamicCommand::Result>& results
+    const DynamicCommandInstance* money_normal;
+    const DynamicCommandInstance* money_edit;
+    {
+        money_edit = DynamicCommand::setup(
+            "money_edit",  // The command
+            "edit money",  // The description
+            {
+                {"enum_2", {"set"}},
+                {"enum_3", {"show"}},
+                {"currency name", {}},
+            },  // The enumeration
+            {
+                Param("mode", ParamType::Enum, false, "enum_2"),
+                Param("mode", ParamType::Enum, false, "enum_3"),
+                Param("currency", ParamType::SoftEnum, false, "currency name"),
+                Param("value", ParamType::Int, false),
+                Param("to", ParamType::String, false)
+            },  // The parameters
+            {
+                // overloads{ (type == Enum ? enumOptions : name) ...}
+                {"enum_2", "to", "value", "currency name"},  // money_edit [String: to] [Int: value] <currency>
+                {"enum_3", "to", "currency name"},  // money show [to] <currency>
+            },  // The overloads
+            [](
+                DynamicCommand const& command,
+                CommandOrigin const& origin,
+                CommandOutput& output,
+                std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
 
@@ -102,50 +99,48 @@ void PluginInit() {
                 }
 
                 switch (do_hash(action.c_str())) {
-                case do_hash("show"): {
-                    output.success(target_money->get(input_currency)->getText());
-                    break;
-                }
+                    case do_hash("show"): {
+                        output.success(target_money->get(input_currency)->getText());
+                        break;
+                    }
 
-                case do_hash("set"): {
-                    target_money->set(tes::Money(results["value"].getRaw<int>(), input_currency));
-                    break;
+                    case do_hash("set"): {
+                        target_money->set(tes::Money(results["value"].getRaw<int>(), input_currency));
+                        break;
+                    }
+                    default:break;
                 }
-                default:
-                    break;
-                }
-        },  // The callback function
-        CommandPermissionLevel::Console);  // The permission level
+            },  // The callback function
+            CommandPermissionLevel::Console);  // The permission level
 
-
-    const auto* p =  DynamicCommand::setup(
-        "money",  // The command
-        "Example description",  // The description
-        {
+        money_normal = DynamicCommand::setup(
+            "money",  // The command
+            "Example description",  // The description
+            {
                 {"enum_2", {"list"}},
                 {"enum_3", {"show"}},
                 {"enum_4", {"send"}},
-                {"currency name", {currency_mng->getAllCurrencyList()}},
-        },  // The enumeration
-        {
+                {"currency name", {}},
+            },  // The enumeration
+            {
                 Param("mode", ParamType::Enum, false, "enum_2"),
                 Param("mode", ParamType::Enum, false, "enum_3"),
                 Param("mode", ParamType::Enum, false, "enum_4"),
                 Param("currency", ParamType::SoftEnum, false, "currency name"),
                 Param("value", ParamType::Int, false),
                 Param("to", ParamType::String, false)
-        },  // The parameters
-        {
-            // overloads{ (type == Enum ? enumOptions : name) ...}
-            {"enum_2"},  // money <list>
-            {"enum_3", "currency name"},  // money show <currency>
-            {"enum_4", "to", "value", "currency name"}  // money send <player> [value] <currency>
-        },  // The overloads
-        [](
-            DynamicCommand const& command,
-            CommandOrigin const& origin,
-            CommandOutput& output,
-            std::unordered_map<std::string, DynamicCommand::Result>& results
+            },  // The parameters
+            {
+                // overloads{ (type == Enum ? enumOptions : name) ...}
+                {"enum_2"},  // money <list>
+                {"enum_3", "currency name"},  // money show <currency>
+                {"enum_4", "to", "value", "currency name"}  // money send <player> [value] <currency>
+            },  // The overloads
+            [](
+                DynamicCommand const& command,
+                CommandOrigin const& origin,
+                CommandOutput& output,
+                std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
 
@@ -157,7 +152,7 @@ void PluginInit() {
                 currency input_currency;
                 if (!results["currency"].isSet) {
                     input_currency = tes::getCurrencyManager()
-                                        ->getCurrency(results["currency"].getRaw<std::string>());
+                        ->getCurrency(results["currency"].getRaw<std::string>());
                 }
 
                 switch (do_hash(action.c_str())) {
@@ -188,13 +183,11 @@ void PluginInit() {
                         sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
                         break;
                     }
-                    default:
-                        break;
+                    default:break;
                 }
-        },  // The callback function
-        CommandPermissionLevel::Any);  // The permission level
+            },  // The callback function
+            CommandPermissionLevel::Any);  // The permission level
+    }
+    tes::initCurrencyManager(tes::CurrencyCommandUpdater(money_normal,money_edit));
 
-
-    currency_mng->addCurrency(std::make_shared<tes::Currency>("euc"));
-    p->setSoftEnum("currency name", currency_mng->getAllCurrencyList());
 }
