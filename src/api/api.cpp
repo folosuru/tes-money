@@ -2,8 +2,13 @@
 
 namespace tes {
 
-    std::shared_ptr<CurrencyManager> CurrencyManager_ = std::make_shared<CurrencyManager>();
-    std::shared_ptr<PlayerManager> PlayerMoneyManager = std::make_shared<PlayerManager>(CurrencyManager_);
+    std::shared_ptr<CurrencyManager> CurrencyManager_;
+    std::shared_ptr<PlayerManager> PlayerMoneyManager;
+
+    void initCurrencyManager(CurrencyCommandUpdater updater) {
+        CurrencyManager_ = std::make_shared<CurrencyManager>(updater);
+        PlayerMoneyManager = std::make_shared<PlayerManager>(CurrencyManager_);
+    }
 
     std::shared_ptr<PlayerManager> getPlayerManager() {
         return PlayerMoneyManager;

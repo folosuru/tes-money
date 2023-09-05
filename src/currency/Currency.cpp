@@ -9,5 +9,4 @@ nlohmann::json Currency::get_json() {
     result["name"] = this->currency_name;
     return result;
 }
-
 }

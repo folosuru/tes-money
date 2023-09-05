@@ -8,7 +8,9 @@
 
 namespace tes {
 
-    PlayerManager::PlayerManager(std::shared_ptr<CurrencyManager> m) : currency_manager_(std::move(m)) {}
+    PlayerManager::PlayerManager(std::shared_ptr<CurrencyManager> m) : currency_manager_(std::move(m)) {
+        loadAll();
+    }
 
     void PlayerManager::newPlayer(const std::string& name) {
         if (players.find(name) == players.end()) {
@@ -45,6 +47,7 @@ namespace tes {
     }
 
     void PlayerManager::saveAll() {
+        std::filesystem::create_directories(file_export_path);
         for (const auto& item : players) {  // ここリファクタリングの余地
             if (!item.second->edited) continue;
             nlohmann::json data = item.second->get_json();
