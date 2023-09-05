@@ -1,11 +1,14 @@
+#define DEBUG_WITHOUT_LLAPI
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
 #include "../src/header/api.hpp"
+#define DEBUG_WITHOUT_LLAPI
 
 void checkLoadJson() {
-    std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>();
-    currency->addCurrency(std::make_shared<tes::Currency>("JPY"));
-    currency->addCurrency(std::make_shared<tes::Currency>("ACP"));
+    std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>(tes::CurrencyCommandUpdater());
+    currency->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
+    currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
 
     auto money = tes::PlayerMoney(
         nlohmann::json::parse(R"({"money" : { "JPY" : 130, "ACP" : 254 }})"),
@@ -21,7 +24,6 @@ int main() {
     checkLoadJson();
     std::shared_ptr<tes::PlayerManager> player_manager = tes::getPlayerManager();
     std::shared_ptr<tes::CurrencyManager> currency_manager = tes::getCurrencyManager();
-
     {
         bool check_unknown_player_access = false;
         try {
@@ -38,8 +40,9 @@ int main() {
         bool check_unknown_currency_access = false;
         try {
             currency_manager->getCurrency("JPY");
-        } catch (std::invalid_argument& e) {
+        } catch (std::exception& e) {
             check_unknown_currency_access = true;
+            std::cout << e.what() << std::endl;
         }
         if (!check_unknown_currency_access) {
             return 1;
@@ -47,10 +50,10 @@ int main() {
     }
     player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
     std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
-
-    currency_manager->addCurrency(std::make_shared<tes::Currency>("JPY"));
+    currency_manager->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
 
     std::shared_ptr<tes::Currency> cur = currency_manager->getCurrency("jpY");
+
 
     {
         money->add(tes::Money(100, cur));
@@ -77,5 +80,6 @@ int main() {
             return 1;
         }
     }
+    player_manager->saveAll();
     return 0;
 }
