@@ -13,13 +13,15 @@
 
 namespace tes {
 class Money;
-class DLL PlayerMoney {
+class TES_MONEY_DLL PlayerMoney {
 public:
     bool edited = false;
 
     PlayerMoney();
 
     PlayerMoney(const nlohmann::json& json, const std::shared_ptr<CurrencyManager>& currency_manager);
+
+    nlohmann::json get_json();
 
     bool has(const Money& money) const;
 

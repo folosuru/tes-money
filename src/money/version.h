@@ -18,10 +18,10 @@
 // The basic descriptions of your plugin
 // Note that the the plugin name CAN ONLY CONTAIN Enlish alphabet, digit, dash(-) and
 // underscore(_). 
-#define PLUGIN_NAME "TES-main"
+#define PLUGIN_NAME "TES-money"
 // Describe what your plugin does
 // We recommend you start the introduction with a third-person singular verb.
-#define PLUGIN_INTRODUCTION "Implement county, dominion, and economy."
+#define PLUGIN_INTRODUCTION "Implement money."
 #define PLUGIN_AUTHOR "folosuru"
 
 // The version of your plugin. If you do not know how to set it, please refer

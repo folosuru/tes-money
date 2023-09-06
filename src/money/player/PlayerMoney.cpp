@@ -5,6 +5,13 @@
 namespace tes {
 
     PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager) {
+        /*
+         * {
+         *      "money" : {
+         *          "currency" : [value],...
+         *      }
+         * }
+         */
         for (const auto& item : j["money"].items()) {
             tes::Types::money_value value = item.value().get<tes::Types::money_value>();
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
@@ -12,7 +19,7 @@ namespace tes {
         }
     }
 
-    bool PlayerMoney::has(const tes::Money &money_) const{
+    bool PlayerMoney::has(const tes::Money &money_) const {
         if (money.find(money_.currency) != money.end()) {
             return (*money.at(money_.currency) >= money_);
         } else {
@@ -55,4 +62,12 @@ namespace tes {
     PlayerMoney::PlayerMoney() {
         edited = true;
     }
+
+nlohmann::json PlayerMoney::get_json() {
+    nlohmann::json result;
+    for (const auto& item : money) {
+        result["money"][item.first->currency_name] = item.second->value;
+    }
+    return result;
+}
 }

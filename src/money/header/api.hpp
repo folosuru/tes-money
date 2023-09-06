@@ -9,9 +9,13 @@
 namespace tes {
 class PlayerManager;
 class CurrencyManager;
-    DLL std::shared_ptr<PlayerManager> getPlayerManager();
+class CurrencyCommandUpdater;
 
-    DLL std::shared_ptr<CurrencyManager> getCurrencyManager();
+    void initCurrencyManager(CurrencyCommandUpdater);
+
+    TES_MONEY_DLL std::shared_ptr<PlayerManager> getPlayerManager();
+
+    TES_MONEY_DLL std::shared_ptr<CurrencyManager> getCurrencyManager();
 
 }
 #endif  // PLUGIN_API_HPP

@@ -3,12 +3,16 @@
 #define PLUGIN_CURRENCY_HPP
 #include <string>
 #include <utility>
+#include <Nlohmann/json.hpp>
 #include "../Util/dll_declspec.hpp"
 
 namespace tes {
-class DLL Currency {
+class TES_MONEY_DLL Currency {
 public:
     explicit Currency(std::string name) : currency_name(std::move(name)) {}
+    explicit Currency(nlohmann::json json);
+    nlohmann::json get_json();
+
     const std::string currency_name;
 
     Currency() = delete;

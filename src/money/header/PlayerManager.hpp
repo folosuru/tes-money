@@ -11,7 +11,7 @@
 
 namespace tes {
 class PlayerMoney;  // これ消すとなぜか動かない。消すな
-class DLL PlayerManager {
+class TES_MONEY_DLL PlayerManager {
 public:
     PlayerManager() = delete;
     explicit PlayerManager(std::shared_ptr<CurrencyManager>);
@@ -20,7 +20,7 @@ public:
 
     std::shared_ptr<PlayerMoney> getPlayer(Types::player_name name);
 
-    inline bool exists(Types::player_name name);
+    inline bool exists(Types::player_name_view name);
 
     void addPlayer(const std::string& name, std::shared_ptr<PlayerMoney>);
 
