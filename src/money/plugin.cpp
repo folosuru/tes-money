@@ -188,5 +188,5 @@ void PluginInit() {
             },  // The callback function
             CommandPermissionLevel::Any);  // The permission level
     }
-    tes::initCurrencyManager(tes::CurrencyCommandUpdater(money_normal, money_edit));
+    tes::getCurrencyManager()->setCommandUpdater(tes::CurrencyCommandUpdater(money_normal, money_edit));
 }

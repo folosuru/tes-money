@@ -18,8 +18,8 @@ namespace tes {
         std::string key = c->currency_name;
         std::transform(key.begin(), key.end(), key.begin(), tolower);
         cur[key] = c;
-        if (updateCommand) {
-            this->updater.updateCurrencyList(getAllCurrencyList());
+        if (updateCommand && updater) {
+            this->updater.value().updateCurrencyList(getAllCurrencyList());
         }
     }
 
@@ -34,7 +34,9 @@ void CurrencyManager::loadAll() {
         nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
         this->addCurrency(std::make_shared<Currency>(j), false);
     }
-    this->updater.updateCurrencyList(getAllCurrencyList());
+    if (this->updater) {
+        this->updater.value().updateCurrencyList(getAllCurrencyList());
+    }
 }
 
 void CurrencyManager::save(const std::string& key) {
@@ -43,7 +45,11 @@ void CurrencyManager::save(const std::string& key) {
     std::ofstream(std::format("{}/{}.json", file_export_path, cur.at(key)->currency_name)) << j << std::endl;
 }
 
-CurrencyManager::CurrencyManager(CurrencyCommandUpdater upd) : updater(upd) {
-        loadAll();
-    }
+CurrencyManager::CurrencyManager() {
+    loadAll();
+}
+
+void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater upd) {
+    this->updater = upd;
+}
 }
