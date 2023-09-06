@@ -2,8 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <fstream>
-#include "../src/header/api.hpp"
-#define DEBUG_WITHOUT_LLAPI
+#include "../src/money/header/api.hpp"
 
 void checkLoadJson() {
     std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>(tes::CurrencyCommandUpdater());

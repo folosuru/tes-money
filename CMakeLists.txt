@@ -5,7 +5,7 @@ project(tes_money)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_BUILD_TYPE Release)
 
-file(GLOB_RECURSE SRC_FILES_DIR
+file(GLOB_RECURSE SRC_MONEY_DIR
     ${PROJECT_SOURCE_DIR}/src/*.c
     ${PROJECT_SOURCE_DIR}/src/*.cpp
     ${PROJECT_SOURCE_DIR}/src/*.h
@@ -63,7 +63,7 @@ add_link_options(
     /SUBSYSTEM:CONSOLE
 )
 
-add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC_FILES_DIR})
+add_library(tes_money SHARED ${SRC_MONEY_DIR})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} 
 	"${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib"
