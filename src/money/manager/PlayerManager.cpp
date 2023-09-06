@@ -52,7 +52,7 @@ namespace tes {
             if (!item.second->edited) continue;
             nlohmann::json data = item.second->get_json();
             data["name"] = item.first;
-            std::ofstream(std::format("{}/{}.json",file_export_path,item.first)) << data << std::endl;
+            std::ofstream(std::format("{}/{}.json", file_export_path, item.first)) << data << std::endl;
         }
     }
 

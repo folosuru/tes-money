@@ -5,16 +5,17 @@
 #ifndef DEBUG_WITHOUT_LLAPI
 #include <llapi/DynamicCommandAPI.h>
 #endif
+#include <string>
+#include <vector>
 
 namespace tes {
 class CurrencyCommandUpdater {
-
- public:
+public:
 #ifndef DEBUG_WITHOUT_LLAPI
     CurrencyCommandUpdater(const DynamicCommandInstance *normal_command, const DynamicCommandInstance *operator_command)
         : normal_command(normal_command), operator_command(operator_command) {}
 #elif
-    CurrencyCommandUpdater(){}
+    CurrencyCommandUpdater() {}
 #endif
 
     void updateCurrencyList(const std::vector<std::string>& new_currency_list);
