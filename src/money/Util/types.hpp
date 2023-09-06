@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <utility>
-
+#include <cstdint>
 namespace tes {
 class PlayerMoney;
 class Currency;
@@ -18,5 +18,6 @@ typedef const std::string& player_name_view;
 typedef std::vector<std::string> player_list;
 typedef std::pair<int, int> posXZ;
 typedef int country;
-typedef unsigned long long money_value;
+typedef std::uint64_t money_value;
+
 }
