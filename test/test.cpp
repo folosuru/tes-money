@@ -5,7 +5,8 @@
 #include "../src/money/header/api.hpp"
 
 void checkLoadJson() {
-    std::shared_ptr<tes::CurrencyManager> currency = std::make_shared<tes::CurrencyManager>(tes::CurrencyCommandUpdater());
+    std::shared_ptr<tes::CurrencyManager> currency;
+    currency = std::make_shared<tes::CurrencyManager>(tes::CurrencyCommandUpdater());
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
 
