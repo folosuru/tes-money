@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include "PlayerMoney.hpp"
 #include "CurrencyManager.hpp"
-#include "../Util/dll_declspec.hpp"
+#include "Util/dll_declspec.hpp"
 
 namespace tes {
 class PlayerMoney;  // これ消すとなぜか動かない。消すな

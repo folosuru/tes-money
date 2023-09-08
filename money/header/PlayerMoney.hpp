@@ -6,9 +6,9 @@
 #include <memory>
 #include <string>
 #include <Nlohmann/json.hpp>
-#include "./Money.hpp"
-#include "../Util/types.hpp"
-#include "../Util/dll_declspec.hpp"
+#include "Money.hpp"
+#include "Util/types.hpp"
+#include "Util/dll_declspec.hpp"
 #include "CurrencyManager.hpp"
 
 namespace tes {

@@ -1,21 +1,20 @@
 #pragma once
 #ifndef PLUGIN_CURRENCYMANAGER_HPP
 #define PLUGIN_CURRENCYMANAGER_HPP
-#include <llapi/DynamicCommandAPI.h>
 #include <memory>
 #include <unordered_map>
 #include <string>
 #include <vector>
 #include <optional>
 #include "Currency.hpp"
-#include "../Util/dll_declspec.hpp"
-#include "../currency/CurrencyCommandUpdater.hpp"
+#include "Util/dll_declspec.hpp"
+#include "CurrencyCommandUpdater.hpp"
 namespace tes {
 class TES_MONEY_DLL CurrencyManager {
 public:
     CurrencyManager();
 
-    void setCommandUpdater(CurrencyCommandUpdater);
+    void setCommandUpdater(CurrencyCommandUpdater*);
 
     std::shared_ptr<Currency> getCurrency(std::string str);
 
@@ -29,7 +28,7 @@ public:
     void save(const std::string& key);
 
 private:
-    std::optional<CurrencyCommandUpdater> updater = std::nullopt;
+    std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;
     const std::string file_export_path = "plugins/tes/money/currency";
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
     std::vector<std::string> currency_name_list;

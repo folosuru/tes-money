@@ -1,12 +1,11 @@
-#define DEBUG_WITHOUT_LLAPI
 #include <iostream>
 #include <stdexcept>
 #include <fstream>
-#include "../src/money/header/api.hpp"
+#include <api.hpp>
 
 void checkLoadJson() {
     std::shared_ptr<tes::CurrencyManager> currency;
-    currency = std::make_shared<tes::CurrencyManager>(tes::CurrencyCommandUpdater());
+    currency = std::make_shared<tes::CurrencyManager>();
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
 

@@ -1,8 +1,11 @@
-#include "../header/CurrencyManager.hpp"
+#include <CurrencyManager.hpp>
 #include <algorithm>
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
+#include <utility>
+#include <format>
+
 namespace tes {
 
     std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
@@ -19,7 +22,7 @@ namespace tes {
         std::transform(key.begin(), key.end(), key.begin(), tolower);
         cur[key] = c;
         if (updateCommand && updater) {
-            this->updater.value().updateCurrencyList(getAllCurrencyList());
+            this->updater->updateCurrencyList(getAllCurrencyList());
         }
     }
 
@@ -29,13 +32,14 @@ bool CurrencyManager::exists(std::string str) {
 }
 
 void CurrencyManager::loadAll() {
+    std::filesystem::create_directories(file_export_path);
     for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
         if (!std::filesystem::is_regular_file(entry)) continue;
         nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
         this->addCurrency(std::make_shared<Currency>(j), false);
     }
     if (this->updater) {
-        this->updater.value().updateCurrencyList(getAllCurrencyList());
+        this->updater->updateCurrencyList(getAllCurrencyList());
     }
 }
 
@@ -49,7 +53,7 @@ CurrencyManager::CurrencyManager() {
     loadAll();
 }
 
-void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater upd) {
-    this->updater = upd;
+void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
+    this->updater = std::shared_ptr<CurrencyCommandUpdater>(upd);
 }
 }

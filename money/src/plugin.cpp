@@ -2,23 +2,23 @@
  * @file plugin.cpp
  * @brief The main file of the plugin
  */
-#include <llapi/LoggerAPI.h>
-#include <llapi/EventAPI.h>
-#include <llapi/GlobalServiceAPI.h>
-#include <llapi/FormUI.h>
-#include <llapi/DynamicCommandAPI.h>
-#include <llapi/I18nAPI.h>
+#include "llapi/LoggerAPI.h"
+#include "llapi/EventAPI.h"
+#include "llapi/GlobalServiceAPI.h"
+#include "llapi/FormUI.h"
+#include "llapi/DynamicCommandAPI.h"
+#include "llapi/I18nAPI.h"
 
 #include <string>
 #include <fstream>
-#include <llapi/mc/Level.hpp>
-#include <llapi/MC/CommandOrigin.hpp>
-#include <llapi/MC/CommandOutput.hpp>
-#include <Nlohmann/json.hpp>
+#include "llapi/mc/Level.hpp"
+#include "llapi/mc/CommandOrigin.hpp"
+#include "llapi/mc/CommandOutput.hpp"
+#include "Nlohmann/json.hpp"
 
 #include "Util/mc_Util.hpp"
 #include "version.h"
-#include "./header/api.hpp"
+#include <api.hpp>
 
 
  // We recommend using the global logger.
@@ -35,10 +35,7 @@ void PluginInit() {
     // Your code here
     Logger logger(PLUGIN_NAME);
     logger.info("Hello, world!!");
-
     // Translation::load("plugins/tes/lang/");
-
-
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
         sendTextToPlayer(event.mPlayer, "hoge")
         if (event.mPlayer != nullptr) {
@@ -46,17 +43,16 @@ void PluginInit() {
         }
         tes::getPlayerManager()->newPlayer(event.mPlayer->getRealName());
         return true;
-        });
+    });
 
     Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event) {
         return true;
-        });
-
+    });
 
     using ParamType = DynamicCommand::ParameterType;
     using Param = DynamicCommand::ParameterData;
-    const DynamicCommandInstance* money_normal;
-    const DynamicCommandInstance* money_edit;
+    const DynamicCommandInstance *money_normal;
+    const DynamicCommandInstance *money_edit;
     {
         money_edit = DynamicCommand::setup(
             "money_edit",  // The command
@@ -188,5 +184,5 @@ void PluginInit() {
             },  // The callback function
             CommandPermissionLevel::Any);  // The permission level
     }
-    tes::getCurrencyManager()->setCommandUpdater(tes::CurrencyCommandUpdater(money_normal, money_edit));
+    tes::getCurrencyManager()->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
 }

@@ -1,4 +1,4 @@
-#include "../header/PlayerManager.hpp"
+#include <PlayerManager.hpp>
 #include <memory>
 #include <stdexcept>
 #include <fstream>
@@ -57,6 +57,7 @@ namespace tes {
     }
 
     void PlayerManager::loadAll() {
+        std::filesystem::create_directories(file_export_path);
         for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
             if (!std::filesystem::is_regular_file(entry)) continue;
             nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));

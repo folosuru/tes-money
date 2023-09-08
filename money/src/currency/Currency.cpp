@@ -1,4 +1,4 @@
-#include "../header/Currency.hpp"
+#include <Currency.hpp>
 
 namespace tes {
 

@@ -30,12 +30,12 @@
 *.exe
 *.out
 *.app
-
 # Build
 build
 cmake-build-*
 out
 SDK
+artifact
 
 
 # Jetbrains IDEs
