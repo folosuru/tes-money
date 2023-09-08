@@ -1,10 +1,10 @@
 #include <CurrencyManager.hpp>
+#include <format>
 #include <algorithm>
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
 #include <utility>
-#include <format>
 
 namespace tes {
 
