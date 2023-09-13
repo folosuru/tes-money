@@ -6,7 +6,7 @@
 #include <memory>
 #include <unordered_map>
 #include "PlayerMoney.hpp"
-#include "CurrencyManager.hpp"
+#include "../currency/CurrencyManager.hpp"
 #include "Util/dll_declspec.hpp"
 
 namespace tes {
@@ -16,7 +16,7 @@ public:
     PlayerManager() = delete;
     explicit PlayerManager(std::shared_ptr<CurrencyManager>);
 
-    static std::shared_ptr<PlayerManager> getPlayerManager();
+    static std::shared_ptr<PlayerManager> get();
 
     void newPlayer(const std::string& name);
 
