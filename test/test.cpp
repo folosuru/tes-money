@@ -1,7 +1,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <fstream>
-#include <api.hpp>
+#include <player/PlayerManager.hpp>
+#include <currency/CurrencyManager.hpp>
 
 void checkLoadJson() {
     std::shared_ptr<tes::CurrencyManager> currency;
@@ -21,9 +22,9 @@ void checkLoadJson() {
 
 int main() {
     checkLoadJson();
-    std::shared_ptr<tes::PlayerManager> player_manager = tes::getPlayerManager();
-    std::shared_ptr<tes::CurrencyManager> currency_manager = tes::getCurrencyManager();
-    {
+    std::shared_ptr<tes::CurrencyManager> currency_manager = std::make_shared<tes::CurrencyManager>();
+    std::shared_ptr<tes::PlayerManager> player_manager = std::make_shared<tes::PlayerManager>(currency_manager);
+        {
         bool check_unknown_player_access = false;
         try {
             std::shared_ptr<tes::PlayerMoney> money1 = player_manager->getPlayer("Yamada");
@@ -41,7 +42,7 @@ int main() {
             currency_manager->getCurrency("JPY");
         } catch (std::exception& e) {
             check_unknown_currency_access = true;
-            std::cout << e.what() << std::endl;
+            // std::cout << e.what() << std::endl;
         }
         if (!check_unknown_currency_access) {
             return 1;
