@@ -16,6 +16,8 @@ public:
     PlayerManager() = delete;
     explicit PlayerManager(std::shared_ptr<CurrencyManager>);
 
+    static std::shared_ptr<PlayerManager> getPlayerManager();
+
     void newPlayer(const std::string& name);
 
     std::shared_ptr<PlayerMoney> getPlayer(Types::player_name name);

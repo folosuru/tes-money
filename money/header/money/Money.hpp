@@ -5,8 +5,8 @@
 #include <stdexcept>
 #include <string>
 #include "Util/types.hpp"
-#include "Currency.hpp"
-#include "Util/dll_declspec.hpp"
+#include "../currency/Currency.hpp"
+#include "../Util/dll_declspec.hpp"
 namespace tes {
 class TES_MONEY_DLL Money {
 public:

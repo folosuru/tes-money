@@ -7,12 +7,14 @@
 #include <vector>
 #include <optional>
 #include "Currency.hpp"
-#include "Util/dll_declspec.hpp"
-#include "CurrencyCommandUpdater.hpp"
+#include "../Util/dll_declspec.hpp"
+#include "../CurrencyCommandUpdater.hpp"
 namespace tes {
 class TES_MONEY_DLL CurrencyManager {
 public:
     CurrencyManager();
+
+    static std::shared_ptr<CurrencyManager> getCurrencyManager();
 
     void setCommandUpdater(CurrencyCommandUpdater*);
 
@@ -28,7 +30,7 @@ public:
     void save(const std::string& key);
 
 private:
-    std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;
+    //std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;
     const std::string file_export_path = "plugins/tes/money/currency";
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
     std::vector<std::string> currency_name_list;
