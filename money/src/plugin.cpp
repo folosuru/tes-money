@@ -18,9 +18,9 @@
 
 #include <Util/mc_Util.hpp>
 #include "version.h"
-#include <api.hpp>
-
-
+#include <player/PlayerManager.hpp>
+#include <currency/CurrencyManager.hpp>
+#include "command/CommandParser.hpp"
  // We recommend using the global logger.
 extern Logger logger;
 
@@ -41,7 +41,7 @@ void PluginInit() {
         if (event.mPlayer != nullptr) {
             event.mPlayer->sendText("hoge");
         }
-        tes::getPlayerManager()->newPlayer(event.mPlayer->getRealName());
+        tes::PlayerManager::get()->newPlayer(event.mPlayer->getRealName());
         return true;
     });
 
@@ -81,27 +81,24 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-
-                player_money target_money;
-                if (!tes::getPlayerManager()->exists(results["to"].getRaw<std::string>())) {
-                    output.error("could not find target player...");
-                    return;
-                }
-                target_money = tes::getPlayerManager()->getPlayer(results["to"].getRaw<std::string>());
-                currency input_currency;
-                if (!results["currency"].isSet) {
-                    input_currency = tes::getCurrencyManager()
-                        ->getCurrency(results["currency"].getRaw<std::string>());
-                }
-
+                tes::CommandParser parser(origin,output,results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("show"): {
-                        output.success(target_money->get(input_currency)->getText());
+                        auto target = parser.getTargetMoney();
+                        auto currency = parser.getCurrency();
+                        if (target && currency) {
+                            output.success(target.value()->get(currency.value())->getText());
+                        }
                         break;
                     }
 
                     case do_hash("set"): {
-                        target_money->set(tes::Money(results["value"].getRaw<int>(), input_currency));
+                        auto target = parser.getTargetMoney();
+                        auto value = parser.getValue();
+                        auto currency = parser.getCurrency();
+                        if (target && value && currency) {
+                            target.value()->set(tes::Money(value.value(), currency.value()));
+                        }
                         break;
                     }
                     default:break;
@@ -139,44 +136,41 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-
-                player_money origin_money;
-                if (!tes::getPlayerManager()->exists(origin.getPlayer()->getRealName())) {
-                    return;
-                }
-                origin_money = tes::getPlayerManager()->getPlayer(origin.getPlayer()->getRealName());
-                currency input_currency;
-                if (!results["currency"].isSet) {
-                    input_currency = tes::getCurrencyManager()
-                        ->getCurrency(results["currency"].getRaw<std::string>());
-                }
-
+                tes::CommandParser parser(origin,output,results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("list"): {
-                        for (const auto& item : origin_money->getAll()) {
-                            output.success(item.second->getText());
+                        auto money = parser.getOriginMoney();
+                        if (money) {
+                            for (const auto& item : money.value()->getAll()) {
+                                output.success(item.second->getText());
+                            }
                         }
                         break;
                     }
 
                     case do_hash("show"): {
-                        output.success(origin_money->get(input_currency)->getText());
+                        auto currency = parser.getCurrency();
+                        auto origin_money = parser.getOriginMoney();
+                        if (currency && origin_money) {
+                            output.success(origin_money.value()->get(currency.value())->getText());
+                        }
                         break;
                     }
 
                     case do_hash("send"): {
                         std::string to_name = results["to"].getRaw<std::string>();
-
-                        if (!tes::getPlayerManager()->exists(to_name)) {
-                            break;
+                        auto currency = parser.getCurrency();
+                        auto from = parser.getOriginMoney();
+                        auto to = parser.getTargetMoney();
+                        auto value = parser.getValue();
+                        if (currency && from && to && value) {
+                            tes::Money request_money = tes::Money(value.value(), currency.value());
+                            if (!from.value()->has(request_money)) {
+                                break;
+                            }
+                            from.value()->send(to.value(), request_money);
+                            sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
                         }
-                        tes::Types::player_money to = tes::getPlayerManager()->getPlayer(to_name);
-                        tes::Money request_money = tes::Money(results["value"].getRaw<int>(), input_currency);
-                        if (!origin_money->has(request_money)) {
-                            break;
-                        }
-                        origin_money->send(to, request_money);
-                        sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
                         break;
                     }
                     default:break;
@@ -184,5 +178,5 @@ void PluginInit() {
             },  // The callback function
             CommandPermissionLevel::Any);  // The permission level
     }
-    tes::getCurrencyManager()->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
+    tes::CurrencyManager::get()->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
 }
