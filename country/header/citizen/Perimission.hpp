@@ -1,0 +1,10 @@
+#pragma once
+#ifndef TES_COUNTRY_COUNTRY_HEADER_CITIZEN_PERIMISSION_HPP_
+#define TES_COUNTRY_COUNTRY_HEADER_CITIZEN_PERIMISSION_HPP_
+namespace tes {
+enum class Permission {
+    money,
+};
+}
+
+#endif //TES_COUNTRY_COUNTRY_HEADER_CITIZEN_PERIMISSION_HPP_
