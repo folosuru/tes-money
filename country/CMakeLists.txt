@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 set(project_name tes-country)
 project(${project_name})
-
+set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE SRC_MONEY_DIR
 		${${project_name}_SOURCE_DIR}/src/*.c
 		${${project_name}_SOURCE_DIR}/src/*.cpp
