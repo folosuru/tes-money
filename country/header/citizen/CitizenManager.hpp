@@ -13,9 +13,9 @@ public:
 
     std::shared_ptr<Citizen> getCitizen(Types::player_name_view);
 
-    void add();
+    void add(Types::player_name_view);
 
-    void ban();
+    void ban(Types::player_name_view);
 
 private:
     std::unordered_map<Types::player_name,std::shared_ptr<Citizen>> citizen;

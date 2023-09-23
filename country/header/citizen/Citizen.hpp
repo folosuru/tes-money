@@ -9,7 +9,7 @@ class Citizen {
 public:
     Citizen(std::shared_ptr<Country>);
 
-    bool hasPermission();
+    bool hasPermission(Permission);
 
     void addPermission(Permission);
 

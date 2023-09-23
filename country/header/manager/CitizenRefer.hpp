@@ -14,7 +14,6 @@ public:
     void add(std::shared_ptr<Citizen>);
 
 
-
 private:
     std::unordered_map<Types::player_name,std::shared_ptr<Citizen>> citizen;
 };
