@@ -39,7 +39,7 @@ namespace tes {
     }
 
     void PlayerMoney::send(const std::shared_ptr<MoneyAccount> &to, const Money &money_) {
-        to->receive(this,money_);
+        to->receive(this, money_);
         this->remove(money_);
     }
 
