@@ -19,9 +19,11 @@ public:
 
     virtual void add(const Money& money_) = 0;
 
-    virtual void set(const Money& money_);
+    virtual void set(const Money& money_) = 0;
 
     virtual void send(const std::shared_ptr<MoneyAccount>& to, const Money& money_) = 0;
+
+    virtual void receive(const MoneyAccount* from, const Money& money_) = 0;
 
     virtual std::shared_ptr<Money> get(const Types::currency& cur) = 0;
 

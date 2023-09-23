@@ -10,10 +10,11 @@
 #include "Util/types.hpp"
 #include "Util/dll_declspec.hpp"
 #include "../currency/CurrencyManager.hpp"
+#include "../money/MoneyAccount.hpp"
 
 namespace tes {
 class Money;
-class TES_MONEY_DLL PlayerMoney {
+class TES_MONEY_DLL PlayerMoney : public MoneyAccount {
 public:
     bool edited = false;
 
@@ -23,19 +24,21 @@ public:
 
     nlohmann::json get_json();
 
-    bool has(const Money& money) const;
+    bool has(const Money& money) const final;
 
-    void remove(const Money& money_);
+    void remove(const Money& money_) final;
 
-    void add(const Money& money_);
+    void add(const Money& money_) final;
 
-    void set(const Money& money_);
+    void set(const Money& money_) final;
 
-    void send(const std::shared_ptr<PlayerMoney>& to, const Money& money_);
+    void send(const std::shared_ptr<MoneyAccount>& to, const Money& money_) final;
 
-    std::shared_ptr<Money> get(const Types::currency& cur);
+    void receive(const MoneyAccount* from, const Money& money_) final;
 
-    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const;
+    std::shared_ptr<Money> get(const Types::currency& cur) final;
+
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const final;
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;
