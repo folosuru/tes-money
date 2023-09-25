@@ -81,7 +81,7 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-                tes::CommandParser parser(origin,output,results);
+                tes::CommandParser parser(origin, output, results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("show"): {
                         auto target = parser.getTargetMoney();
@@ -136,7 +136,7 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-                tes::CommandParser parser(origin,output,results);
+                tes::CommandParser parser(origin, output, results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("list"): {
                         auto money = parser.getOriginMoney();

@@ -14,7 +14,7 @@ CommandParser::CommandParser(const CommandOrigin& origin,
 std::optional<Types::player_money> CommandParser::getOriginMoney() {
     auto mng = PlayerManager::get();
     std::string name = origin.getPlayer()->getRealName();
-    if (!mng->exists(name)){
+    if (!mng->exists(name)) {
         output.error("target is not exist");
         return std::nullopt;
     }
@@ -23,11 +23,11 @@ std::optional<Types::player_money> CommandParser::getOriginMoney() {
 
 std::optional<Types::currency> CommandParser::getCurrency() {
     auto mng = tes::CurrencyManager::get();
-    if (!results.contains("currency")){
+    if (!results.contains("currency")) {
         return std::nullopt;
     }
     auto cur_name = results["currency"].get<std::string>();
-    if (!mng->exists(cur_name)){
+    if (!mng->exists(cur_name)) {
         output.error("currency is not exist:");
         return std::nullopt;
     }
@@ -35,7 +35,7 @@ std::optional<Types::currency> CommandParser::getCurrency() {
 }
 
 std::optional<Types::money_value> CommandParser::getValue() {
-    if (!results.contains("value")){
+    if (!results.contains("value")) {
         return std::nullopt;
     }
     int value = results["value"].get<int>();
@@ -48,11 +48,11 @@ std::optional<Types::money_value> CommandParser::getValue() {
 
 std::optional<Types::player_money> CommandParser::getTargetMoney() {
     auto mng = tes::PlayerManager::get();
-    if (!results.contains("to")){
+    if (!results.contains("to")) {
         return std::nullopt;
     }
     auto name = results["to"].get<std::string>();
-    if (!mng->exists(name)){
+    if (!mng->exists(name)) {
         output.error("player dose not exist:");
         return std::nullopt;
     }
