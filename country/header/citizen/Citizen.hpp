@@ -4,10 +4,13 @@
 #include "../country/Country.hpp"
 #include "Perimission.hpp"
 #include <memory>
+#include <unordered_set>
 namespace tes {
 class Citizen {
 public:
-    Citizen(std::shared_ptr<Country>);
+    const std::string name;
+
+    Citizen(std::shared_ptr<Country>,std::string name);
 
     bool hasPermission(Permission);
 
@@ -17,7 +20,7 @@ public:
 
 private:
     std::shared_ptr<Country> country;
-    std::vector<Permission> permission;
+    std::unordered_set<Permission> permission;
 };
 }
 #endif  // TES_COUNTRY_HEADER_CITIZEN_CITIZEN_HPP_

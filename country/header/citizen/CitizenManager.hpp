@@ -3,11 +3,12 @@
 #define TES_COUNTRY_HEADER_CITIZEN_CITIZENMANAGER_HPP_
 #include <string>
 #include <unordered_map>
-#include "Citizen.hpp"
 #include <memory>
 #include <Util/types.hpp>
+#include "Citizen.hpp"
 
 namespace tes {
+class Citizen;
 class CitizenManager {
 public:
 
