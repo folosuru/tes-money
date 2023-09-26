@@ -18,15 +18,28 @@ public:
 
     void setCommandUpdater(CurrencyCommandUpdater*);
 
+    /**
+     * 入力に対応する通貨を返す
+     * @throws std::out_of_range 存在しなかった場合
+     */
     std::shared_ptr<Currency> getCurrency(std::string str);
 
     void addCurrency(const std::shared_ptr<Currency>& c, bool updateCommand = true);
 
     bool exists(std::string str);
 
+    /**
+     * 通貨の名前が列挙されたvectorを返す
+     * @return e.g. {"JPY","USD",...}
+     */
     const std::vector<std::string>& getAllCurrencyList();
 
     void loadAll();
+
+    /**
+     * 指定された名前の通貨の情報の保存をする
+     * @note 全部を保存する関数がないのは、通貨の情報はそう頻繁に更新されないだろうと考えたから
+     */
     void save(const std::string& key);
 
 private:
