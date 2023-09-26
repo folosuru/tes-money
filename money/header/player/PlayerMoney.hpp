@@ -38,7 +38,7 @@ public:
 
     std::shared_ptr<Money> get(const Types::currency& cur) final;
 
-    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const final;
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const;
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;

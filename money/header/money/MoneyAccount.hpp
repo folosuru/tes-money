@@ -26,8 +26,6 @@ public:
     virtual void receive(const MoneyAccount* from, const Money& money_) = 0;
 
     virtual std::shared_ptr<Money> get(const Types::currency& cur) = 0;
-
-    virtual const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const = 0;
 };
 
 }
