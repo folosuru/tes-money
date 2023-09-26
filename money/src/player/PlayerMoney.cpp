@@ -38,13 +38,13 @@ namespace tes {
         money[money_.currency] = std::make_shared<Money>(*get(money_.currency) + money_);
     }
 
-    void PlayerMoney::send(const std::shared_ptr<PlayerMoney> &to, const Money &money_) {
-        to->add(money_);
+    void PlayerMoney::send(const std::shared_ptr<MoneyAccount> &to, const Money &money_) {
+        to->receive(this, money_);
         this->remove(money_);
     }
 
     std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) {
-        if (!money.contains(cur)) {
+        if (money.find(cur) != money.end()) {
             money[cur] = std::make_shared<Money>(0, cur);
         }
         return money[cur];
@@ -70,4 +70,8 @@ nlohmann::json PlayerMoney::get_json() {
     }
     return result;
 }
+
+    void PlayerMoney::receive(const MoneyAccount* from, const Money& money_) {
+        this->add(money_);
+    }
 }
