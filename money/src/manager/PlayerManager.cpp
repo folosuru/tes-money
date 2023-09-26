@@ -21,7 +21,7 @@ namespace tes {
         }
     }
 
-    std::shared_ptr<PlayerMoney> PlayerManager::getPlayer(Types::player_name name) {
+    std::shared_ptr<PlayerMoney> PlayerManager::getPlayer(Types::player_name_view name) {
         if (exists(name)) {
             return players[name];
         } else {
@@ -38,11 +38,11 @@ namespace tes {
         }
     }
 
-    const std::unordered_map<std::string, std::shared_ptr<tes::PlayerMoney>> &PlayerManager::getAllPlayer() {
+    const std::unordered_map<std::string, std::shared_ptr<tes::PlayerMoney>> &PlayerManager::getAllPlayer() noexcept {
         return players;
     }
 
-    bool PlayerManager::exists(Types::player_name_view name) {
+    bool PlayerManager::exists(Types::player_name_view name) noexcept {
         return players.contains(name);
     }
 

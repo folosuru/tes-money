@@ -13,7 +13,7 @@ namespace tes {
 class Money;
 class TES_MONEY_DLL MoneyAccount {
 public:
-    virtual bool has(const Money& money) const = 0;
+    virtual bool has(const Money& money) const noexcept = 0;
 
     /**
      * money_の分お金を減らす
@@ -26,9 +26,9 @@ public:
      * money_の額を加える。
      * @param money_
      */
-    virtual void add(const Money& money_) = 0;
+    virtual void add(const Money& money_) noexcept = 0;
 
-    virtual void set(const Money& money_) = 0;
+    virtual void set(const Money& money_) noexcept = 0;
 
     /**
      * toに送金する。内部でtoのreceive関数が呼ばれるハズ
@@ -49,7 +49,7 @@ public:
      * @param cur
      * @return Money
      */
-    virtual std::shared_ptr<Money> get(const Types::currency& cur) = 0;
+    virtual std::shared_ptr<Money> get(const Types::currency& cur) const noexcept = 0;
 };
 
 }

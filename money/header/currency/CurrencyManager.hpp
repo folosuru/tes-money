@@ -26,7 +26,7 @@ public:
 
     void addCurrency(const std::shared_ptr<Currency>& c, bool updateCommand = true);
 
-    bool exists(std::string str);
+    bool exists(std::string str) const noexcept;
 
     /**
      * 通貨の名前が列挙されたvectorを返す

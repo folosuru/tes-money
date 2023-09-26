@@ -24,10 +24,11 @@ public:
      * 額面の表示用のテキストを返す。
      * @return example: "150 JPY", "0 USD"
      */
-    std::string getText() const;
+    [[nodiscard]]
+    std::string getText() const noexcept;
 
     [[nodiscard]]
-    inline bool isSameCurrency(const Money& money) const;
+    inline bool isSameCurrency(const Money& money) const noexcept;
 
     bool operator<(const Money &compare) const;
     bool operator>(const Money &compare) const;

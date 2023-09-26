@@ -24,21 +24,23 @@ public:
 
     nlohmann::json get_json();
 
-    bool has(const Money& money) const final;
+    bool has(const Money& money) const noexcept final;
 
     void remove(const Money& money_) final;
 
-    void add(const Money& money_) final;
+    void add(const Money& money_) noexcept final;
 
-    void set(const Money& money_) final;
+    void set(const Money& money_) noexcept final;
 
     void send(const std::shared_ptr<MoneyAccount>& to, const Money& money_) final;
 
     void receive(const MoneyAccount* from, const Money& money_) final;
 
-    std::shared_ptr<Money> get(const Types::currency& cur) final;
+    [[nodiscard]]
+    std::shared_ptr<Money> get(const Types::currency& cur) const noexcept final;
 
-    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const;
+    [[nodiscard]]
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const noexcept;
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;

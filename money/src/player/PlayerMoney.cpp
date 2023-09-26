@@ -1,5 +1,4 @@
 #include <player/PlayerMoney.hpp>
-#include <format>
 #include <memory>
 
 namespace tes {
@@ -19,7 +18,7 @@ namespace tes {
         }
     }
 
-    bool PlayerMoney::has(const tes::Money &money_) const {
+    bool PlayerMoney::has(const tes::Money &money_) const noexcept {
         if (money.find(money_.currency) != money.end()) {
             return (*money.at(money_.currency) >= money_);
         } else {
@@ -33,7 +32,7 @@ namespace tes {
         money[money_.currency] = std::make_shared<Money>(*get(money_.currency) - money_);
     }
 
-    void PlayerMoney::add(const Money &money_) {
+    void PlayerMoney::add(const Money &money_) noexcept {
         edited = true;
         money[money_.currency] = std::make_shared<Money>(*get(money_.currency) + money_);
     }
@@ -43,18 +42,18 @@ namespace tes {
         this->remove(money_);
     }
 
-    std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) {
+    std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) const noexcept {
         if (money.find(cur) != money.end()) {
-            money[cur] = std::make_shared<Money>(0, cur);
+            return std::make_shared<Money>(0, cur);
         }
-        return money[cur];
+        return money.at(cur);
     }
 
-    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& PlayerMoney::getAll() const {
+    const std::unordered_map<Types::currency, std::shared_ptr<Money>>& PlayerMoney::getAll() const noexcept {
         return money;
     }
 
-    void PlayerMoney::set(const Money& money_) {
+    void PlayerMoney::set(const Money& money_) noexcept {
         edited = true;
         money[money_.currency] = std::make_shared<Money>(money_);
     }
