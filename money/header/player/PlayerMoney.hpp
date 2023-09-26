@@ -6,10 +6,10 @@
 #include <memory>
 #include <string>
 #include <Nlohmann/json.hpp>
-#include "Money.hpp"
+#include "../money/Money.hpp"
 #include "Util/types.hpp"
 #include "Util/dll_declspec.hpp"
-#include "CurrencyManager.hpp"
+#include "../currency/CurrencyManager.hpp"
 
 namespace tes {
 class Money;
