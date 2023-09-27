@@ -23,7 +23,6 @@
 #include "command/CommandParser.hpp"
  // We recommend using the global logger.
 extern Logger logger;
-
 /**
  * @brief The entrypoint of the plugin. DO NOT remove or rename this function.
  *
@@ -35,6 +34,10 @@ void PluginInit() {
     // Your code here
     Logger logger(PLUGIN_NAME);
     logger.info("Hello, world!!");
+
+    tes::CurrencyManager::get()->loadAll();
+    tes::PlayerManager::get()->loadAll();
+
     // Translation::load("plugins/tes/lang/");
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
         sendTextToPlayer(event.mPlayer, "hoge")
