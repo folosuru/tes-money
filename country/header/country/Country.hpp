@@ -5,14 +5,15 @@
 #include <unordered_map>
 #include "../citizen/CitizenManager.hpp"
 #include <Util/types.hpp>
+#include <utility>
 namespace tes {
 class Country {
 public:
     Country() = delete;
 
-    Country(std::string);
+    explicit Country(std::string name_) : name(std::move(name_)){};
 
-    std::shared_ptr<CitizenManager> getCitizenManager();
+    std::shared_ptr<CitizenManager> getCitizenManager() {return citizen;};
 
 private:
     std::string name;

@@ -11,7 +11,7 @@ class CitizenRefer {
 public:
     std::shared_ptr<Citizen> get(Types::player_name_view);
 
-    void add(std::shared_ptr<Citizen>);
+    void add(const std::shared_ptr<Citizen>&);
 
 
 private:

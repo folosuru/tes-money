@@ -10,7 +10,7 @@ std::shared_ptr<Citizen> CitizenRefer::get(Types::player_name_view name){
     }
 }
 
-void CitizenRefer::add(std::shared_ptr<Citizen> citizen_) {
+void CitizenRefer::add(const std::shared_ptr<Citizen>& citizen_) {
     citizen[citizen_->name] = citizen_;
 }
 

@@ -11,8 +11,13 @@ public:
 
     std::shared_ptr<Country> get(country_id id);
 
+    void loadAll();
+    void saveAll();
+
 private:
     std::unordered_map<country_id,std::shared_ptr<Country>> country;
+
+    inline const static std::string data_save_path = "plugins/tes/country/country";
 };
 }
 #endif //TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_
