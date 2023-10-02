@@ -13,7 +13,7 @@ namespace tes {
     }
 
 
-    bool Money::operator<(const Money &compare) const {
+    bool Money::operator==(const Money &compare) const {
         return (isSameCurrency(compare) && value == compare.value);
     }
     bool Money::operator<(const Money &compare) const {
