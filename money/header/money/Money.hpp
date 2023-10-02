@@ -30,6 +30,7 @@ public:
     [[nodiscard]]
     inline bool isSameCurrency(const Money& money) const noexcept;
 
+    bool operator==(const Money &compare) const;
     bool operator<(const Money &compare) const;
     bool operator>(const Money &compare) const;
     bool operator<=(const Money &compare) const;
