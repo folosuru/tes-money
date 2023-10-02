@@ -1,4 +1,5 @@
 #include <player/PlayerMoney.hpp>
+#include <format>
 #include <memory>
 
 namespace tes {
@@ -42,8 +43,8 @@ namespace tes {
         this->remove(money_);
     }
 
-    std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) const noexcept {
-        if (money.find(cur) != money.end()) {
+    std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) const noexcept{
+        if (!money.contains(cur)) {
             return std::make_shared<Money>(0, cur);
         }
         return money.at(cur);

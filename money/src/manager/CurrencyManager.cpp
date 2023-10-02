@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <fstream>
 
+#include <iostream>
 namespace tes {
 
     std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
@@ -47,9 +48,7 @@ void CurrencyManager::save(const std::string& key) {
     nlohmann::json j = cur.at(key)->get_json();
     std::ofstream(std::format("{}/{}.json", file_export_path, cur.at(key)->currency_name)) << j << std::endl;
 }
-
 CurrencyManager::CurrencyManager() {
-    loadAll();
 }
 
 void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
