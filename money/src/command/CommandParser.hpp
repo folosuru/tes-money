@@ -1,11 +1,12 @@
 #pragma once
 #ifndef TES_MONEY_SRC_COMMAND_COMMANDPARSER_HPP_
 #define TES_MONEY_SRC_COMMAND_COMMANDPARSER_HPP_
+#ifndef DEBUG_WITHOUT_LLAPI
 #include <optional>
 #include <unordered_map>
 #include <string>
-#include <llapi/DynamicCommandAPI.h>
 #include <Util/types.hpp>
+#include <llapi/DynamicCommandAPI.h>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
 namespace tes {
@@ -31,5 +32,5 @@ private:
     std::unordered_map<std::string, DynamicCommand::Result>& results;
 };
 }
-
+#endif  // DEBUG_WITHOUT_LLAPI
 #endif  // TES_MONEY_SRC_COMMAND_COMMANDPARSER_HPP_

@@ -19,7 +19,7 @@ namespace tes {
 
     bool Money::operator>(const Money &compare) const {
         if (!isSameCurrency(compare)) throw std::invalid_argument("different currency");
-        return (value < compare.value);
+        return (value > compare.value);
     }
 
     bool Money::operator<=(const Money &compare) const {
@@ -29,7 +29,7 @@ namespace tes {
 
     bool Money::operator>=(const Money &compare) const {
         if (!isSameCurrency(compare)) throw std::invalid_argument("different currency");
-        return (value <= compare.value);
+        return (value >= compare.value);
     }
 
     Money Money::operator+(const Money &money) const {

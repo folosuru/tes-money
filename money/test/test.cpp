@@ -3,56 +3,61 @@
 #include <fstream>
 #include <player/PlayerManager.hpp>
 #include <currency/CurrencyManager.hpp>
+#include <Cpptf.hpp>
+
 
 void checkLoadJson() {
     std::shared_ptr<tes::CurrencyManager> currency;
     currency = std::make_shared<tes::CurrencyManager>();
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
-    auto money = tes::PlayerMoney(
-        nlohmann::json::parse(R"({"money" : { "JPY" : 130, "ACP" : 254 }})"),
-        currency);
-    if (money.get(currency->getCurrency("jpy"))->value != 130 ||
-        money.get(currency->getCurrency("acp"))->value != 254) {
-        std::cout << "load json failed" << std::endl;
-        throw std::exception("");
-    }
+    std::string json_t = R"({"money" : { "JPY" : 130, "ACP" : 254 }})";
+    auto json = nlohmann::json::parse(json_t);
+    auto money = tes::PlayerMoney(json, currency);
+    cpptf::isTrue("json_load", money.get(currency->getCurrency("jpy"))->value == 130 &&
+                               money.get(currency->getCurrency("acp"))->value == 254);
+}
+
+void PlayerMng() {
+    cpptf::change_section("PlayerManager");
+    cpptf::except_any("unknown player access",[](){
+        tes::PlayerManager(std::make_shared<tes::CurrencyManager>()).getPlayer("Yoshida");
+    });
+    cpptf::isSame("player money access",[](){
+        auto mng = tes::PlayerManager(std::make_shared<tes::CurrencyManager>());
+        auto m = std::make_shared<tes::PlayerMoney>();
+        mng.addPlayer("Taro",m);
+        auto currency = std::make_shared<tes::Currency>(std::string("jpy"));
+        m->add(tes::Money(100,currency));
+        return mng.getPlayer("Taro")->get(currency)->value;
+    }(),100);
+    checkLoadJson();
+}
+
+namespace CurrencyMng {
+void checkUnknownAccess() {
+    cpptf::except_any("unknown currency access", [](){
+        tes::CurrencyManager().getCurrency("ZWL");
+    });
+}
+}
+
+void money() {
+    cpptf::change_section("money");
+    auto currency = tes::Currency(std::string("currency_1"));
+
 }
 
 int main() {
-    checkLoadJson();
+    PlayerMng();
+    CurrencyMng::checkUnknownAccess();
     std::shared_ptr<tes::CurrencyManager> currency_manager = std::make_shared<tes::CurrencyManager>();
     std::shared_ptr<tes::PlayerManager> player_manager = std::make_shared<tes::PlayerManager>(currency_manager);
-        {
-        bool check_unknown_player_access = false;
-        try {
-            std::shared_ptr<tes::PlayerMoney> money1 = player_manager->getPlayer("Yamada");
-        } catch (std::invalid_argument& e) {
-            check_unknown_player_access = true;
-        }
-        if (!check_unknown_player_access) {
-            return 1;
-        }
-    }
-
-    {
-        bool check_unknown_currency_access = false;
-        try {
-            currency_manager->getCurrency("JPY");
-        } catch (std::exception& e) {
-            check_unknown_currency_access = true;
-            // std::cout << e.what() << std::endl;
-        }
-        if (!check_unknown_currency_access) {
-            return 1;
-        }
-    }
     player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
     std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
     currency_manager->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
 
     std::shared_ptr<tes::Currency> cur = currency_manager->getCurrency("jpY");
-
 
     {
         money->add(tes::Money(100, cur));
@@ -79,6 +84,6 @@ int main() {
             return 1;
         }
     }
-    player_manager->saveAll();
+    cpptf::complete();
     return 0;
 }

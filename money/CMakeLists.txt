@@ -9,12 +9,14 @@ file(GLOB_RECURSE SRC_MONEY_DIR
 		${${project_name_}_SOURCE_DIR}/src/*.hpp
 )
 
-LiteLoader_options()
-
 add_library(${project_name_} SHARED ${SRC_MONEY_DIR})
 
+LiteLoader_options(${project_name_})
+LiteLoader_include(${project_name_})
 LiteLoader_libraries(${project_name_})
 
 target_include_directories(${project_name_} PRIVATE
 		${${project_name_}_SOURCE_DIR}/header/
 )
+
+add_subdirectory(test)

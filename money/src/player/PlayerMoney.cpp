@@ -44,7 +44,7 @@ namespace tes {
     }
 
     std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) {
-        if (money.find(cur) != money.end()) {
+        if (!money.contains(cur)) {
             money[cur] = std::make_shared<Money>(0, cur);
         }
         return money[cur];

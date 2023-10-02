@@ -1,8 +1,5 @@
-//
-// Created by folosuru on 2023/09/13.
-//
-
 #include "CommandParser.hpp"
+#ifndef DEBUG_WITHOUT_LLAPI
 #include <player/PlayerManager.hpp>
 #include <string>
 namespace tes {
@@ -59,3 +56,4 @@ std::optional<Types::player_money> CommandParser::getTargetMoney() {
     return mng->getPlayer(name);
 }
 }
+#endif  // DEBUG_WITHOUT_LLAPI

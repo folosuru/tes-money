@@ -15,7 +15,7 @@ file(GLOB_RECURSE TES_FILES_DIR
 )
 message(${TES_FILES_DIR})
 add_definitions(
-        -D DEBUG_WITHOUT_LLAPI
+    -D DEBUG_WITHOUT_LLAPI
 	-D TEST
 )
 
