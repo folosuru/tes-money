@@ -22,6 +22,7 @@ public:
     [[nodiscard]]
     inline bool isSameCurrency(const Money& money) const;
 
+    bool operator==(const Money &compare) const;
     bool operator<(const Money &compare) const;
     bool operator>(const Money &compare) const;
     bool operator<=(const Money &compare) const;
