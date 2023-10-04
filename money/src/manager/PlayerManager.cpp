@@ -5,7 +5,6 @@
 #include <filesystem>
 #include <utility>
 #include <Nlohmann/json.hpp>
-#include <iostream>
 namespace tes {
 
     PlayerManager::PlayerManager(std::shared_ptr<CurrencyManager> m) : currency_manager_(std::move(m)) {

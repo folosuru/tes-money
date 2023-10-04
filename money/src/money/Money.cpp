@@ -9,7 +9,7 @@ namespace tes {
     }
 
     bool Money::isSameCurrency(const Money &money) const noexcept{
-        return (this->currency == currency);
+        return (this->currency == money.currency);
     }
 
 

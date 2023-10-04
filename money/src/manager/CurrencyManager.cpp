@@ -5,7 +5,6 @@
 #include <filesystem>
 #include <fstream>
 
-#include <iostream>
 namespace tes {
 
     std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
