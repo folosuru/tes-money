@@ -37,7 +37,7 @@ public:
     void receive(const MoneyAccount* from, const Money& money_) final;
 
     [[nodiscard]]
-    std::shared_ptr<Money> get(const Types::currency& cur) const noexcept final;
+    Money get(const Types::currency& cur) const noexcept final;
 
     [[nodiscard]]
     const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const noexcept;

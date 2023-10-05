@@ -49,7 +49,7 @@ public:
      * @param cur
      * @return Money
      */
-    virtual std::shared_ptr<Money> get(const Types::currency& cur) const noexcept = 0;
+    virtual Money get(const Types::currency& cur) const noexcept = 0;
 };
 
 }

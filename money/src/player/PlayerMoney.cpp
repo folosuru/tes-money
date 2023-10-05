@@ -30,12 +30,12 @@ namespace tes {
     void PlayerMoney::remove(const Money &money_) {
         edited = true;
         /* 0以下ならMoneyのコンストラクタが怒ってくれる！あんしん！ */
-        money[money_.currency] = std::make_shared<Money>(*get(money_.currency) - money_);
+        money[money_.currency] = std::make_shared<Money>(get(money_.currency) - money_);
     }
 
     void PlayerMoney::add(const Money &money_) noexcept {
         edited = true;
-        money[money_.currency] = std::make_shared<Money>(*get(money_.currency) + money_);
+        money[money_.currency] = std::make_shared<Money>(get(money_.currency) + money_);
     }
 
     void PlayerMoney::send(const std::shared_ptr<MoneyAccount> &to, const Money &money_) {
@@ -43,11 +43,11 @@ namespace tes {
         this->remove(money_);
     }
 
-    std::shared_ptr<Money> PlayerMoney::get(const Types::currency &cur) const noexcept{
+    Money PlayerMoney::get(const Types::currency &cur) const noexcept{
         if (!money.contains(cur)) {
-            return std::make_shared<Money>(0, cur);
+            return Money(0, cur);
         }
-        return money.at(cur);
+        return *money.at(cur);
     }
 
     const std::unordered_map<Types::currency, std::shared_ptr<Money>>& PlayerMoney::getAll() const noexcept {

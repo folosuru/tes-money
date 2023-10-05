@@ -14,8 +14,8 @@ void checkLoadJson() {
     std::string json_t = R"({"money" : { "JPY" : 130, "ACP" : 254 }})";
     auto json = nlohmann::json::parse(json_t);
     auto money = tes::PlayerMoney(json, currency);
-    cpptf::isTrue("json_load", money.get(currency->getCurrency("jpy"))->value == 130 &&
-                               money.get(currency->getCurrency("acp"))->value == 254);
+    cpptf::isTrue("json_load", money.get(currency->getCurrency("jpy")).value == 130 &&
+                               money.get(currency->getCurrency("acp")).value == 254);
 }
 
 void PlayerMng() {
@@ -29,9 +29,33 @@ void PlayerMng() {
         mng.addPlayer("Taro",m);
         auto currency = std::make_shared<tes::Currency>(std::string("jpy"));
         m->add(tes::Money(100,currency));
-        return mng.getPlayer("Taro")->get(currency)->value;
+        return mng.getPlayer("Taro")->get(currency).value;
     }(),100);
     checkLoadJson();
+}
+
+void PlayerMoney() {
+    cpptf::change_section("PlayerMoney");
+    std::shared_ptr<tes::CurrencyManager> currency_manager = std::make_shared<tes::CurrencyManager>();
+    std::shared_ptr<tes::PlayerManager> player_manager = std::make_shared<tes::PlayerManager>(currency_manager);
+    player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
+    std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
+    currency_manager->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
+
+    std::shared_ptr<tes::Currency> cur = currency_manager->getCurrency("jpY");
+
+    money->add(tes::Money(100, cur));
+    cpptf::isSame("add money", money->get(cur), tes::Money(100, cur));
+
+    money->remove(tes::Money(50, cur));
+    cpptf::isSame("remove money", money->get(cur), tes::Money(50, cur));
+
+    player_manager->addPlayer("Shinada", std::make_shared<tes::PlayerMoney>());
+    std::shared_ptr<tes::PlayerMoney> money2 = player_manager->getPlayer("Shinada");
+
+    money->send(money2, tes::Money(10, cur));
+    cpptf::isSame("send from", money->get(cur), tes::Money(40, cur));
+    cpptf::isSame("send from", money2->get(cur), tes::Money(10, cur));\
 }
 
 namespace CurrencyMng {
@@ -72,39 +96,7 @@ int main() {
     money();
     PlayerMng();
     CurrencyMng::checkUnknownAccess();
-    std::shared_ptr<tes::CurrencyManager> currency_manager = std::make_shared<tes::CurrencyManager>();
-    std::shared_ptr<tes::PlayerManager> player_manager = std::make_shared<tes::PlayerManager>(currency_manager);
-    player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
-    std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
-    currency_manager->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
-
-    std::shared_ptr<tes::Currency> cur = currency_manager->getCurrency("jpY");
-
-    {
-        money->add(tes::Money(100, cur));
-        if (money->get(cur)->value != 100) {
-            return 1;
-        }
-    }
-
-    {
-        money->remove(tes::Money(50, cur));
-        if (money->get(cur)->value != 50) {
-            return 1;
-        }
-    }
-
-    player_manager->addPlayer("Shinada", std::make_shared<tes::PlayerMoney>());
-    std::shared_ptr<tes::PlayerMoney> money2 = player_manager->getPlayer("Shinada");
-    {
-        money->send(money2, tes::Money(10, cur));
-        if (money->get(cur)->value != 40) {
-            return 1;
-        }
-        if (money2->get(cur)->value != 10) {
-            return 1;
-        }
-    }
+    PlayerMoney();
     cpptf::complete();
     return 0;
 }
