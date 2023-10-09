@@ -3,6 +3,7 @@
 #define TES_COUNTRY_HEADER_COUNTRY_COUNTRY_HPP_
 #include <string>
 #include <unordered_map>
+#include <Nlohmann/json.hpp>
 #include "../citizen/CitizenManager.hpp"
 #include <Util/types.hpp>
 #include <utility>
@@ -12,6 +13,8 @@ public:
     Country() = delete;
 
     explicit Country(std::string name_) : name(std::move(name_)){};
+
+    explicit Country(nlohmann::json );
 
     std::shared_ptr<CitizenManager> getCitizenManager() {return citizen;};
 

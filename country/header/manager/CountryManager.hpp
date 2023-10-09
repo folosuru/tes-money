@@ -11,6 +11,8 @@ public:
 
     std::shared_ptr<Country> get(country_id id);
 
+    void addCountry(std::shared_ptr<Country>);
+
     void loadAll();
     void saveAll();
 
