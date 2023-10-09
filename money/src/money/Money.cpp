@@ -8,12 +8,12 @@ namespace tes {
         }
     }
 
-    bool Money::isSameCurrency(const Money &money) const {
-        return (this->currency == currency);
+    bool Money::isSameCurrency(const Money &money) const noexcept {
+        return (this->currency == money.currency);
     }
 
 
-    bool Money::operator<(const Money &compare) const {
+    bool Money::operator==(const Money &compare) const {
         return (isSameCurrency(compare) && value == compare.value);
     }
     bool Money::operator<(const Money &compare) const {
@@ -46,7 +46,7 @@ namespace tes {
         return Money(value - money.value, currency);
     }
 
-    std::string Money::getText() const {
+    std::string Money::getText() const noexcept {
         return std::format("{0} {1}", value, currency->currency_name);
     }
 }

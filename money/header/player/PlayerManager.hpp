@@ -20,13 +20,13 @@ public:
 
     void newPlayer(const std::string& name);
 
-    std::shared_ptr<PlayerMoney> getPlayer(Types::player_name name);
+    std::shared_ptr<PlayerMoney> getPlayer(Types::player_name_view name);
 
-    inline bool exists(Types::player_name_view name);
+    inline bool exists(Types::player_name_view name) noexcept;
 
     void addPlayer(const std::string& name, std::shared_ptr<PlayerMoney>);
 
-    const std::unordered_map<std::string, std::shared_ptr<PlayerMoney>>& getAllPlayer();
+    const std::unordered_map<std::string, std::shared_ptr<PlayerMoney>>& getAllPlayer() noexcept;
 
     void loadAll();
     void saveAll();

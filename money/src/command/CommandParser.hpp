@@ -5,7 +5,7 @@
 #include <optional>
 #include <unordered_map>
 #include <string>
-#include <Util/types.hpp>
+#include <Util/MoneyTypes.hpp>
 #include <llapi/DynamicCommandAPI.h>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
@@ -15,6 +15,8 @@ public:
     CommandParser(CommandOrigin const& origin,
                   CommandOutput& output,
                   std::unordered_map<std::string, DynamicCommand::Result>& results);
+
+    const std::string origin_language;
 
     std::optional<Types::player_money> getOriginMoney();
 
