@@ -30,16 +30,27 @@ private:
     T succeed_value;
     U fail_value;
 };
-template<class U> class OptionalMessage<void,U> {
+template<class T> class OptionalMessage<T,T> {
 public:
-    OptionalMessage() : flag(true) {};
-    explicit OptionalMessage(U value) : fail_value(std::move(value)), flag(false) {}
+    explicit OptionalMessage(T value_, bool flag_) : flag(flag_) {
+        if (flag_) {
+            succeed_value = value_;
+        } else {
+            fail_value = value_;
+        }
+    };
 
     explicit operator bool() const noexcept {
         return flag;
     }
     [[nodiscard]]
-    U get_fail() const {
+    T get_succeed() const {
+        if (!flag) {
+            throw std::runtime_error("");
+        }
+        return succeed_value;
+    }
+    [[nodiscard]] T get_fail() const {
         if (flag) {
             throw std::runtime_error("");
         }
@@ -47,7 +58,11 @@ public:
     }
 private:
     bool flag;
-    U fail_value;
+    T succeed_value;
+    T fail_value;
 };
+
+
+
 }
 #endif
