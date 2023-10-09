@@ -20,17 +20,17 @@ void checkLoadJson() {
 
 void PlayerMng() {
     cpptf::change_section("PlayerManager");
-    cpptf::except_any("unknown player access",[](){
+    cpptf::except_any("unknown player access", [](){
         tes::PlayerManager(std::make_shared<tes::CurrencyManager>()).getPlayer("Yoshida");
     });
-    cpptf::isSame("player money access",[](){
+    cpptf::isSame("player money access", []() {
         auto mng = tes::PlayerManager(std::make_shared<tes::CurrencyManager>());
         auto m = std::make_shared<tes::PlayerMoney>();
-        mng.addPlayer("Taro",m);
+        mng.addPlayer("Taro", m);
         auto currency = std::make_shared<tes::Currency>(std::string("jpy"));
-        m->add(tes::Money(100,currency));
+        m->add(tes::Money(100, currency));
         return mng.getPlayer("Taro")->get(currency).value;
-    }(),100);
+    }(), 100);
     checkLoadJson();
 }
 
@@ -55,7 +55,7 @@ void PlayerMoney() {
 
     money->send(money2, tes::Money(10, cur));
     cpptf::isSame("send from", money->get(cur), tes::Money(40, cur));
-    cpptf::isSame("send from", money2->get(cur), tes::Money(10, cur));\
+    cpptf::isSame("send from", money2->get(cur), tes::Money(10, cur));
 }
 
 namespace CurrencyMng {
@@ -70,25 +70,25 @@ void money() {
     cpptf::change_section("money");
     const auto currency1 = std::make_shared<tes::Currency>(std::string("currency_1"));
     const auto currency2 = std::make_shared<tes::Currency>(std::string("currency_2"));
-    cpptf::except_any("validation", [currency1](){tes::Money(-100,currency1);});
-    cpptf::isSame("operator ==", tes::Money(100,currency1), tes::Money(100,currency1));
-    cpptf::isTrue("operator ==", [currency1,currency2](){
-        return !(tes::Money(100,currency1) == tes::Money(100,currency2));
+    cpptf::except_any("validation", [currency1](){tes::Money(-100, currency1);});
+    cpptf::isSame("operator ==", tes::Money(100, currency1), tes::Money(100, currency1));
+    cpptf::isTrue("operator ==", [currency1, currency2]() {
+        return !(tes::Money(100, currency1) == tes::Money(100, currency2));
     }());
-    cpptf::isTrue("operator ==", [currency1](){
-        return !(tes::Money(100,currency1) == tes::Money(150,currency1));
+    cpptf::isTrue("operator ==", [currency1]() {
+        return !(tes::Money(100, currency1) == tes::Money(150, currency1));
     }());
-    cpptf::isTrue("operator ==", [currency1,currency2](){
-        return !(tes::Money(100,currency1) == tes::Money(150,currency2));
+    cpptf::isTrue("operator ==", [currency1, currency2]() {
+        return !(tes::Money(100, currency1) == tes::Money(150, currency2));
     }());
 
-    cpptf::isSame("add", tes::Money(100,currency1) + tes::Money(75,currency1), tes::Money(175,currency1));
-    cpptf::except_any("add other currency",[currency1,currency2](){
-        tes::Money(100,currency1) + (tes::Money(200,currency2));
+    cpptf::isSame("add", tes::Money(100, currency1) + tes::Money(75, currency1), tes::Money(175, currency1));
+    cpptf::except_any("add other currency", [currency1, currency2]() {
+        tes::Money(100, currency1) + (tes::Money(200, currency2));
     });
-    cpptf::isSame("remove", tes::Money(500,currency1) - tes::Money(75,currency1), tes::Money(425,currency1));
-    cpptf::except_any("money under 0",[currency1](){
-        tes::Money(100,currency1) - (tes::Money(200,currency1));
+    cpptf::isSame("remove", tes::Money(500, currency1) - tes::Money(75, currency1), tes::Money(425, currency1));
+    cpptf::except_any("money under 0", [currency1]() {
+        tes::Money(100, currency1) - (tes::Money(200, currency1));
     });
 }
 
