@@ -7,8 +7,8 @@
 namespace tes::util {
 template<class T, class U> class OptionalMessage {
 public:
-    explicit OptionalMessage(T value_) : succeed_value(value_), flag(true) {};
-    explicit OptionalMessage(U message_): fail_value(std::move(message_)), flag(false){}
+    explicit OptionalMessage(T value_) : succeed_value(value_), flag(true) {}
+    explicit OptionalMessage(U message_): fail_value(std::move(message_)), flag(false) {}
     explicit operator bool() const noexcept {
         return flag;
     }
@@ -30,7 +30,7 @@ private:
     T succeed_value;
     U fail_value;
 };
-template<class T> class OptionalMessage<T,T> {
+template<class T> class OptionalMessage<T, T> {
 public:
     explicit OptionalMessage(T value_, bool flag_) : flag(flag_) {
         if (flag_) {
@@ -38,7 +38,7 @@ public:
         } else {
             fail_value = value_;
         }
-    };
+    }
 
     explicit operator bool() const noexcept {
         return flag;
@@ -56,13 +56,11 @@ public:
         }
         return fail_value;
     }
+
 private:
     bool flag;
     T succeed_value;
     T fail_value;
 };
-
-
-
 }
 #endif
