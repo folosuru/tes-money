@@ -5,7 +5,7 @@
 #include <string>
 #include <Nlohmann/json.hpp>
 #include "Money.hpp"
-#include "Util/types.hpp"
+#include "Util/MoneyTypes.hpp"
 #include "Util/dll_declspec.hpp"
 #include "../currency/CurrencyManager.hpp"
 
@@ -13,6 +13,8 @@ namespace tes {
 class Money;
 class TES_MONEY_DLL MoneyAccount {
 public:
+    virtual std::string getName() = 0;
+
     virtual bool has(const Money& money) const noexcept = 0;
 
     /**

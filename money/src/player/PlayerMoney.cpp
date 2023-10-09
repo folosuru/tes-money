@@ -3,8 +3,9 @@
 #include <memory>
 
 namespace tes {
-
-    PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager) {
+using Arrai18n::trl_text;
+    PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager)
+    : name(j["name"].get<std::string>()) {
         /*
          * {
          *      "money" : {
@@ -17,6 +18,7 @@ namespace tes {
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
             this->add(tes::Money(value, currency));
         }
+
     }
 
     bool PlayerMoney::has(const tes::Money &money_) const noexcept {
@@ -39,8 +41,8 @@ namespace tes {
     }
 
     void PlayerMoney::send(const std::shared_ptr<MoneyAccount> &to, const Money &money_) {
-        to->receive(this, money_);
         this->remove(money_);
+        to->receive(this, money_);
     }
 
     Money PlayerMoney::get(const Types::currency &cur) const noexcept{
@@ -63,15 +65,30 @@ namespace tes {
         edited = true;
     }
 
-nlohmann::json PlayerMoney::get_json() {
-    nlohmann::json result;
-    for (const auto& item : money) {
-        result["money"][item.first->currency_name] = item.second->value;
+    nlohmann::json PlayerMoney::get_json() {
+        nlohmann::json result;
+        for (const auto& item : money) {
+            result["money"][item.first->currency_name] = item.second->value;
+        }
+        return result;
     }
-    return result;
-}
 
     void PlayerMoney::receive(const MoneyAccount* from, const Money& money_) {
         this->add(money_);
+    }
+
+    util::OptionalMessage<trl_text, trl_text> PlayerMoney::try_send(const std::shared_ptr<MoneyAccount>& to,
+                                                                    const Money& money_) {
+        if (!this->has(money_)) {
+            return util::OptionalMessage<trl_text, trl_text>(
+                {"money.send.not_enough",
+                 {}
+                 }, false);
+        }
+        this->send(to,money_);
+        return util::OptionalMessage<trl_text, trl_text>(
+            {"money.send.success",
+             {money_.getText(), to->getName()}
+             }, true);
     }
 }

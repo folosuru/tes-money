@@ -16,6 +16,8 @@ public:
                   CommandOutput& output,
                   std::unordered_map<std::string, DynamicCommand::Result>& results);
 
+    const std::string origin_language;
+
     std::optional<Types::player_money> getOriginMoney();
 
     std::optional<Types::currency> getCurrency();
@@ -25,6 +27,7 @@ public:
     std::optional<Types::player_money> getTargetMoney();
 
 private:
+
     CommandOrigin const& origin;
 
     CommandOutput& output;

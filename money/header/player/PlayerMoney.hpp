@@ -6,6 +6,8 @@
 #include <memory>
 #include <string>
 #include <Nlohmann/json.hpp>
+#include <CppArrai18n/Arrai18n.hpp>
+#include <util/OptionalMessage.hpp>
 #include "../money/Money.hpp"
 #include "Util/MoneyTypes.hpp"
 #include "Util/dll_declspec.hpp"
@@ -22,6 +24,8 @@ public:
     PlayerMoney();
 
     PlayerMoney(const nlohmann::json& json, const std::shared_ptr<CurrencyManager>& currency_manager);
+
+    std::string getName() override;
 
     nlohmann::json get_json();
 
@@ -47,6 +51,7 @@ public:
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;
+    std::string name;
 };
 
 }
