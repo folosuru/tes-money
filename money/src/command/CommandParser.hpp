@@ -27,7 +27,6 @@ public:
     std::optional<Types::player_money> getTargetMoney();
 
 private:
-
     CommandOrigin const& origin;
 
     CommandOutput& output;

@@ -15,7 +15,7 @@ std::optional<Types::player_money> CommandParser::getOriginMoney() {
     if (!mng->exists(name)) {
         output.error(
             Arrai18n::trl(origin_language,
-            "money.player_not_found",{name}));
+            "money.player_not_found", {name}));
         return std::nullopt;
     }
     return mng->getPlayer(name);
@@ -28,7 +28,7 @@ std::optional<Types::currency> CommandParser::getCurrency() {
     }
     auto cur_name = results["currency"].get<std::string>();
     if (!mng->exists(cur_name)) {
-        output.error(Arrai18n::trl(origin_language,"currency.not_found",{cur_name}));
+        output.error(Arrai18n::trl(origin_language, "currency.not_found", {cur_name}));
         return std::nullopt;
     }
     return mng->getCurrency(cur_name);
@@ -41,7 +41,7 @@ std::optional<Types::money_value> CommandParser::getValue() {
     int value = results["value"].get<int>();
     if (value < 0) {
         output.error(Arrai18n::trl(
-            origin_language,"money.money.cannot_under_0",{}));
+            origin_language, "money.money.cannot_under_0", {}));
         return std::nullopt;
     }
     return value;
@@ -56,7 +56,7 @@ std::optional<Types::player_money> CommandParser::getTargetMoney() {
     if (!mng->exists(name)) {
         output.error(
             Arrai18n::trl(origin_language,
-                          "money.player_not_found",{name}));
+                          "money.player_not_found", {name}));
         return std::nullopt;
     }
     return mng->getPlayer(name);

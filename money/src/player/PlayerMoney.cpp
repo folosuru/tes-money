@@ -18,7 +18,6 @@ using Arrai18n::trl_text;
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
             this->add(tes::Money(value, currency));
         }
-
     }
 
     bool PlayerMoney::has(const tes::Money &money_) const noexcept {
@@ -45,7 +44,7 @@ using Arrai18n::trl_text;
         to->receive(this, money_);
     }
 
-    Money PlayerMoney::get(const Types::currency &cur) const noexcept{
+    Money PlayerMoney::get(const Types::currency &cur) const noexcept {
         if (!money.contains(cur)) {
             return Money(0, cur);
         }
@@ -85,7 +84,7 @@ using Arrai18n::trl_text;
                  {}
                  }, false);
         }
-        this->send(to,money_);
+        this->send(to, money_);
         return util::OptionalMessage<trl_text, trl_text>(
             {"money.send.success",
              {money_.getText(), to->getName()}

@@ -8,7 +8,7 @@ namespace tes {
         }
     }
 
-    bool Money::isSameCurrency(const Money &money) const noexcept{
+    bool Money::isSameCurrency(const Money &money) const noexcept {
         return (this->currency == money.currency);
     }
 
@@ -46,7 +46,7 @@ namespace tes {
         return Money(value - money.value, currency);
     }
 
-    std::string Money::getText() const noexcept{
+    std::string Money::getText() const noexcept {
         return std::format("{0} {1}", value, currency->currency_name);
     }
 }
