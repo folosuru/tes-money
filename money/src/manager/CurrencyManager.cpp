@@ -4,9 +4,7 @@
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
-#include <utility>
 
-#include <iostream>
 namespace tes {
 
     std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
@@ -27,7 +25,7 @@ namespace tes {
         }
     }
 
-bool CurrencyManager::exists(std::string str) {
+bool CurrencyManager::exists(std::string str) const noexcept {
     std::transform(str.begin(), str.end(), str.begin(), tolower);
     return cur.contains(str);
 }

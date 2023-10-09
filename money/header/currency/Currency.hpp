@@ -9,7 +9,7 @@
 namespace tes {
 class TES_MONEY_DLL Currency {
 public:
-    explicit Currency(std::string name) : currency_name(std::move(name)) {}
+    explicit Currency(std::string name) noexcept : currency_name(std::move(name)) {}
     explicit Currency(nlohmann::json json);
     nlohmann::json get_json();
 
