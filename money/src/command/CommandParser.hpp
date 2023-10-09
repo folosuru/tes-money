@@ -5,7 +5,7 @@
 #include <optional>
 #include <unordered_map>
 #include <string>
-#include <Util/types.hpp>
+#include <Util/MoneyTypes.hpp>
 #include <llapi/DynamicCommandAPI.h>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>

@@ -4,7 +4,7 @@
 #include <utility>
 #include <stdexcept>
 #include <string>
-#include "Util/types.hpp"
+#include "Util/MoneyTypes.hpp"
 #include "../currency/Currency.hpp"
 #include "../Util/dll_declspec.hpp"
 namespace tes {

@@ -7,13 +7,14 @@
 #include <string>
 #include <Nlohmann/json.hpp>
 #include "../money/Money.hpp"
-#include "Util/types.hpp"
+#include "Util/MoneyTypes.hpp"
 #include "Util/dll_declspec.hpp"
 #include "../currency/CurrencyManager.hpp"
 #include "../money/MoneyAccount.hpp"
 
 namespace tes {
 class Money;
+using Arrai18n::trl_text;
 class TES_MONEY_DLL PlayerMoney : public MoneyAccount {
 public:
     bool edited = false;
@@ -31,6 +32,8 @@ public:
     void add(const Money& money_) noexcept final;
 
     void set(const Money& money_) noexcept final;
+
+    util::OptionalMessage<trl_text, trl_text> try_send(const std::shared_ptr<MoneyAccount>& to, const Money& money_);
 
     void send(const std::shared_ptr<MoneyAccount>& to, const Money& money_) final;
 
