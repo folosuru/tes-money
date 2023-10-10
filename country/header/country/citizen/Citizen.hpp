@@ -7,7 +7,7 @@
 #include <memory>
 #include <unordered_set>
 namespace tes {
-class Citizen {
+class TES_COUNTRY_DLL Citizen {
 public:
     const std::string name;
 

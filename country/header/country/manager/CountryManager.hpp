@@ -3,8 +3,9 @@
 #define TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_
 #include <memory>
 #include "../country/Country.hpp"
+#include "../util/dll_declspec.hpp"
 namespace tes {
-class CountryManager {
+class TES_COUNTRY_DLL CountryManager {
 public:
     typedef int country_id;
 

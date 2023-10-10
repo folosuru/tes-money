@@ -11,7 +11,7 @@
 #include <utility>
 #include <optional>
 namespace tes {
-class Country {
+class TES_COUNTRY_DLL Country {
 public:
     Country() = delete;
 

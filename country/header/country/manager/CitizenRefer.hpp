@@ -5,9 +5,10 @@
 #include <unordered_map>
 #include <memory>
 #include <Util/types.hpp>
+#include "../util/dll_declspec.hpp"
 
 namespace tes {
-class CitizenRefer {
+class TES_COUNTRY_DLL CitizenRefer {
 public:
     std::shared_ptr<Citizen> get(Types::player_name_view);
 
