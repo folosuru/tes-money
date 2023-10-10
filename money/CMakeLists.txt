@@ -16,7 +16,7 @@ LiteLoader_include(${project_name_})
 LiteLoader_libraries(${project_name_})
 
 target_include_directories(${project_name_} PRIVATE
-		${${project_name_}_SOURCE_DIR}/header/
+		${${project_name_}_SOURCE_DIR}/header/money/
 		${${project_name_}_SOURCE_DIR}/../
 )
 
