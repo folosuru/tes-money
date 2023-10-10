@@ -6,6 +6,7 @@
 #include "Perimission.hpp"
 #include <memory>
 #include <unordered_set>
+#include <string>
 namespace tes {
 class TES_COUNTRY_DLL Citizen {
 public:

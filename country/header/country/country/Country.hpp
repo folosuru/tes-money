@@ -19,7 +19,7 @@ public:
 
     explicit Country(nlohmann::json);
 
-    std::shared_ptr<CitizenManager> getCitizenManager() { return citizen; };
+    std::shared_ptr<CitizenManager> getCitizenManager() { return citizen; }
 
 private:
     std::string name;

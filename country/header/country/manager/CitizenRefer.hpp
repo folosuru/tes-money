@@ -16,9 +16,7 @@ public:
 
 
 private:
-    std::unordered_map<Types::player_name,std::shared_ptr<Citizen>> citizen;
+    std::unordered_map<Types::player_name, std::shared_ptr<Citizen>> citizen;
 };
-
 }
-
-#endif //TES_COUNTRY_COUNTRY_HEADER_REFER_CITIZENREFER_HPP_
+#endif  // TES_COUNTRY_COUNTRY_HEADER_REFER_CITIZENREFER_HPP_

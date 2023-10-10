@@ -6,12 +6,12 @@
 #include <memory>
 #include <Util/types.hpp>
 #include "Citizen.hpp"
+#include "../util/dll_declspec.hpp"
 
 namespace tes {
 class Citizen;
 class TES_COUNTRY_DLL CitizenManager {
 public:
-
     std::shared_ptr<Citizen> getCitizen(Types::player_name_view);
 
     void add(Types::player_name_view);
@@ -20,7 +20,7 @@ public:
     void ban(Types::player_name_view);
 
 private:
-    std::unordered_map<Types::player_name,std::shared_ptr<Citizen>> citizen;
+    std::unordered_map<Types::player_name, std::shared_ptr<Citizen>> citizen;
 };
 }
 #endif  // TES_COUNTRY_HEADER_CITIZEN_CITIZENMANAGER_HPP_

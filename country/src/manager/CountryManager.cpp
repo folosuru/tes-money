@@ -23,5 +23,4 @@ std::shared_ptr<CountryManager> CountryManager::get() {
     }
     return instance;
 }
-
 }
