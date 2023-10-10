@@ -15,6 +15,7 @@ public:
     std::shared_ptr<Citizen> getCitizen(Types::player_name_view);
 
     void add(Types::player_name_view);
+    void add(Types::player_name_view, std::shared_ptr<Citizen>);
 
     void ban(Types::player_name_view);
 

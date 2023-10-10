@@ -62,7 +62,7 @@ target_link_libraries(${project_name}
 )
 target_include_directories(${project_name} PRIVATE
 		${${project_name}_SOURCE_DIR}/../SDK/include
-		${${project_name}_SOURCE_DIR}/header/
+		${${project_name}_SOURCE_DIR}/header/country/
 		${${project_name}_SOURCE_DIR}/../money/header/
 )
 

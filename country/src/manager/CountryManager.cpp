@@ -1,10 +1,9 @@
 #include <manager/CountryManager.hpp>
 #include <fstream>
 #include <filesystem>
-#include <Nlohmann/json.hpp>
 namespace tes {
 
-std::shared_ptr<Country> CountryManager::get(CountryManager::country_id id) {
+std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) {
     return this->country.at(id);
 }
 
@@ -14,8 +13,15 @@ void CountryManager::loadAll() {
         if (!std::filesystem::is_regular_file(entry)) continue;
         nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
         std::shared_ptr<tes::Country> add_country(new Country(j));
-        this->addCountry(add_country);
+        this->addCountry(add_country, add_country->getId());
     }
+}
+
+std::shared_ptr<CountryManager> CountryManager::get() {
+    if (!instance) {
+        instance = std::make_shared<CountryManager>();
+    }
+    return instance;
 }
 
 }
