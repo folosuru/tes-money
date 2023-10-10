@@ -15,12 +15,8 @@ file(GLOB_RECURSE TES_FILES_DIR
 )
 message(${TES_FILES_DIR})
 add_definitions(
-        -D"_AMD64_"
-        -D DEBUG_WITHOUT_LLAPI
-)
-add_compile_options(
-        /utf-8
-        /D TEST
+    -D DEBUG_WITHOUT_LLAPI
+	-D TEST
 )
 
 add_executable(tester ${TES_FILES_DIR} "${CMAKE_SOURCE_DIR}/test.cpp")

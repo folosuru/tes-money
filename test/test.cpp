@@ -9,7 +9,6 @@ void checkLoadJson() {
     currency = std::make_shared<tes::CurrencyManager>();
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
-
     auto money = tes::PlayerMoney(
         nlohmann::json::parse(R"({"money" : { "JPY" : 130, "ACP" : 254 }})"),
         currency);

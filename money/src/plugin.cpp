@@ -14,16 +14,13 @@
 #include <llapi/mc/Level.hpp>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
-#include <Nlohmann/json.hpp>
-
+#include <CppArrai18n/Arrai18n.hpp>
 #include <Util/mc_Util.hpp>
 #include "version.h"
 #include <player/PlayerManager.hpp>
-#include <currency/CurrencyManager.hpp>
 #include "command/CommandParser.hpp"
  // We recommend using the global logger.
 extern Logger logger;
-
 /**
  * @brief The entrypoint of the plugin. DO NOT remove or rename this function.
  *
@@ -32,9 +29,14 @@ void PluginInit() {
     using tes::Types::player_money;
     using tes::Types::currency;
 
+    Arrai18n::load("plugins/tes/money/lang/ja-JP.txt");
     // Your code here
     Logger logger(PLUGIN_NAME);
     logger.info("Hello, world!!");
+
+    tes::CurrencyManager::get()->loadAll();
+    tes::PlayerManager::get()->loadAll();
+
     // Translation::load("plugins/tes/lang/");
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
         sendTextToPlayer(event.mPlayer, "hoge")
@@ -46,6 +48,7 @@ void PluginInit() {
     });
 
     Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event) {
+        tes::PlayerManager::get()->saveAll();
         return true;
     });
 
@@ -81,13 +84,13 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-                tes::CommandParser parser(origin,output,results);
+                tes::CommandParser parser(origin, output, results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("show"): {
                         auto target = parser.getTargetMoney();
                         auto currency = parser.getCurrency();
                         if (target && currency) {
-                            output.success(target.value()->get(currency.value())->getText());
+                            output.success(target.value()->get(currency.value()).getText());
                         }
                         break;
                     }
@@ -136,7 +139,7 @@ void PluginInit() {
                 std::unordered_map<std::string, DynamicCommand::Result>& results
             ) {
                 auto action = results["mode"].get<std::string>();
-                tes::CommandParser parser(origin,output,results);
+                tes::CommandParser parser(origin, output, results);
                 switch (do_hash(action.c_str())) {
                     case do_hash("list"): {
                         auto money = parser.getOriginMoney();
@@ -152,7 +155,7 @@ void PluginInit() {
                         auto currency = parser.getCurrency();
                         auto origin_money = parser.getOriginMoney();
                         if (currency && origin_money) {
-                            output.success(origin_money.value()->get(currency.value())->getText());
+                            output.success(origin_money.value()->get(currency.value()).getText());
                         }
                         break;
                     }
@@ -165,11 +168,15 @@ void PluginInit() {
                         auto value = parser.getValue();
                         if (currency && from && to && value) {
                             tes::Money request_money = tes::Money(value.value(), currency.value());
-                            if (!from.value()->has(request_money)) {
-                                break;
+                            auto result = from.value()->try_send(to.value(), request_money);
+                            if (result) {
+                                output.success(Arrai18n::trl(parser.origin_language,
+                                                             result.get_succeed()));
+                                sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
+                            } else {
+                                output.error(Arrai18n::trl(parser.origin_language,
+                                                           result.get_fail()));
                             }
-                            from.value()->send(to.value(), request_money);
-                            sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
                         }
                         break;
                     }

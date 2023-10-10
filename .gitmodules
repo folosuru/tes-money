@@ -1,0 +1,6 @@
+[submodule "cpptf"]
+	path = cpptf
+	url = https://github.com/folosuru/cpptf.git
+[submodule "CppArrai18n"]
+	path = CppArrai18n
+	url = https://github.com/folosuru/CppArrai18n.git

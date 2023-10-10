@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
-#include <utility>
 
 namespace tes {
 
@@ -26,7 +25,7 @@ namespace tes {
         }
     }
 
-bool CurrencyManager::exists(std::string str) {
+bool CurrencyManager::exists(std::string str) const noexcept {
     std::transform(str.begin(), str.end(), str.begin(), tolower);
     return cur.contains(str);
 }
@@ -48,9 +47,7 @@ void CurrencyManager::save(const std::string& key) {
     nlohmann::json j = cur.at(key)->get_json();
     std::ofstream(std::format("{}/{}.json", file_export_path, cur.at(key)->currency_name)) << j << std::endl;
 }
-
 CurrencyManager::CurrencyManager() {
-    loadAll();
 }
 
 void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
