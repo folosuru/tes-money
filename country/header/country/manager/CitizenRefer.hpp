@@ -4,7 +4,7 @@
 #include "../citizen/Citizen.hpp"
 #include <unordered_map>
 #include <memory>
-#include <Util/types.hpp>
+#include <util/GeneralTypes.hpp>
 #include "../util/dll_declspec.hpp"
 
 namespace tes {
