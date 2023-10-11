@@ -1,6 +1,8 @@
 #include <citizen/Citizen.hpp>
 #include <stdexcept>
 #include <utility>
+#include <manager/CitizenRefer.hpp>
+#include <country/Country.hpp>
 namespace tes {
 bool Citizen::hasPermission(tes::Permission perm) {
     return this->permission.contains(perm);
@@ -14,5 +16,17 @@ Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer,
     }
     refer->add(std::shared_ptr<Citizen>(this));
     country_->getCitizenManager()->add(name, std::shared_ptr<Citizen>(this));
+}
+
+void Citizen::addPermission(Permission perm) {
+    if (!permission.contains(perm)) {
+        permission.insert(perm);
+    }
+}
+
+void Citizen::removePermission(Permission perm) {
+    if (!permission.contains(perm)) {
+        permission.erase(perm);
+    }
 }
 }

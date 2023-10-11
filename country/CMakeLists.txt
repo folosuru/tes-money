@@ -54,6 +54,9 @@ add_link_options(
 
 add_library(${project_name} SHARED ${SRC_MONEY_DIR})
 
+find_package(libpqxx CONFIG REQUIRED)
+target_link_libraries(${project_name_} libpqxx::pqxx)
+
 target_link_libraries(${project_name} 
 	"${${project_name}_SOURCE_DIR}/../SDK/lib/LiteLoader.lib"
 	"${${project_name}_SOURCE_DIR}/../SDK/lib/bedrock_server_api.lib"
@@ -74,3 +77,5 @@ target_link_directories(${project_name}
 add_custom_command(TARGET ${project_name} PRE_BUILD
     COMMAND cmd /c ${${project_name}_SOURCE_DIR}/../prepare_libraries.cmd ${${project_name}_SOURCE_DIR}/../
 )
+
+add_subdirectory(test)

@@ -14,8 +14,8 @@ public:
 
     std::shared_ptr<Country> getCountry(country_id id);
 
-    void addCountry(std::shared_ptr<Country>);
-    void addCountry(std::shared_ptr<Country>, country_id id);
+    void addCountry(const std::shared_ptr<Country>&);
+    std::shared_ptr<Country> addCountry(const std::string& name);
 
     void loadAll();
     void saveAll();
@@ -23,7 +23,7 @@ public:
 private:
     std::unordered_map<country_id, std::shared_ptr<Country>> country;
     inline static std::shared_ptr<CountryManager> instance = nullptr;
-    constexpr static std::string_view data_save_path = "plugins/tes/country/country";
+    inline const static std::string data_save_path = "plugins/tes/country/country";
 };
 }
 #endif  // TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_

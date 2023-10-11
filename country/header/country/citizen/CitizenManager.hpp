@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
-#include <Util/types.hpp>
+#include <util/GeneralTypes.hpp>
 #include "Citizen.hpp"
 #include "../util/dll_declspec.hpp"
 
@@ -18,6 +18,8 @@ public:
     void add(Types::player_name_view, std::shared_ptr<Citizen>);
 
     void ban(Types::player_name_view);
+
+    void loadAll();
 
 private:
     std::unordered_map<Types::player_name, std::shared_ptr<Citizen>> citizen;
