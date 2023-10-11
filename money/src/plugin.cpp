@@ -15,7 +15,7 @@
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
 #include <CppArrai18n/Arrai18n.hpp>
-#include <Util/mc_Util.hpp>
+#include <util/mc/message.hpp>
 #include "version.h"
 #include <player/PlayerManager.hpp>
 #include "command/CommandParser.hpp"
@@ -39,10 +39,7 @@ void PluginInit() {
 
     // Translation::load("plugins/tes/lang/");
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
-        sendTextToPlayer(event.mPlayer, "hoge")
-        if (event.mPlayer != nullptr) {
-            event.mPlayer->sendText("hoge");
-        }
+        tes::util::sendText(event.mPlayer, "hoge");
         tes::PlayerManager::get()->newPlayer(event.mPlayer->getRealName());
         return true;
     });
@@ -172,7 +169,7 @@ void PluginInit() {
                             if (result) {
                                 output.success(Arrai18n::trl(parser.origin_language,
                                                              result.get_succeed()));
-                                sendTextToPlayer(Global<Level>->getPlayer(to_name), "");
+                                tes::util::sendText(Global<Level>->getPlayer(to_name), "");
                             } else {
                                 output.error(Arrai18n::trl(parser.origin_language,
                                                            result.get_fail()));
