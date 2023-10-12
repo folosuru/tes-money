@@ -8,3 +8,4 @@ add_compile_options(
 project(tes)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/artifact)
 add_subdirectory(money)
+add_subdirectory(AsyncTask)
