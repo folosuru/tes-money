@@ -4,3 +4,6 @@
 [submodule "CppArrai18n"]
 	path = CppArrai18n
 	url = https://github.com/folosuru/CppArrai18n.git
+[submodule "AsyncTask"]
+	path = AsyncTask
+	url = https://github.com/folosuru/AsyncTask.git
