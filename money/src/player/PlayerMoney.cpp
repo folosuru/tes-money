@@ -64,14 +64,6 @@ using Arrai18n::trl_text;
         edited = true;
     }
 
-    nlohmann::json PlayerMoney::get_json() {
-        nlohmann::json result;
-        for (const auto& item : money) {
-            result["money"][item.first->currency_name] = item.second->value;
-        }
-        return result;
-    }
-
     void PlayerMoney::receive(const MoneyAccount* from, const Money& money_) {
         this->add(money_);
     }

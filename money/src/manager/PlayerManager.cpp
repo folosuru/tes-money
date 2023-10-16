@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <utility>
 #include <Nlohmann/json.hpp>
+#include <SQLiteCpp/SQLiteCpp>
 namespace tes {
 
     PlayerManager::PlayerManager(std::shared_ptr<CurrencyManager> m) : currency_manager_(std::move(m)) {
@@ -45,23 +46,35 @@ namespace tes {
     }
 
     void PlayerManager::saveAll() {
-        std::filesystem::create_directories(file_export_path);
-        for (const auto& item : players) {  // ここリファクタリングの余地
+        SQLite::Database db(file_export_path,
+                            SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+
+        SQLite::Statement query {db, "INSERT INTO money (name, currency, value) VALUES (?,?,?)"};
+        SQLite::Statement query {db, "UPDATE money SET value = ? where name = ?, currency = ?"};
+        for (const auto& item : players) {
             if (!item.second->edited) continue;
-            nlohmann::json data = item.second->get_json();
-            data["name"] = item.first;
-            std::ofstream(std::format("{}/{}.json", file_export_path, item.first)) << data << std::endl;
+            for (const auto& money : item.second->getAll()) {
+                // TODO: UPSERT
+            }
         }
     }
 
     void PlayerManager::loadAll() {
-        std::filesystem::create_directories(file_export_path);
-        for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
-            if (!std::filesystem::is_regular_file(entry)) continue;
-            nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-            std::string player_name = j["name"].get<std::string>();
-            std::shared_ptr<tes::PlayerMoney> player_money(new PlayerMoney(j, currency_manager_));
-            this->addPlayer(player_name, player_money);
+        SQLite::Database db(file_export_path,
+                            SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+        db.exec("CREATE TABLE IF NOT EXISTS money (name text, currency text, value INT);");
+
+        SQLite::Statement   query(db, "SELECT name, currency, value FROM money");
+        while (query.executeStep()) {
+            // Demonstrate how to get some typed column value
+            std::string player   = query.getColumn(0);
+            std::string currency = query.getColumn(1);
+            Types::money_value value = query.getColumn(2);
+            if (!this->exists(player)) {
+                this->addPlayer(std::make_shared<PlayerMoney>());
+            }
+            this->getPlayer(player)
+                ->add(Money(value,currency_manager_->getCurrency(currency)));
         }
     }
 }

@@ -32,7 +32,7 @@ public:
     void saveAll();
 
 private:
-    const std::string file_export_path = "plugins/tes/money/player";
+    const std::string file_export_path = "plugins/tes/money/player/money.sqlite";
     std::unordered_map<std::string, std::shared_ptr<PlayerMoney>> players;
     std::shared_ptr<CurrencyManager> currency_manager_;
 };

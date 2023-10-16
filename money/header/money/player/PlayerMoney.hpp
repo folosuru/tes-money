@@ -27,7 +27,6 @@ public:
 
     std::string getName() override;
 
-    nlohmann::json get_json();
 
     bool has(const Money& money) const noexcept final;
 
