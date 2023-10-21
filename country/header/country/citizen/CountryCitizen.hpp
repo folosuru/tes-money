@@ -10,7 +10,7 @@
 
 namespace tes {
 class Citizen;
-class TES_COUNTRY_DLL CitizenManager {
+class TES_COUNTRY_DLL CountryCitizen {
 public:
     std::shared_ptr<Citizen> getCitizen(Types::player_name_view);
 

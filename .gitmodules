@@ -7,3 +7,6 @@
 [submodule "AsyncTask"]
 	path = AsyncTask
 	url = https://github.com/folosuru/AsyncTask.git
+[submodule "lib/SQLiteCpp"]
+	path = lib/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp.git

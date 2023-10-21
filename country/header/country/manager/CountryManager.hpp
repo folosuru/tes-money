@@ -12,7 +12,8 @@ public:
 
     static std::shared_ptr<CountryManager> get();
 
-    std::shared_ptr<Country> getCountry(country_id id);
+    [[nodiscard]]
+    std::shared_ptr<Country> getCountry(country_id id) const;
 
     void addCountry(const std::shared_ptr<Country>&);
     std::shared_ptr<Country> addCountry(const std::string& name);

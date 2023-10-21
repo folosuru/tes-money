@@ -5,7 +5,7 @@
 #include <memory>
 #include <unordered_map>
 #include <Nlohmann/json.hpp>
-#include "../citizen/CitizenManager.hpp"
+#include "../citizen/CountryCitizen.hpp"
 #include <util/GeneralTypes.hpp>
 #include <utility>
 #include <optional>
@@ -25,11 +25,11 @@ public:
     explicit Country(nlohmann::json);
     nlohmann::json get_json();
 
-    std::shared_ptr<CitizenManager> getCitizenManager() { return citizen; }
+    std::shared_ptr<CountryCitizen> getCitizenManager() { return citizen; }
 
 private:
     std::string name;
-    std::shared_ptr<CitizenManager> citizen;
+    std::shared_ptr<CountryCitizen> citizen;
 };
 }
 

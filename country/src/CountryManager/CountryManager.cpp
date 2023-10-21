@@ -1,9 +1,10 @@
 #include <manager/CountryManager.hpp>
 #include <fstream>
 #include <filesystem>
+#include "DataLoader.hpp"
 namespace tes {
 
-std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) {
+std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) const {
     return this->country.at(id);
 }
 
@@ -36,7 +37,7 @@ void CountryManager::addCountry(const std::shared_ptr<Country>& country_) {
 }
 
 std::shared_ptr<Country> CountryManager::addCountry(const std::string& name) {
-    std::shared_ptr<Country> new_country = std::make_shared<Country>(name, country.size());
+    std::shared_ptr<Country> new_country = std::make_shared<Country>(name, (country_id)country.size());
     this->addCountry(new_country);
     return new_country;
 }

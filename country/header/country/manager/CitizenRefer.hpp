@@ -1,10 +1,12 @@
 #pragma once
 #ifndef TES_COUNTRY_COUNTRY_HEADER_REFER_CITIZENREFER_HPP_
 #define TES_COUNTRY_COUNTRY_HEADER_REFER_CITIZENREFER_HPP_
-#include "../citizen/Citizen.hpp"
+
 #include <unordered_map>
 #include <memory>
 #include <util/GeneralTypes.hpp>
+#include "../citizen/Citizen.hpp"
+#include "CountryManager.hpp"
 #include "../util/dll_declspec.hpp"
 
 namespace tes {
@@ -13,6 +15,8 @@ public:
     std::shared_ptr<Citizen> get(Types::player_name_view);
 
     void add(const std::shared_ptr<Citizen>&);
+
+    void loadAll(const std::shared_ptr<CountryManager>&);
 
 
 private:

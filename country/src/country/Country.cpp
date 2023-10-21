@@ -4,7 +4,7 @@ namespace tes {
 Country::Country(std::string name_,
                  country_id id_)
     : name(std::move(name_)),
-      citizen(std::make_shared<CitizenManager>()),
+      citizen(std::make_shared<CountryCitizen>()),
       id(id_) {
 }
 

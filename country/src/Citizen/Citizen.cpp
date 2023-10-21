@@ -18,6 +18,13 @@ Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer,
     country_->getCitizenManager()->add(name, std::shared_ptr<Citizen>(this));
 }
 
+Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer_,
+                 const std::shared_ptr<Country>& country_,
+                 std::string name_,
+                 std::unordered_set<Permission> permission_)
+                 : Citizen(refer_,country_,std::move(name_)) {
+    permission = std::move(permission_);
+}
 void Citizen::addPermission(Permission perm) {
     if (!permission.contains(perm)) {
         permission.insert(perm);
@@ -29,4 +36,14 @@ void Citizen::removePermission(Permission perm) {
         permission.erase(perm);
     }
 }
+
+const std::shared_ptr<Country>& Citizen::GetCountry() const {
+    return country;
+}
+
+const std::unordered_set<Permission>& Citizen::getAllPermission() const noexcept {
+    return permission;
+}
+
+
 }
