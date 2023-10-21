@@ -15,7 +15,7 @@
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
 #include <CppArrai18n/Arrai18n.hpp>
-#include <util/mc/message.hpp>
+#include <mc_util/message.hpp>
 #include "version.h"
 #include <player/PlayerManager.hpp>
 #include "command/CommandParser.hpp"

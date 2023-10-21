@@ -90,4 +90,8 @@ using Arrai18n::trl_text;
              {money_.getText(), to->getName()}
              }, true);
     }
+
+    std::string PlayerMoney::getName() {
+        return name;
+    }
 }
