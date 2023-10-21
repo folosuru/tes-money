@@ -2,7 +2,7 @@
 
 namespace tes {
 
-Currency::Currency(nlohmann::json json) : currency_name(json["name"]) {}
+Currency::Currency(nlohmann::json json) : currency_name(json["name"].get<std::string>()) {}
 
 nlohmann::json Currency::get_json() {
     nlohmann::json result;

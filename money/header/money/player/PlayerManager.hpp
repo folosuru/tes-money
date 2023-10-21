@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
+#include <types/GeneralTypes.hpp>
 #include "PlayerMoney.hpp"
 #include "../currency/CurrencyManager.hpp"
 #include "Util/dll_declspec.hpp"

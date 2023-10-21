@@ -51,10 +51,10 @@ endfunction()
 
 function(LiteLoader_libraries project_name)
     target_link_libraries(${project_name}
-        "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib/SDK/lib/LiteLoader.lib"
-        "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib/SDK/lib/bedrock_server_api.lib"
-        "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib/SDK/lib/bedrock_server_var.lib"
-        "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib/SDK/lib/SymDBHelper.lib"
+        "${CMAKE_SOURCE_DIR}/SDK/lib/LiteLoader.lib"
+        "${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_api.lib"
+        "${CMAKE_SOURCE_DIR}/SDK/lib/bedrock_server_var.lib"
+        "${CMAKE_SOURCE_DIR}/SDK/lib/SymDBHelper.lib"
     )
     target_link_directories(${project_name}
         PRIVATE ${CMAKE_SOURCE_DIR}/SDK/lib
