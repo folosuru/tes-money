@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <memory>
+#include <vector>
 #include "Perimission.hpp"
 namespace tes {
 class PermissionManager {

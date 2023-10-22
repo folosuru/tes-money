@@ -18,6 +18,5 @@ nlohmann::json Country::get_json() {
 Country::Country(nlohmann::json data)
   : id(data["id"].get<country_id>()),
     name(data["name"].get<std::string>()) {
-
 }
 }

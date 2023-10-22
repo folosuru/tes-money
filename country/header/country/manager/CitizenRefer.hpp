@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <string>
 #include <types/GeneralTypes.hpp>
 #include "../citizen/Citizen.hpp"
 #include "CountryManager.hpp"

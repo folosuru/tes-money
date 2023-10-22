@@ -1,6 +1,8 @@
 #include <manager/CountryManager.hpp>
 #include <fstream>
 #include <filesystem>
+#include <util/Resources.hpp>
+#include <SQLiteCpp/SQLiteCpp.h>
 #include "DataLoader.hpp"
 namespace tes {
 
@@ -9,12 +11,15 @@ std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id i
 }
 
 void CountryManager::loadAll() {
-    std::filesystem::create_directories(data_save_path);
-    for (const auto& entry : std::filesystem::directory_iterator(data_save_path)) {
-        if (!std::filesystem::is_regular_file(entry)) continue;
-        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-        std::shared_ptr<tes::Country> add_country(new Country(j));
-        this->addCountry(add_country);
+    SQLite::Database db(country_db_file,
+                        SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    db.exec("CREATE TABLE IF NOT EXISTS country (name string, country int);");
+
+    SQLite::Statement query(db, "SELECT name, country FROM country");
+    while (query.executeStep()) {
+        std::string name = query.getColumn(0).getString();
+        int country_id = query.getColumn(1);
+        this->addCountry(std::make_shared<Country>(name, country_id));
     }
 }
 

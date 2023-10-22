@@ -22,7 +22,7 @@ Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer_,
                  const std::shared_ptr<Country>& country_,
                  std::string name_,
                  std::unordered_set<Permission> permission_)
-                 : Citizen(refer_,country_,std::move(name_)) {
+                 : Citizen(refer_, country_, std::move(name_)) {
     permission = std::move(permission_);
 }
 void Citizen::addPermission(Permission perm) {

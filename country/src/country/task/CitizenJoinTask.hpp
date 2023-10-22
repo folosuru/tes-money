@@ -19,8 +19,8 @@ public:
                             SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
         SQLite::Statement query1(db,
                                  "insert into citizen(name, country)  VALUES (?,?)");
-        query1.bind(1,target_name);
-        query1.bind(2,country_id);
+        query1.bind(1, target_name);
+        query1.bind(2, country_id);
         query1.exec();
     }
 
@@ -30,6 +30,5 @@ private:
     std::string target_name;
     CountryManager::country_id country_id;
 };
-
-} // tes
-#endif //TES_COUNTRY_SRC_COUNTRY_TASK_CITIZENJOINTASK_HPP_
+}  // tes
+#endif  // TES_COUNTRY_SRC_COUNTRY_TASK_CITIZENJOINTASK_HPP_

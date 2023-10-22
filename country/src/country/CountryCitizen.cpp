@@ -17,7 +17,7 @@ void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_) {
         throw std::runtime_error("citizen already exists!");
     }
     AsyncTask::add_task(std::make_shared<CitizenJoinTask>(citizen_->name, citizen_->GetCountry()->id));
-    citizens.insert({citizen_->name,citizen_});
+    citizens.insert({citizen_->name, citizen_});
 }
 
 void CountryCitizen::ban(Types::player_name_view name) {

@@ -2,6 +2,7 @@
 #ifndef TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_
 #define TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include "../country/Country.hpp"
 #include "../util/dll_declspec.hpp"
@@ -24,7 +25,7 @@ public:
 private:
     std::unordered_map<country_id, std::shared_ptr<Country>> country;
     inline static std::shared_ptr<CountryManager> instance = nullptr;
-    inline const static std::string data_save_path = "plugins/tes/country/country";
+    inline static const std::string data_save_path = "plugins/tes/country/country";
 };
 }
 #endif  // TES_MONEY_COUNTRY_HEADER_MANAGER_COUNTRYMANAGER_HPP_
