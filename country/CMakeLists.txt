@@ -21,13 +21,12 @@ target_link_libraries(${project_name_}
 	"${${project_name_}_SOURCE_DIR}/../SDK/lib/bedrock_server_api.lib"
 	"${${project_name_}_SOURCE_DIR}/../SDK/lib/bedrock_server_var.lib"
 	"${${project_name_}_SOURCE_DIR}/../SDK/lib/SymDBHelper.lib"
+	SQLiteCpp
+	sqlite3
 )
 target_include_directories(${project_name_} PRIVATE
-		${${project_name_}_SOURCE_DIR}/../SDK/include
 		${${project_name_}_SOURCE_DIR}/header/country/
 		${${project_name_}_SOURCE_DIR}/../money/header/
-		${${project_name_}_SOURCE_DIR}/../
-		${${project_name_}_SOURCE_DIR}/../AsyncTask/include/
 )
 
 target_link_directories(${project_name_}

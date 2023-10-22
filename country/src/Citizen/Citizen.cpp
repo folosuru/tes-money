@@ -15,7 +15,7 @@ Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer,
         throw std::invalid_argument("country cannot be nullptr");
     }
     refer->add(std::shared_ptr<Citizen>(this));
-    country_->getCitizenManager()->add(name, std::shared_ptr<Citizen>(this));
+    country_->getCitizenManager()->add(std::shared_ptr<Citizen>(this));
 }
 
 Citizen::Citizen(const std::shared_ptr<CitizenRefer>& refer_,

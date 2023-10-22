@@ -1,5 +1,6 @@
 set(project_name_ tes-country-test)
 project(${project_name_})
+set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE files
         ${${project_name_}_SOURCE_DIR}
         ${PROJECT_SOURCE_DIR}/../src/*/*.cpp
@@ -24,6 +25,4 @@ target_link_libraries(${project_name_}
 )
 target_include_directories(${project_name_} PRIVATE
         ${${project_name_}_SOURCE_DIR}/../header/country/
-        ${${project_name_}_SOURCE_DIR}/../../
-        ${${project_name_}_SOURCE_DIR}/../../cpptf/
 )

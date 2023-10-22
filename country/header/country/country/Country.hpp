@@ -4,12 +4,12 @@
 #include <string>
 #include <memory>
 #include <unordered_map>
-#include <Nlohmann/json.hpp>
 #include "../citizen/CountryCitizen.hpp"
-#include <util/GeneralTypes.hpp>
+#include <types/GeneralTypes.hpp>
 #include <utility>
 #include <optional>
 #include "../util/dll_declspec.hpp"
+#include <Nlohmann/json.hpp>
 
 namespace tes {
 class TES_COUNTRY_DLL Country {

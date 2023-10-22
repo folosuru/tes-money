@@ -5,7 +5,8 @@
 #include <manager/CountryManager.hpp>
 #include <manager/CitizenRefer.hpp>
 #include <citizen/Citizen.hpp>
-#include <Cpptf.hpp>
+#include <permission/PermissionManager.hpp>
+#include <cpptf/Cpptf.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
 
 void Citizen_test() {
@@ -28,6 +29,17 @@ void load_citizen() {
     std::shared_ptr<CitizenRefer> refer = std::make_shared<CitizenRefer>();
     std::shared_ptr<Country> country = std::make_shared<Country>("Japan",1);
 
+}
+
+void permission_manager_test() {
+    cpptf::change_section("permission manager");
+    tes::PermissionManager mng;
+    std::string_view view;
+    {
+        std::string text1("Hoge");
+        view = mng.getSv(text1);
+    }
+    cpptf::isSame("hold scope",view,"Hoge");
 }
 
 void sql_t() {
@@ -56,6 +68,7 @@ void sql_t() {
 
 
 int main() {
+    permission_manager_test();
     sql_t();
     Citizen_test();
     cpptf::complete();
