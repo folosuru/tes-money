@@ -49,12 +49,18 @@ namespace tes {
         SQLite::Database db(file_export_path,
                             SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
 
-        SQLite::Statement query {db, "INSERT INTO money (name, currency, value) VALUES (?,?,?)"};
-        SQLite::Statement query {db, "UPDATE money SET value = ? where name = ?, currency = ?"};
+        SQLite::Statement query {db, "INSERT INTO money (name, currency, value) VALUES (?1,?2,?3)"};
+        SQLite::Statement query {db, "UPDATE money SET where name = ?1, currency = ?2, value = ?3"};
         for (const auto& item : players) {
             if (!item.second->edited) continue;
             for (const auto& money : item.second->getAll()) {
-                // TODO: UPSERT
+                    SQLite::Statement query1(db,
+                             "INSERT INTO money (name, currency, value) VALUES (?1,?2,?3)"
+                             "ON CONFLICT(name, currency) DO UPDATE SET where name = ?1, currency = ?2, value = ?3");
+                    query1.bind(1, name);
+                    query1.bind(2, money->currency->currency_name);
+                    query1.bind(3, money->value);
+                    query1.exec();
             }
         }
     }

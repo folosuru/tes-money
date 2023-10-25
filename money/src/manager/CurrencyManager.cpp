@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
+#include <SQLiteCpp/SQLiteCpp>
 
 namespace tes {
 
@@ -31,23 +32,29 @@ bool CurrencyManager::exists(std::string str) const noexcept {
 }
 
 void CurrencyManager::loadAll() {
-    std::filesystem::create_directories(this->file_export_path);
-    for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
-        if (!std::filesystem::is_regular_file(entry)) continue;
-        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-        this->addCurrency(std::make_shared<Currency>(j), false);
-    }
-    if (this->updater) {
-        this->updater->updateCurrencyList(getAllCurrencyList());
-    }
+        SQLite::Database db(file_export_path,
+                            SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+        db.exec("CREATE TABLE IF NOT EXISTS currency (name text);");
+
+        SQLite::Statement   query(db, "SELECT name FROM currency");
+        while (query.executeStep()) {
+            // Demonstrate how to get some typed column value
+            std::string name = query.getColumn(0);
+            this->addCurrency(
+                std::make_shared<Currency>(name),
+                false
+            );
+        }
 }
 
 void CurrencyManager::save(const std::string& key) {
-    std::filesystem::create_directories(file_export_path);
-    nlohmann::json j = cur.at(key)->get_json();
-    std::ofstream(std::format("{}/{}.json", file_export_path, cur.at(key)->currency_name)) << j << std::endl;
-}
-CurrencyManager::CurrencyManager() {
+    SQLite::Database db(file_export_path,
+                        SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+    
+    SQLite::Statement query1(db,
+                             "INSERT INTO currency (name) VALUES (?) ON CONFLICT(name) DO NOTHING");
+    query1.bind(1, name);
+    query1.exec();
 }
 
 void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
