@@ -1,9 +1,12 @@
-[submodule "cpptf"]
-	path = cpptf
-	url = https://github.com/folosuru/cpptf.git
-[submodule "CppArrai18n"]
-	path = CppArrai18n
-	url = https://github.com/folosuru/CppArrai18n.git
-[submodule "AsyncTask"]
-	path = AsyncTask
+[submodule "lib/SQLiteCpp"]
+	path = lib/SQLiteCpp
+	url = https://github.com/SRombauts/SQLiteCpp.git
+[submodule "lib/AsyncTask"]
+	path = lib/AsyncTask
 	url = https://github.com/folosuru/AsyncTask.git
+[submodule "lib/CppArrai18n"]
+	path = lib/CppArrai18n
+	url = https://github.com/folosuru/CppArrai18n.git
+[submodule "lib/cpptf"]
+	path = lib/cpptf
+	url = https://github.com/folosuru/cpptf.git
