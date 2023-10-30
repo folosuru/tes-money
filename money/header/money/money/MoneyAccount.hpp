@@ -13,25 +13,12 @@ namespace tes {
 class Money;
 class TES_MONEY_DLL MoneyAccount {
 public:
+    enum class MoneySendStatus {
+        success,
+        not_enough
+    };
+
     virtual std::string getName() = 0;
-
-    virtual bool has(const Money& money) const noexcept = 0;
-
-    /**
-     * money_の分お金を減らす
-     * @param money_
-     * @throw
-     */
-    virtual void remove(const Money& money_) = 0;
-
-    /**
-     * money_の額を加える。
-     * @param money_
-     */
-    virtual void add(const Money& money_) noexcept = 0;
-
-    virtual void set(const Money& money_) noexcept = 0;
-
     /**
      * toに送金する。内部でtoのreceive関数が呼ばれるハズ
      * @param to
@@ -44,7 +31,9 @@ public:
      * @param from
      * @param money_
      */
-    virtual void receive(const MoneyAccount* from, const Money& money_) = 0;
+    virtual void receive(const MoneyAccount* from,
+                         const Money& money_,
+                         std::function<void(MoneySendStatus)> callback) = 0;
 
     /**
      * curで指定された通貨のMoneyを返す
