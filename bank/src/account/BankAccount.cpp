@@ -3,7 +3,7 @@
 namespace tes {
 
 void BankAccount::updatePreview() {
-
+    
 }
 
 }

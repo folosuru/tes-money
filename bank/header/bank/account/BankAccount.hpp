@@ -1,11 +1,12 @@
 #ifndef TES_BANK_HEADER_ACCOUNT_BANKACCOUNT_HPP
 #define TES_BANK_HEADER_ACCOUNT_BANKACCOUNT_HPP
+#include <memory>
 #include <money/money/Money.hpp>
 #include <money/money/MoneyAccount.hpp>
 #include <money/Util/MoneyTypes.hpp>
 
 namespace tes {
-class BankAccount : public MoneyAccount {
+class BankAccount : public MoneyAccount, public std::enable_shared_from_this<BankAccount> {
 public:
     std::string getName() override;
 
@@ -17,6 +18,8 @@ public:
     std::string getBalancePreview(Types::currency) const noexcept;
 
     const std::unordered_map<Types::currency, std::string>& getAllBalancePreview() const noexcept;
+
+    void setBalance();
 
     void send(const MoneyAccount* from,
               const Money& money_,

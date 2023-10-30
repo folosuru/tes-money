@@ -20,4 +20,6 @@ target_include_directories(${project_name_} PRIVATE
 		${${project_name_}_SOURCE_DIR}/../money/header
 )
 
+# TODO: use libpqxx
+
 add_subdirectory(test)
