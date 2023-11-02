@@ -1,6 +1,7 @@
 #include <manager/CitizenRefer.hpp>
 #include <citizen/Citizen.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
+#include <util/Resources.hpp>
 namespace tes {
 
 std::shared_ptr<Citizen> CitizenRefer::get(Types::player_name_view name) {
@@ -15,13 +16,10 @@ void CitizenRefer::add(const std::shared_ptr<Citizen>& citizen_) {
     citizen[citizen_->name] = citizen_;
 }
 
-void CitizenRefer::loadCitizen(std::shared_ptr<CountryManager> country_manager,
-                               std::shared_ptr<PermissionManager> perm_mng) {
-    SQLite::Database db(db_name,
+void CitizenRefer::loadCitizen(const std::shared_ptr<CountryManager>& country_manager,
+                               const std::shared_ptr<PermissionManager>& perm_mng) {
+    SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-    db.exec("CREATE TABLE IF NOT EXISTS citizen (name string, country int);");
-    db.exec("CREATE TABLE IF NOT EXISTS citizen_permission (name string, permission text);");
-
     SQLite::Statement query(db,
                             R"(SELECT citizen.name, permission, citizen.country
     FROM citizen LEFT OUTER JOIN citizen_permission ON citizen.name = citizen_permission.name
@@ -37,12 +35,12 @@ void CitizenRefer::loadCitizen(std::shared_ptr<CountryManager> country_manager,
         SQLite::Column permission = query.getColumn(1);
         int country = query.getColumn(2).getInt();
         if (name != last_name) {
-            new Citizen(refer_, country_manager->getCountry(country), last_name, permission_list);
+            Citizen::build(refer_, country_manager->getCountry(country), last_name, permission_list);
             permission_list.clear();
             last_name = name;
         }
         if (permission.isNull()) {
-            new Citizen(refer_, country_manager->getCountry(country), name);
+            Citizen::build(refer_, country_manager->getCountry(country), name);
             continue;
         }
         permission_list.insert(perm_mng->getSv(permission.getString()));

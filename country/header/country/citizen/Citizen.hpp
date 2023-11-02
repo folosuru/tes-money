@@ -14,14 +14,13 @@ class TES_COUNTRY_DLL Citizen {
 public:
     const std::string name;
 
-    Citizen(const std::shared_ptr<CitizenRefer>&,
-            const std::shared_ptr<Country>&,
-            std::string name);
-
-    Citizen(const std::shared_ptr<CitizenRefer>&,
-            const std::shared_ptr<Country>&,
-            std::string name,
-            std::unordered_set<Permission> permission_);
+    static std::shared_ptr<Citizen> build(const std::shared_ptr<CitizenRefer>&,
+                                          const std::shared_ptr<Country>&,
+                                          std::string name,
+                                          std::unordered_set<Permission> permission_);
+    static std::shared_ptr<Citizen> build(const std::shared_ptr<CitizenRefer>&,
+                                          const std::shared_ptr<Country>&,
+                                          std::string name);
 
     bool hasPermission(Permission);
 
@@ -33,10 +32,17 @@ public:
     const std::unordered_set<Permission>& getAllPermission() const noexcept;
 
     [[nodiscard]]
-    const std::shared_ptr<Country>& GetCountry() const;
+    std::shared_ptr<Country> getCountry() const;
 
 private:
-    std::shared_ptr<Country> country;
+    Citizen(const std::shared_ptr<Country>&,
+            std::string name);
+
+    Citizen(const std::shared_ptr<Country>&,
+            std::string name,
+            std::unordered_set<Permission> permission_);
+
+    std::weak_ptr<Country> country;
 
     std::unordered_set<Permission> permission;
 };

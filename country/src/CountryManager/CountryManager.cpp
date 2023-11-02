@@ -3,7 +3,6 @@
 #include <filesystem>
 #include <util/Resources.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
-#include "DataLoader.hpp"
 namespace tes {
 
 std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) const {

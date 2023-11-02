@@ -16,7 +16,7 @@ void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_) {
     if (citizens.contains(citizen_->name)) {
         throw std::runtime_error("citizen already exists!");
     }
-    AsyncTask::add_task(std::make_shared<CitizenJoinTask>(citizen_->name, citizen_->GetCountry()->id));
+    AsyncTask::add_task(std::make_shared<CitizenJoinTask>(citizen_->name, citizen_->getCountry()->id));
     citizens.insert({citizen_->name, citizen_});
 }
 

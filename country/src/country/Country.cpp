@@ -19,4 +19,8 @@ Country::Country(nlohmann::json data)
   : id(data["id"].get<country_id>()),
     name(data["name"].get<std::string>()) {
 }
+
+const std::string& Country::getName() {
+    return name;
+}
 }

@@ -1,0 +1,13 @@
+[ja-JP]
+yes = "はい"
+no = "いいえ"
+
+country.joined = "{0}に参加しました"
+country.form.joined.top = "現在{0}に所属しています"
+country.form.top.left = "脱退する"
+country.form.top.currency = "通貨の設定"
+country.form.top.citizen = "国民の管理"
+country.form.left.title = "国家を脱退する"
+country.form.left.description = "本当に{0}を脱退しますか？"
+
+country.left.complete = "{0}を脱退しました"

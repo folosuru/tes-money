@@ -9,15 +9,18 @@ file(GLOB_RECURSE files
 add_definitions(
         -D DEBUG_WITHOUT_LLAPI
         -D TEST
+        -D AsyncTask_NOT_USE_DLL
 )
 add_link_options(
     /DEBUG
 )
-add_executable(${project_name_} test.cpp ${files})
+add_executable(${project_name_}
+    test.cpp
+    ${files}
+    ${CMAKE_SOURCE_DIR}/lib/AsyncTask/mock/TaskManagerMock.cpp)
 
 find_package(libpqxx CONFIG REQUIRED)
 target_link_libraries(${project_name_} libpqxx::pqxx)
-LiteLoader_libraries(${project_name_})
 LiteLoader_include(${project_name_})
 target_link_libraries(${project_name_}
         SQLiteCpp

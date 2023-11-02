@@ -18,13 +18,12 @@ public:
 
     void add(const std::shared_ptr<Citizen>&);
 
-    void loadCitizen(std::shared_ptr<CountryManager>,
-                     std::shared_ptr<PermissionManager>);
+    void loadCitizen(const std::shared_ptr<CountryManager>&,
+                     const std::shared_ptr<PermissionManager>&);
 
 
 private:
     std::unordered_map<Types::player_name, std::shared_ptr<Citizen>> citizen;
-    const inline static std::string db_name = "country.sqlite";
 };
 }
 #endif  // TES_COUNTRY_COUNTRY_HEADER_REFER_CITIZENREFER_HPP_

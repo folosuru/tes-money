@@ -20,7 +20,11 @@ public:
 
     Country() = delete;
 
+    ~Country() = default;
+
     explicit Country(std::string name_, country_id);
+
+    const std::string& getName();
 
     explicit Country(nlohmann::json);
     nlohmann::json get_json();

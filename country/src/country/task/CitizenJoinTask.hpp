@@ -17,6 +17,7 @@ public:
     void onRun() override {
         SQLite::Database db(country_db_file,
                             SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+        db.exec("CREATE TABLE IF NOT EXISTS citizen (name string, country int);");
         SQLite::Statement query1(db,
                                  "insert into citizen(name, country)  VALUES (?,?)");
         query1.bind(1, target_name);

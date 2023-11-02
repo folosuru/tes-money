@@ -14,6 +14,8 @@ class TES_COUNTRY_DLL CountryCitizen {
 public:
     std::shared_ptr<Citizen> getCitizen(Types::player_name_view);
 
+    ~CountryCitizen() = default;
+
     void add(const std::shared_ptr<Citizen>&);
 
     void ban(Types::player_name_view);
