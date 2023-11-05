@@ -5,11 +5,13 @@
 #include <memory>
 #include <unordered_map>
 #include "../citizen/CountryCitizen.hpp"
+#include "../economy/CountryEconomy.hpp"
 #include <types/GeneralTypes.hpp>
 #include <utility>
 #include <optional>
 #include "../util/dll_declspec.hpp"
 #include <Nlohmann/json.hpp>
+#include <money/currency/Currency.hpp>
 
 namespace tes {
 class TES_COUNTRY_DLL Country {
@@ -26,6 +28,8 @@ public:
 
     const std::string& getName();
 
+    std::shared_ptr<CountryEconomy> getEconomyManager() const noexcept;
+
     explicit Country(nlohmann::json);
     nlohmann::json get_json();
 
@@ -34,6 +38,7 @@ public:
 private:
     std::string name;
     std::shared_ptr<CountryCitizen> citizen;
+    std::shared_ptr<CountryEconomy> economy;
 };
 }
 

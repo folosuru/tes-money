@@ -6,9 +6,9 @@
 #include <memory>
 #include <unordered_map>
 #include <types/GeneralTypes.hpp>
-#include "PlayerMoney.hpp"
+#include "./PlayerMoney.hpp"
 #include "../currency/CurrencyManager.hpp"
-#include "Util/dll_declspec.hpp"
+#include "../Util/dll_declspec.hpp"
 
 namespace tes {
 class PlayerMoney;  // これ消すとなぜか動かない。消すな

@@ -19,8 +19,8 @@ add_executable(${project_name_}
     ${files}
     ${CMAKE_SOURCE_DIR}/lib/AsyncTask/mock/TaskManagerMock.cpp)
 
-find_package(libpqxx CONFIG REQUIRED)
-target_link_libraries(${project_name_} libpqxx::pqxx)
+#find_package(libpqxx CONFIG REQUIRED)
+#target_link_libraries(${project_name_} libpqxx::pqxx)
 LiteLoader_include(${project_name_})
 target_link_libraries(${project_name_}
         SQLiteCpp

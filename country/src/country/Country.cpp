@@ -5,7 +5,9 @@ Country::Country(std::string name_,
                  country_id id_)
     : name(std::move(name_)),
       citizen(std::make_shared<CountryCitizen>()),
-      id(id_) {
+      id(id_),
+      economy(std::make_shared<CountryEconomy>()) {
+
 }
 
 nlohmann::json Country::get_json() {
@@ -22,5 +24,9 @@ Country::Country(nlohmann::json data)
 
 const std::string& Country::getName() {
     return name;
+}
+
+std::shared_ptr<CountryEconomy> Country::getEconomyManager() const noexcept {
+    return economy;
 }
 }

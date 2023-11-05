@@ -62,5 +62,24 @@ private:
     T succeed_value;
     T fail_value;
 };
+template<class T> class OptionalMessage<void, T> {
+public:
+    explicit OptionalMessage(T value_) : fail_value(value_), flag(false) {}
+    explicit OptionalMessage() : flag(true) {}
+
+    explicit operator bool() const noexcept {
+        return flag;
+    }
+    [[nodiscard]] T get_fail() const {
+        if (flag) {
+            throw std::runtime_error("");
+        }
+        return fail_value;
+    }
+
+private:
+    bool flag;
+    T fail_value;
+};
 }
 #endif

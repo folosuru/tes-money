@@ -9,8 +9,8 @@
 #include <CppArrai18n/Arrai18n.hpp>
 #include <util/OptionalMessage.hpp>
 #include "../money/Money.hpp"
-#include "Util/MoneyTypes.hpp"
-#include "Util/dll_declspec.hpp"
+#include "../Util/MoneyTypes.hpp"
+#include "../Util/dll_declspec.hpp"
 #include "../currency/CurrencyManager.hpp"
 #include "../money/MoneyAccount.hpp"
 

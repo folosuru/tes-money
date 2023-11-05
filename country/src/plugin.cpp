@@ -26,4 +26,5 @@ extern Logger logger;
  *
  */
 void PluginInit() {
+    // TODO: moneyのlangファイルもロードするようにする
 }

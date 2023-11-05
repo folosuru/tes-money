@@ -5,8 +5,8 @@
 #include <string>
 #include <Nlohmann/json.hpp>
 #include "Money.hpp"
-#include "Util/MoneyTypes.hpp"
-#include "Util/dll_declspec.hpp"
+#include "../Util/MoneyTypes.hpp"
+#include "../Util/dll_declspec.hpp"
 #include "../currency/CurrencyManager.hpp"
 
 namespace tes {

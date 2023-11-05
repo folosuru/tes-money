@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include <util/OptionalMessage.hpp>
+#include <CppArrai18n/Arrai18n.hpp>
 #include "Currency.hpp"
 #include "../Util/dll_declspec.hpp"
 #include "../Util/CurrencyCommandUpdater.hpp"
@@ -41,6 +43,9 @@ public:
      * @note 全部を保存する関数がないのは、通貨の情報はそう頻繁に更新されないだろうと考えたから
      */
     void save(const std::string& key);
+
+    [[nodiscard]]
+    tes::util::OptionalMessage<void,Arrai18n::trl_text> currencyNameValidation(const std::string&) const noexcept;
 
 private:
     std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;

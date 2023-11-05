@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
+#include <CppArrai18n/Arrai18n.hpp>
 
 namespace tes {
 
@@ -52,5 +53,11 @@ CurrencyManager::CurrencyManager() {
 
 void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
     this->updater = std::shared_ptr<CurrencyCommandUpdater>(upd);
+}
+tes::util::OptionalMessage<void, Arrai18n::trl_text> CurrencyManager::currencyNameValidation(const string& name) const noexcept {
+        typedef tes::util::OptionalMessage<void, Arrai18n::trl_text> return_type;
+    if (name.empty()) return return_type({"money.currency.validation.fail.empty",{}});
+    if (exists(name)) return return_type({"money.currency.validation.fail.already_exist",{name}});
+    return return_type();
 }
 }

@@ -5,6 +5,7 @@ include(LiteLoaderBDS.cmake)
 add_compile_options(
         /utf-8
 )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(tes)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/artifact)
 add_subdirectory(lib)

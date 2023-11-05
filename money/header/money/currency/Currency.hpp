@@ -4,7 +4,7 @@
 #include <string>
 #include <utility>
 #include <Nlohmann/json.hpp>
-#include "Util/dll_declspec.hpp"
+#include "../Util/dll_declspec.hpp"
 
 namespace tes {
 class TES_MONEY_DLL Currency {

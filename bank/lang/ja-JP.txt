@@ -5,6 +5,3 @@ money.money.cannot_under_0 = "金額を0以下にすることはできません�
 money.player_not_found = "{0}というプレイヤーは見つかりませんでした。"
 money.send.not_enough = "所持金が足りません。"
 money.send.success = "{0}を{1}に送金しました。"
-
-money.currency.validation.fail.empty = "名前を空白にはできません"
-money.currency.validation.fail.already_exist = "{0}という名前の通貨は既に存在しています"
