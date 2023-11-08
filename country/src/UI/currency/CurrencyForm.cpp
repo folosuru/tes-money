@@ -63,10 +63,18 @@ void editCurrency(Player *player,
                                           "country.currency.trigger.description"));
     form.addToggle("enable_Woodbreak_trigger",
                    Arrai18n::trl(player->getLanguageCode(),
-                   "country.currency.trigger.WoodBreak.description"));
+                                 "country.currency.trigger.WoodBreak.description"),
+                   citizen->getCountry()->economy->existsTrigger(""));
+    form.addInput("WoodBreak_trigger_value",
+                  Arrai18n::trl(player->getLanguageCode(),
+                                "country.currency.trigger.get_value"));
+
     form.addToggle("enable_Stonebreak_trigger",
                    Arrai18n::trl(player->getLanguageCode(),
                    "country.currency.trigger.StoneBreak.description"));
+    form.addInput("StoneBreak_trigger_value",
+                  Arrai18n::trl(player->getLanguageCode(),
+                                "country.currency.trigger.get_value"));
 
 }
 }

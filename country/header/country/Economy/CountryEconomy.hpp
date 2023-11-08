@@ -24,6 +24,8 @@ public:
 
     void runTrigger(std::string trigger_name, std::string player_name) noexcept;
 
+    bool existsTrigger(std::string name) const noexcept;
+
 private:
     CountryEconomy(std::unordered_map<std::string_view, int> trigger,
                    std::weak_ptr<Currency> currency);
