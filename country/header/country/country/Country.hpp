@@ -36,6 +36,7 @@ public:
     std::shared_ptr<CountryCitizen> getCitizenManager() { return citizen; }
 
 private:
+    // TODO: メンバをconstのpublicにしてgetXX関数を破壊する
     std::string name;
     std::shared_ptr<CountryCitizen> citizen;
     std::shared_ptr<CountryEconomy> economy;

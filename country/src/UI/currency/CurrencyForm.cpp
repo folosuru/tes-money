@@ -61,7 +61,12 @@ void editCurrency(Player *player,
                                         "country.form.top.currency"));
     form.addLabel("label1", Arrai18n::trl(player->getLanguageCode(),
                                           "country.currency.trigger.description"));
-    
+    form.addToggle("enable_Woodbreak_trigger",
+                   Arrai18n::trl(player->getLanguageCode(),
+                   "country.currency.trigger.WoodBreak.description"));
+    form.addToggle("enable_Stonebreak_trigger",
+                   Arrai18n::trl(player->getLanguageCode(),
+                   "country.currency.trigger.StoneBreak.description"));
 
 }
 }
