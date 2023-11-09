@@ -1,13 +1,16 @@
 #pragma once
 #ifndef TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
 #define TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
-#include "MoneyAddTrigger.hpp"
+#include "MoneyAddTriggerManager.hpp"
+#include "money/currency/Currency.hpp"
 #include <unordered_map>
 #include <memory>
+#include <optional>
+
 namespace tes {
 class CountryEconomy {
 public:
-    const std::shared_ptr<Currency>& getCurrency();
+    std::shared_ptr<Currency> getCurrency();
 
     CountryEconomy() = default;
 
@@ -20,18 +23,20 @@ public:
      */
     static std::shared_ptr<CountryEconomy> load(nlohmann::json);
 
-    void setCurrency(std::shared_ptr<Currency>);
+    void setCurrency(const std::shared_ptr<Currency>&);
 
-    void runTrigger(std::string trigger_name, std::string player_name) noexcept;
+    int getValue(const std::string& trigger_name);
 
-    bool existsTrigger(std::string name) const noexcept;
+    void runTrigger(const std::string& trigger_name, std::string player_name) noexcept;
+
+    bool existsTrigger(const std::string& name) const noexcept;
 
 private:
     CountryEconomy(std::unordered_map<std::string_view, int> trigger,
                    std::weak_ptr<Currency> currency);
     // money_value_type
     std::unordered_map<std::string_view, int> money_add_trigger;
-    std::weak_ptr<Currency> currency = nullptr;
+    std::weak_ptr<Currency> currency;
 };
 }
 #endif //TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_

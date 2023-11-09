@@ -1,13 +1,47 @@
 {
-    "WoodBreak" : [
-        [17,0],
-        [17,1],
-        [17,2],
-        [17,3],
-        [162,0],
-        [162,1]
-    ],
-    "StoneBreak" : [
-        [1,0]
-    ]
+    "SurfaceBlockBreak" : {
+        "DirtBreak" : [
+            [2,0],
+            [3,0]
+        ],
+        "SandBreak" : [
+            [12,0],
+            [12,1]
+        ],
+        "GravelBreak" : [
+            [13,0]
+        ],
+        "WoodBreak" : [
+            [17,0],
+            [17,1],
+            [17,2],
+            [17,3],
+            [162,0],
+            [162,1]
+        ],
+        "StoneBreak" : [
+            [1,0]
+        ]
+    },
+    "OreBlockBreak" : {
+        "CoalOreBreak" : [
+            [16,0]
+        ],
+        "IronOreBreak" : [
+            [15,0]
+        ],
+        "GoldOreBreak" : [
+            [14,0]
+        ],
+        "DiamondOreBreak" : [
+            [56,0]
+        ],
+        "RedstoneOreBreak" : [
+            [73,0],
+            [74,0]
+        ],
+        "LapisOreBlock" : [
+            [21,0]
+        ]
+    }
 }

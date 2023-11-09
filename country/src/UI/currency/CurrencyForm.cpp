@@ -53,10 +53,22 @@ void createCurrency(Player *player,
 
     });
 }
+namespace {
+std::string getTriggerValueText(const std::shared_ptr<CountryEconomy>& economy, std::string trigger) {
+    if (economy->existsTrigger(trigger)) {
+        return std::to_string(economy->getValue(trigger));
+    }
+    return "0";
+}
+constexpr std::string trigger_wood_break = "WoodBreak";
+constexpr std::string trigger_stone_break = "StoneBreak";
+
+}
 
 void editCurrency(Player *player,
                   const std::shared_ptr<Citizen>& citizen,
                   const std::shared_ptr<DataManager>& mng) {
+    std::shared_ptr<CountryEconomy> economy = citizen->getCountry()->economy;
     Form::CustomForm form(Arrai18n::trl(player->getLanguageCode(),
                                         "country.form.top.currency"));
     form.addLabel("label1", Arrai18n::trl(player->getLanguageCode(),
@@ -64,17 +76,28 @@ void editCurrency(Player *player,
     form.addToggle("enable_Woodbreak_trigger",
                    Arrai18n::trl(player->getLanguageCode(),
                                  "country.currency.trigger.WoodBreak.description"),
-                   citizen->getCountry()->economy->existsTrigger(""));
+                   economy->existsTrigger(trigger_wood_break));
     form.addInput("WoodBreak_trigger_value",
                   Arrai18n::trl(player->getLanguageCode(),
-                                "country.currency.trigger.get_value"));
+                                "country.currency.trigger.get_value"),
+                  getTriggerValueText(economy,trigger_wood_break));
+    form.sendTo(player,[](Player* player, auto result){
 
-    form.addToggle("enable_Stonebreak_trigger",
-                   Arrai18n::trl(player->getLanguageCode(),
-                   "country.currency.trigger.StoneBreak.description"));
-    form.addInput("StoneBreak_trigger_value",
-                  Arrai18n::trl(player->getLanguageCode(),
-                                "country.currency.trigger.get_value"));
+    });
 
+}
+
+void editMoneyAddTrigger(Player *player,
+                         const std::shared_ptr<Citizen>& citizen,
+                         const std::shared_ptr<DataManager>& data) {
+    Form::SimpleForm form("","");
+    for (const auto& i : data->MoneyAddTriggerMng->getAllWithCategory()) {
+        form.addButton(Arrai18n::trl(player->getLanguageCode(),
+                                      "country.currency.trigger.category."+i.name),
+                       "",[i](Player* pl){
+            Form::CustomForm form();
+            // TODO
+        });
+    }
 }
 }

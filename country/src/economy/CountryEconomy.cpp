@@ -1,7 +1,8 @@
 #include <economy/CountryEconomy.hpp>
 #include <money/player/PlayerManager.hpp>
 namespace tes {
-void CountryEconomy::runTrigger(std::string trigger_name, std::string player_name) {
+
+void CountryEconomy::runTrigger(const std::string& trigger_name, std::string player_name) noexcept {
     if (money_add_trigger.contains(trigger_name)) {
         PlayerManager::get()->getPlayer(player_name)
             ->add(Money(money_add_trigger.at(trigger_name), currency.lock());
@@ -11,21 +12,28 @@ void CountryEconomy::runTrigger(std::string trigger_name, std::string player_nam
  * JSONから読み込む？どっちがいいかな
  */
  // TODO: nullチェックいる？
-std::shared_ptr<CountryEconomy> load(nlohmann::json json) {
-    std::shared_ptr<Currency> cur = CurrencyManager::get()->getCurrency(json["currency"].get<std::string>());
+std::shared_ptr<CountryEconomy> CountryEconomy::load(nlohmann::json json) {
+    std::weak_ptr<Currency> cur(CurrencyManager::get()->getCurrency(json["currency"].get<std::string>()));
     std::unordered_map<std::string_view, int> triggers;
-    for (cons auto& i : json["trigger"].items()) {
+    for (const auto& i : json["trigger"].items()) {
         triggers.insert({i.key(),i.value()});
     }
-    return std::make_shared<CountryEconomy>(triggers,cur);
+    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers,cur));
 }
 
 
-const std::shared_ptr<Currency>& CountryEconomy::getCurrency() {
-    return currency;
+std::shared_ptr<Currency> CountryEconomy::getCurrency() {
+    return currency.lock();
 }
 
-void CountryEconomy::setCurrency(std::shared_ptr<Currency> new_cur) {
+void CountryEconomy::setCurrency(const std::shared_ptr<Currency>& new_cur) {
     currency = new_cur;
+}
+
+int CountryEconomy::getValue(const std::string& trigger_name) {
+    return money_add_trigger.at(trigger_name);
+}
+bool CountryEconomy::existsTrigger(const std::string& name) const noexcept {
+    return money_add_trigger.contains(name);
 }
 }

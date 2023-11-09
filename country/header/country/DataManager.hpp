@@ -7,6 +7,7 @@
 #include "manager/CountryManager.hpp"
 #include "manager/CitizenRefer.hpp"
 #include "permission/PermissionManager.hpp"
+#include "economy/MoneyAddTriggerManager.hpp"
 namespace tes {
 class DataManager : public std::enable_shared_from_this<DataManager>{
 public:
@@ -18,6 +19,7 @@ public:
 
     const std::shared_ptr<CountryManager> CountryManager;
 
+    const std::shared_ptr<MoneyAddTriggerManager> MoneyAddTriggerMng;
 private:
     DataManager();
     static inline std::shared_ptr<DataManager> manager;

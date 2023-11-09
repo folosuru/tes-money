@@ -18,5 +18,7 @@ country.left.complete = "{0}を脱退しました"
 
 country.currency.trigger.description = "国民が特定の行動をした時にお金を手に入れられるように設定できます。"
 country.currency.trigger.get_value = "入手額"
+country.currency.trigger.category.SurfaceBlockBreak = "痴情のブロックを壊したとき"
+country.currency.trigger.category.OreBlockBreak = "鉱石ブロックを壊したとき"
 country.currency.trigger.WoodBreak.description = "原木を壊した時"
 country.currency.trigger.StoneBreak.description = "石を壊した時"

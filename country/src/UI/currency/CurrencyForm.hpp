@@ -20,6 +20,10 @@ void createCurrency(Player* player,
 void editCurrency(Player* player,
                   const std::shared_ptr<Citizen>&,
                   const std::shared_ptr<DataManager>&);
+
+void editMoneyAddTrigger(Player* player,
+                         const std::shared_ptr<Citizen>&,
+                         const std::shared_ptr<DataManager>&);
 }
 
 #endif //TES_COUNTRY_SRC_UI_CURRENCY_CURRENCYFORM_HPP_
