@@ -18,7 +18,7 @@ function(LiteLoader_options project_name)
         PRIVATE /EHsc
         PRIVATE /FC
         PRIVATE /GL
-        PRIVATE /MD
+        PRIVATE /MDd
         PRIVATE /nologo
         PRIVATE /permissive-
         PRIVATE /sdl

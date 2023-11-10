@@ -6,10 +6,31 @@ add_compile_options(
         /utf-8
 )
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-project(tes)
+set(project_name_ tes)
+project(${project_name_})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/artifact)
 add_subdirectory(lib)
 include_thirdparty_libraries()
 include_directories(util)
-add_subdirectory(money)
-add_subdirectory(country)
+cmake_minimum_required(VERSION 3.21)
+
+file(GLOB_RECURSE SRC_MONEY_DIR
+        ${CMAKE_SOURCE_DIR}/src/*.c
+        ${CMAKE_SOURCE_DIR}/src/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/*.h
+        ${CMAKE_SOURCE_DIR}/src/*.hpp
+        )
+
+add_library(${project_name_} SHARED ${SRC_MONEY_DIR})
+
+LiteLoader_options(${project_name_})
+LiteLoader_include(${project_name_})
+LiteLoader_libraries(${project_name_})
+target_link_libraries(${project_name_}
+        AsyncTask
+        SQLiteCpp
+        sqlite3
+        )
+target_include_directories(${project_name_} PRIVATE
+        ${CMAKE_SOURCE_DIR}/header/
+        )
