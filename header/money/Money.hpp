@@ -10,13 +10,13 @@
 namespace tes {
 class TES_DLL Money {
 public:
-    const Types::money_value value;
+    const Types::money_value_t value;
     const Types::currency currency;
 
     /**
      * @throws std::invalid_argument valueが0以下の時
      */
-    Money(Types::money_value value_, Types::currency currency_);
+    Money(Types::money_value_t value_, Types::currency currency_);
 
     Money(const Money& m) = default;
 

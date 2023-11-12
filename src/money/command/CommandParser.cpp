@@ -34,7 +34,7 @@ std::optional<Types::currency> CommandParser::getCurrency() {
     return mng->getCurrency(cur_name);
 }
 
-std::optional<Types::money_value> CommandParser::getValue() {
+std::optional<Types::money_value_t> CommandParser::getValue() {
     if (!results.contains("value")) {
         return std::nullopt;
     }

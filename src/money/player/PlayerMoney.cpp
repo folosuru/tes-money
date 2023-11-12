@@ -14,7 +14,7 @@ using Arrai18n::trl_text;
          * }
          */
         for (const auto& item : j["money"].items()) {
-            tes::Types::money_value value = item.value().get<tes::Types::money_value>();
+            tes::Types::money_value_t value = item.value().get<tes::Types::money_value_t>();
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
             this->add(tes::Money(value, currency));
         }

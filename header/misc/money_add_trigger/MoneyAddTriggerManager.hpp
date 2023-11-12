@@ -9,6 +9,8 @@
 namespace tes {
 class MoneyAddTriggerManager {
 public:
+
+    [[nodiscard]]
     std::optional<std::string_view> getTriggerOnBreak(int id, int data);
 
     void load();

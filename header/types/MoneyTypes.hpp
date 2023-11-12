@@ -13,6 +13,6 @@ namespace tes::Types {
 // typedef std::string currency;
 typedef std::shared_ptr<Currency> currency;
 typedef std::shared_ptr<PlayerMoney> player_money;
-typedef std::int64_t money_value;
+typedef std::int64_t money_value_t;
 
 }

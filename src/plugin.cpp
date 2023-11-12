@@ -15,6 +15,8 @@
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
 #include <DataManager.hpp>
+#include "country/Event.hpp"
+#include "money/Event.hpp"
 #include <Nlohmann/json.hpp>
 #include "version.h"
 
@@ -29,8 +31,17 @@ extern Logger logger;
 void PluginInit() {
     // TODO: moneyのlangファイルもロードするようにする
 
-    Event::PlayerDestroyBlockEvent::subscribe([](const Event::PlayerDestroyBlockEvent& event){
+    Event::PlayerDestroyBlockEvent::subscribe([](const Event::PlayerDestroyBlockEvent& event) {
+        tes::country::onBreak(event);
         // event.mBlockInstance;
+        return true;
+    });
+    Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event) {
+        tes::PlayerManager::get()->saveAll();
+        return true;
+    });
+    Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
+        if (!tes::money::onPlayerJoin(event)) return false;
         return true;
     });
 }

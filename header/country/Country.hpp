@@ -30,8 +30,11 @@ public:
 
     const std::string& getName();
 
-    std::shared_ptr<CountryEconomy> getEconomyManager() const noexcept;
+    [[nodiscard]]
+    const std::shared_ptr<CountryEconomy>& getEconomyManager() const noexcept;
 
+
+    //countryもSQLで管理したい欲が出て来たよ
     explicit Country(nlohmann::json);
     nlohmann::json get_json();
 

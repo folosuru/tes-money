@@ -27,7 +27,7 @@ const std::string& Country::getName() {
     return name;
 }
 
-std::shared_ptr<CountryEconomy> Country::getEconomyManager() const noexcept {
+const std::shared_ptr<CountryEconomy>& Country::getEconomyManager() const noexcept {
     return economy;
 }
 }

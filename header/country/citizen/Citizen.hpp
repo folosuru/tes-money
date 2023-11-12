@@ -34,6 +34,8 @@ public:
     [[nodiscard]]
     std::shared_ptr<Country> getCountry() const;
 
+    void save();
+
 private:
     Citizen(const std::shared_ptr<Country>&,
             std::string name);

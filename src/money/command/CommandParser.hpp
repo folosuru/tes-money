@@ -22,7 +22,7 @@ public:
 
     std::optional<Types::currency> getCurrency();
 
-    std::optional<Types::money_value> getValue();
+    std::optional<Types::money_value_t> getValue();
 
     std::optional<Types::player_money> getTargetMoney();
 

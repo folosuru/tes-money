@@ -1,8 +1,13 @@
 #include <country/economy/CountryEconomy.hpp>
 #include <money/player/PlayerManager.hpp>
+#include <country/Country.hpp>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include "util/Resources.hpp"
+#include <types/MoneyTypes.hpp>
+
 namespace tes {
 
-void CountryEconomy::runTrigger(const std::string& trigger_name, const std::string& player_name) noexcept {
+void CountryEconomy::runTrigger(std::string_view trigger_name, const std::string& player_name) noexcept {
     if (money_add_trigger.contains(trigger_name)) {
         PlayerManager::get()->getPlayer(player_name)
             ->add(Money(money_add_trigger.at(trigger_name), currency.lock()));
@@ -47,5 +52,19 @@ void CountryEconomy::removeTrigger(const std::string& trigger_name) {
         money_add_trigger.erase(trigger_name);
     }
 
+}
+
+std::shared_ptr<CountryEconomy> CountryEconomy::load(std::shared_ptr<Country> country) {
+    SQLite::Database db(country_db_file,
+                        SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    SQLite::Statement query(db, R"(SELECT trigger, add_value from country_money_trigger where country = ?;)");
+    query.bind(1, country->id);
+    while (query.executeStep()) {
+        std::string trigger = query.getColumn(0).getString();
+        Types::money_value_t value = query.getColumn(1);
+
+    }
+//    static_assert(false, "todo");
+    return std::shared_ptr<CountryEconomy>();
 }
 }

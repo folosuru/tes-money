@@ -6,8 +6,9 @@
 #include <unordered_map>
 #include <memory>
 #include <optional>
-
+#include <types/MoneyTypes.hpp>
 namespace tes {
+class Country;
 class CountryEconomy {
 public:
     std::shared_ptr<Currency> getCurrency();
@@ -17,7 +18,7 @@ public:
     /**
      * データベースから読み取り。
      */
-    static std::shared_ptr<CountryEconomy> load(int country_id);
+    static std::shared_ptr<CountryEconomy> load(std::shared_ptr<Country>);
     /**
      * JSONから読み込む？どっちがいいかな
      */
@@ -27,7 +28,7 @@ public:
 
     int getValue(const std::string& trigger_name);
 
-    void runTrigger(const std::string& trigger_name, const std::string& player_name) noexcept;
+    void runTrigger(std::string_view trigger_name, const std::string& player_name) noexcept;
 
     bool existsTrigger(const std::string& name) const noexcept;
 
@@ -36,11 +37,12 @@ public:
     void removeTrigger(const std::string& trigger_name);
 
 private:
-    CountryEconomy(std::unordered_map<std::string_view, int> trigger,
+    CountryEconomy(std::unordered_map<std::string_view, Types::money_value_t> trigger,
                    std::weak_ptr<Currency> currency);
     // money_value_type
-    std::unordered_map<std::string_view, int> money_add_trigger;
+    std::unordered_map<std::string_view, Types::money_value_t> money_add_trigger;
     std::weak_ptr<Currency> currency;
+    std::weak_ptr<Country> country;
 };
 }
 #endif //TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
