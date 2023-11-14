@@ -1,4 +1,4 @@
-#pragma once
+class CountryEconomy;
 #ifndef TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
 #define TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
@@ -6,11 +6,11 @@
 #include <unordered_map>
 #include <memory>
 #include <optional>
-
 #include <DataManager.hpp>
 #include <types/MoneyTypes.hpp>
 namespace tes {
 class Country;
+class DataManager;
 class CountryEconomy {
 public:
     std::shared_ptr<Currency> getCurrency();
@@ -22,11 +22,6 @@ public:
      */
     static std::shared_ptr<CountryEconomy> load(std::shared_ptr<Country> country,
                                                 std::shared_ptr<DataManager> trigger_mng);
-    /**
-     * JSONから読み込む？どっちがいいかな
-     */
-    static std::shared_ptr<CountryEconomy> load(nlohmann::json);
-
     void setCurrency(const std::shared_ptr<Currency>&);
 
     int getValue(const std::string& trigger_name);

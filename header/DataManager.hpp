@@ -10,6 +10,11 @@
 #include <misc/PermissionManager.hpp>
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
 namespace tes {
+class PermissionManager;
+class CitizenRefer;
+class CountryManager;
+class CurrencyManager;
+class MoneyAddTriggerManager;
 class DataManager : public std::enable_shared_from_this<DataManager>{
 public:
     static std::shared_ptr<DataManager> get();

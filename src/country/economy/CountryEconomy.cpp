@@ -14,18 +14,6 @@ void CountryEconomy::runTrigger(std::string_view trigger_name, const std::string
             ->add(Money(money_add_trigger.at(trigger_name), currency.lock()));
     }
 }
-/**
- * JSONから読み込む？どっちがいいかな
- */
- // TODO: nullチェックいる？
-std::shared_ptr<CountryEconomy> CountryEconomy::load(nlohmann::json json) {
-    std::weak_ptr<Currency> cur(CurrencyManager::get()->getCurrency(json["currency"].get<std::string>()));
-    std::unordered_map<std::string_view, int> triggers;
-    for (const auto& i : json["trigger"].items()) {
-        triggers.insert({i.key(),i.value()});
-    }
-    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers,cur));
-}
 
 
 std::shared_ptr<Currency> CountryEconomy::getCurrency() {

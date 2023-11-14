@@ -12,6 +12,7 @@
 #include <util/dll_declspec.hpp>
 
 namespace tes {
+class CountryManager;
 class TES_DLL CitizenRefer {
 public:
     CitizenRefer() = default;
