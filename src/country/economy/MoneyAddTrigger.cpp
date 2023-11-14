@@ -15,6 +15,8 @@ void MoneyAddTriggerManager::load() {
         for (const auto& trigger : category.value().items()) {
             triggers.push_back(trigger.key());
             for (const auto& block : trigger.value()) {
+                std::shared_ptr<std::string> key_ptr;
+                all_key.insert({*key_ptr,key_ptr});
                 trigger_on_break.insert({block.get<std::pair<int, int>>(), trigger.key()});
             }
         }

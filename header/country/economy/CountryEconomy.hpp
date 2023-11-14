@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <memory>
 #include <optional>
+
+#include <DataManager.hpp>
 #include <types/MoneyTypes.hpp>
 namespace tes {
 class Country;
@@ -18,7 +20,8 @@ public:
     /**
      * データベースから読み取り。
      */
-    static std::shared_ptr<CountryEconomy> load(std::shared_ptr<Country>);
+    static std::shared_ptr<CountryEconomy> load(std::shared_ptr<Country> country,
+                                                std::shared_ptr<DataManager> trigger_mng);
     /**
      * JSONから読み込む？どっちがいいかな
      */
@@ -37,10 +40,10 @@ public:
     void removeTrigger(const std::string& trigger_name);
 
 private:
-    CountryEconomy(std::unordered_map<std::string_view, Types::money_value_t> trigger,
+    CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
                    std::weak_ptr<Currency> currency);
     // money_value_type
-    std::unordered_map<std::string_view, Types::money_value_t> money_add_trigger;
+    std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> money_add_trigger;
     std::weak_ptr<Currency> currency;
     std::weak_ptr<Country> country;
 };

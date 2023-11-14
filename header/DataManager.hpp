@@ -6,6 +6,7 @@
 #include <memory>
 #include <country/CountryManager.hpp>
 #include <country/citizen/CitizenRefer.hpp>
+#include <currency/CurrencyManager.hpp>
 #include <misc/PermissionManager.hpp>
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
 namespace tes {
@@ -18,6 +19,8 @@ public:
     const std::shared_ptr<CitizenRefer> CitizenRefer;
 
     const std::shared_ptr<CountryManager> CountryManager;
+
+    const std::shared_ptr<CurrencyManager> CurrencyMng;
 
     const std::shared_ptr<MoneyAddTriggerManager> MoneyAddTriggerMng;
 private:

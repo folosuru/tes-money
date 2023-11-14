@@ -4,6 +4,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include "util/Resources.hpp"
 #include <types/MoneyTypes.hpp>
+#include <memory>
 
 namespace tes {
 
@@ -54,17 +55,22 @@ void CountryEconomy::removeTrigger(const std::string& trigger_name) {
 
 }
 
-std::shared_ptr<CountryEconomy> CountryEconomy::load(std::shared_ptr<Country> country) {
+std::shared_ptr<CountryEconomy> CountryEconomy::load(std::shared_ptr<Country> country,
+                                                     std::shared_ptr<DataManager> data) {
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     SQLite::Statement query(db, R"(SELECT trigger, add_value from country_money_trigger where country = ?;)");
     query.bind(1, country->id);
+    std::unordered_map<std::string_view, Types::money_value_t> triggers;
     while (query.executeStep()) {
         std::string trigger = query.getColumn(0).getString();
         Types::money_value_t value = query.getColumn(1);
-
+        triggers.insert({data->MoneyAddTriggerMng->getOrGenKey(trigger), value});
     }
-//    static_assert(false, "todo");
-    return std::shared_ptr<CountryEconomy>();
+    SQLite::Statement getCurrencyQuery(db, R"(select currency from country where id=?)");
+    getCurrencyQuery.bind(1,country->id);
+    getCurrencyQuery.executeStep();
+    std::shared_ptr<Currency> currency = data->CurrencyMng->getCurrency(getCurrencyQuery.getColumn(0));
+    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, currency));
 }
 }
