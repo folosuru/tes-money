@@ -26,7 +26,10 @@ public:
 
     ~Country() = default;
 
-    explicit Country(std::string name_, country_id);
+    explicit Country(std::string name_,
+                     country_id id_,
+                     const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                     const std::shared_ptr<CurrencyManager>& currency));
 
     const std::string& getName();
 
@@ -35,7 +38,9 @@ public:
 
 
     //countryもSQLで管理したい欲が出て来たよ
-    explicit Country(nlohmann::json);
+    explicit Country(nlohmann::json,
+                     const std::shared_ptr<MoneyAddTriggerManager>&,
+                     const std::shared_ptr<CurrencyManager>&);
     nlohmann::json get_json();
 
     std::shared_ptr<CountryCitizen> getCitizenManager() { return citizen; }

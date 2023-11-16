@@ -2,11 +2,13 @@
 #include <memory>
 namespace tes {
 Country::Country(std::string name_,
-                 country_id id_)
+                 country_id id_,
+                 const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                 const std::shared_ptr<CurrencyManager>& currency)
     : name(std::move(name_)),
       citizen(std::make_shared<CountryCitizen>()),
       id(id_),
-      economy(std::make_shared<CountryEconomy>()) {
+      economy(CountryEconomy::load(id,trigger, currency) {
 
 }
 
@@ -17,10 +19,12 @@ nlohmann::json Country::get_json() {
     return result;
 }
 
-Country::Country(nlohmann::json data)
+Country::Country(nlohmann::json data,
+                 const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                 const std::shared_ptr<CurrencyManager>& currency)
   : id(data["id"].get<country_id>()),
     name(data["name"].get<std::string>()),
-    economy(CountryEconomy::load(data["economy"])) {
+    economy(CountryEconomy::load(id,trigger, currency)) {
 }
 
 const std::string& Country::getName() {

@@ -20,11 +20,12 @@ public:
     /**
      * データベースから読み取り。
      */
-    static std::shared_ptr<CountryEconomy> load(std::shared_ptr<Country> country,
-                                                std::shared_ptr<DataManager> trigger_mng);
+    static std::shared_ptr<CountryEconomy> load(int country_id,
+                                                const std::shared_ptr<MoneyAddTriggerManager>& trigger_mng,
+                                                const std::shared_ptr<CurrencyManager>& currency_mng);
     void setCurrency(const std::shared_ptr<Currency>&);
 
-    int getValue(const std::string& trigger_name);
+    Types::money_value_t getValue(const std::string& trigger_name);
 
     void runTrigger(std::string_view trigger_name, const std::string& player_name) noexcept;
 
