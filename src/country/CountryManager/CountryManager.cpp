@@ -9,6 +9,13 @@ std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id i
     return this->country.at(id);
 }
 
+std::shared_ptr<CountryManager> CountryManager::build() {
+    std::shared_ptr<CountryManager> result = std::make_shared<CountryManager>();
+    result->loadAll();
+    return result;
+}
+
+
 void CountryManager::loadAll() {
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);

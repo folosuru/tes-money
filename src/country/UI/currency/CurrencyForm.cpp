@@ -20,6 +20,20 @@ void currencySetting(Player* player,
     }
 }
 
+/*
+|     create currency     |
+|-------------------------|
+| "JPY" is already exists!|  optional
+| |---------------------| |
+| | currency name input | |
+| |---------------------| |
+| name should be easy to  |
+| call.                   |
+| |---------------------| |
+| |    send     button  | |
+| |---------------------| |
+|-------------------------|
+*/
 void createCurrency(Player *player,
                     const std::shared_ptr<Citizen>& citizen,
                     const std::shared_ptr<DataManager>& manager,
@@ -75,6 +89,26 @@ void editCurrency(Player *player,
 }
 
 namespace {
+/*
+| edit money add trigger  |
+|-------------------------|
+| on Dirt break     =||   | toggle
+|                         |
+| |---------------------| |
+| | get value           | | input
+| |---------------------| |
+|                         |
+| on Sand break     ||=   | toggle
+|                         |
+| |---------------------| |
+| | get value           | | input
+| |---------------------| |
+|                         |
+            .
+            .
+            .
+*/
+
 void showTriggerSettingForm(const std::shared_ptr<CountryEconomy>& economy,
                             const std::shared_ptr<MoneyAddTriggerCategory>& category,
                             Player *pl,
@@ -117,6 +151,22 @@ void showTriggerSettingForm(const std::shared_ptr<CountryEconomy>& economy,
 }
 }
 
+/*
+| edit money add trigger  |
+|-------------------------|
+| you can set add money   |
+| when brock break...     |
+| |---------------------| |
+| | surface block break | | button
+| |---------------------| |
+|                         |
+| |---------------------| |
+| | Ore block break     | | button
+| |---------------------| |
+            .
+            .
+            .
+*/
 void editMoneyAddTrigger(Player *player,
                          const std::shared_ptr<Citizen>& citizen,
                          const std::shared_ptr<DataManager>& data) {

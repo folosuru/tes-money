@@ -15,7 +15,6 @@ void countryMenu(Player* player, const std::shared_ptr<DataManager>& data) {
         return;
     }
 }
-
 void countryJoinedMenu(Player* player,
                        const std::shared_ptr<Citizen>& citizen,
                        const std::shared_ptr<DataManager>& data) {
@@ -53,5 +52,12 @@ void countryJoinedMenu(Player* player,
     form.addButton("Exit");
     form.sendTo(player);
 }
-
+void countryNotJoinedMenu(Player *) {
+    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
+                                            "TODO",
+                                            {citizen->getCountry()->getName()}));
+    form.addButton("look country index", "", []{});
+    form.addButton("search country", "", []{});
+    form.addButton("create country", "", []{});
+}
 }
