@@ -49,7 +49,7 @@ std::shared_ptr<CountryEconomy> CountryEconomy::load(int country_id,
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     SQLite::Statement query(db, R"(SELECT trigger, add_value from country_money_trigger where country = ?;)");
-    query.bind(1, country_id->id);
+    query.bind(1, country_id);
     std::unordered_map<std::string_view, Types::money_value_t> triggers;
     while (query.executeStep()) {
         std::string trigger = query.getColumn(0).getString();
@@ -57,9 +57,9 @@ std::shared_ptr<CountryEconomy> CountryEconomy::load(int country_id,
         triggers.insert({trigger_mng->getOrGenKey(trigger), value});
     }
     SQLite::Statement getCurrencyQuery(db, R"(select currency from country where id=?)");
-    getCurrencyQuery.bind(1, country_id->id);
+    getCurrencyQuery.bind(1, country_id);
     getCurrencyQuery.executeStep();
     std::shared_ptr<Currency> currency = currency_mng->getCurrency(getCurrencyQuery.getColumn(0));
-    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, currency));
+    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, currency, trigger_mng));
 }
 }

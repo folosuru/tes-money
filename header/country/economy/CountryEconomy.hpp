@@ -37,9 +37,11 @@ public:
 
 private:
     CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
-                   std::weak_ptr<Currency> currency);
+                   std::weak_ptr<Currency> currency,
+                   std::weak_ptr<MoneyAddTriggerManager>);
     // money_value_type
     std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> money_add_trigger;
+    std::weak_ptr<MoneyAddTriggerManager> trigger_mng;
     std::weak_ptr<Currency> currency;
     std::weak_ptr<Country> country;
 };

@@ -1,14 +1,15 @@
 #include <country/Country.hpp>
 #include <memory>
+#include <utility>
 namespace tes {
 Country::Country(std::string name_,
                  country_id id_,
-                 const std::shared_ptr<MoneyAddTriggerManager>& trigger,
-                 const std::shared_ptr<CurrencyManager>& currency)
+                 std::shared_ptr<CountryCitizen>  citizen_,
+                 std::shared_ptr<CountryEconomy>  economy_)
     : name(std::move(name_)),
-      citizen(std::make_shared<CountryCitizen>()),
+      citizen(std::move(citizen_)),
       id(id_),
-      economy(CountryEconomy::load(id,trigger, currency) {
+      economy(std::move(economy_)) {
 
 }
 
@@ -33,5 +34,12 @@ const std::string& Country::getName() {
 
 const std::shared_ptr<CountryEconomy>& Country::getEconomyManager() const noexcept {
     return economy;
+}
+
+std::shared_ptr<Country> Country::load(Country::country_id id_,
+                                       const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                                       const std::shared_ptr<CurrencyManager>& currency) {
+    //SQL here...
+    return std::make_shared<Country>(, id_, std::make_shared<CountryCitizen>(), CountryEconomy::load(id_,trigger, currency));
 }
 }
