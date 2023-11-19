@@ -32,10 +32,14 @@ public:
                      const std::shared_ptr<CurrencyManager>& currency);
     explicit Country(std::string name_,
                      country_id id_,
+                     const std::shared_ptr<MoneyAddTriggerManager>& trigger);
+    explicit Country(std::string name_,
+                     country_id id_,
                      std::shared_ptr<CountryCitizen>  citizen,
                      std::shared_ptr<CountryEconomy>  economy);
 
-    static std::shared_ptr<Country> load(country_id id_,
+    static std::shared_ptr<Country> load(const std::string& name,
+                                         Country::country_id id_,
                                          const std::shared_ptr<MoneyAddTriggerManager>& trigger,
                                          const std::shared_ptr<CurrencyManager>& currency);
 

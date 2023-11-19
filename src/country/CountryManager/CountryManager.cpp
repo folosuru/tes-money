@@ -9,14 +9,10 @@ std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id i
     return this->country.at(id);
 }
 
-std::shared_ptr<CountryManager> CountryManager::build() {
+std::shared_ptr<CountryManager> CountryManager::build(const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                                                      const std::shared_ptr<CurrencyManager>& currency) {
+
     std::shared_ptr<CountryManager> result = std::make_shared<CountryManager>();
-    result->loadAll();
-    return result;
-}
-
-
-void CountryManager::loadAll() {
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     db.exec("CREATE TABLE IF NOT EXISTS country (name string, country int);");
@@ -25,9 +21,11 @@ void CountryManager::loadAll() {
     while (query.executeStep()) {
         std::string name = query.getColumn(0).getString();
         int country_id = query.getColumn(1);
-        this->addCountry(std::make_shared<Country>(name, country_id));
+        result->addCountry(Country::load(std::string(), country_id, trigger, currency));
     }
+    return result;
 }
+
 
 void CountryManager::saveAll() {
     for (const auto& i : country) {
@@ -41,9 +39,4 @@ void CountryManager::addCountry(const std::shared_ptr<Country>& country_) {
     country.insert({country_->id, country_});
 }
 
-std::shared_ptr<Country> CountryManager::addCountry(const std::string& name) {
-    std::shared_ptr<Country> new_country = std::make_shared<Country>(name, (country_id)country.size());
-    this->addCountry(new_country);
-    return new_country;
-}
 }

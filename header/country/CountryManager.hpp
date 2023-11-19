@@ -17,15 +17,14 @@ public:
      * Construct CountryManager with load data...
      * @return self
      */
-    static std::shared_ptr<CountryManager> build();
+    static std::shared_ptr<CountryManager> build(const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                                                 const std::shared_ptr<CurrencyManager>& currency);
 
     [[nodiscard]]
     std::shared_ptr<Country> getCountry(country_id id) const;
 
     void addCountry(const std::shared_ptr<Country>&);
-    std::shared_ptr<Country> addCountry(const std::string& name);
 
-    void loadAll();
     void saveAll();
 
 private:

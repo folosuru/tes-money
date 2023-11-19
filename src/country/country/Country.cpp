@@ -36,10 +36,10 @@ const std::shared_ptr<CountryEconomy>& Country::getEconomyManager() const noexce
     return economy;
 }
 
-std::shared_ptr<Country> Country::load(Country::country_id id_,
+std::shared_ptr<Country> Country::load(const std::string& name,
+                                       Country::country_id id_,
                                        const std::shared_ptr<MoneyAddTriggerManager>& trigger,
                                        const std::shared_ptr<CurrencyManager>& currency) {
-    //SQL here...
-    return std::make_shared<Country>(, id_, std::make_shared<CountryCitizen>(), CountryEconomy::load(id_,trigger, currency));
+    return std::make_shared<Country>(name, id_, std::make_shared<CountryCitizen>(), CountryEconomy::load(id_,trigger, currency));
 }
 }

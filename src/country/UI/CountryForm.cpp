@@ -52,12 +52,10 @@ void countryJoinedMenu(Player* player,
     form.addButton("Exit");
     form.sendTo(player);
 }
-void countryNotJoinedMenu(Player *) {
-    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
-                                            "TODO",
-                                            {citizen->getCountry()->getName()}));
-    form.addButton("look country index", "", []{});
-    form.addButton("search country", "", []{});
-    form.addButton("create country", "", []{});
+void countryNotJoinedMenu(Player* player) {
+    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),"TODO"));
+    form.addButton("look country index", "", [](Player* pl){});
+    form.addButton("search country", "", [](Player* pl){});
+    form.addButton("create country", "", [](Player* pl){});
 }
 }

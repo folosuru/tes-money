@@ -3,6 +3,7 @@ class CountryEconomy;
 #define TES_COUNTRY_HEADER_COUNTRY_COUNTRY_ECONOMY_COUNTRYECONOMY_HPP_
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
 #include <currency/Currency.hpp>
+#include <currency/CurrencyManager.hpp>
 #include <unordered_map>
 #include <memory>
 #include <optional>
