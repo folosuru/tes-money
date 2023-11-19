@@ -8,6 +8,7 @@
 #include <types/GeneralTypes.hpp>
 #include <money/player/PlayerMoney.hpp>
 #include <currency/CurrencyManager.hpp>
+#include <util/player_identify/PlayerIdentify.hpp>
 #include <util/dll_declspec.hpp>
 
 namespace tes {
@@ -17,24 +18,24 @@ public:
     PlayerManager() = delete;
     explicit PlayerManager(std::shared_ptr<CurrencyManager>);
 
-    static std::shared_ptr<PlayerManager> get();
+    static std::shared_ptr<PlayerManager> load(const std::shared_ptr<CurrencyManager>&,
+                                               const std::shared_ptr<PlayerIdentifyProvider>&);
 
-    void newPlayer(const std::string& name);
+    void newPlayer(const PlayerIdentify& name);
 
-    std::shared_ptr<PlayerMoney> getPlayer(Types::player_name_view name);
+    std::shared_ptr<PlayerMoney> getPlayer(PlayerIdentify name);
 
-    inline bool exists(Types::player_name_view name) noexcept;
+    inline bool exists(PlayerIdentify name) noexcept;
 
-    void addPlayer(const std::string& name, std::shared_ptr<PlayerMoney>);
+    void addPlayer(const PlayerIdentify&, std::shared_ptr<PlayerMoney>);
 
-    const std::unordered_map<std::string, std::shared_ptr<PlayerMoney>>& getAllPlayer() noexcept;
+    const std::unordered_map<PlayerIdentify, std::shared_ptr<PlayerMoney>>& getAllPlayer() noexcept;
 
-    void loadAll();
     void saveAll();
 
 private:
-    const std::string file_export_path = "plugins/tes/money/player";
-    std::unordered_map<std::string, std::shared_ptr<PlayerMoney>> players;
+    static const inline std::string file_export_path = "plugins/tes/money/player";
+    std::unordered_map<PlayerIdentify, std::shared_ptr<PlayerMoney>> players;
     std::shared_ptr<CurrencyManager> currency_manager_;
 };
 }

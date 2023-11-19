@@ -2,11 +2,15 @@
 #include <country/citizen/Citizen.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <util/Resources.hpp>
+#include <utility>
 namespace tes {
-
 std::shared_ptr<Citizen> CitizenRefer::get(Types::player_name_view name) {
-    if (citizen.contains(name)) {
-        return citizen[name];
+    return this->get(this->identify_provider->getIdentify(name));
+}
+
+std::shared_ptr<Citizen> CitizenRefer::get(const PlayerIdentify& name) {
+    if (auto result = citizen.find(name); result != citizen.end()) {
+        return result->second;
     } else {
         return nullptr;
     }
@@ -16,40 +20,40 @@ void CitizenRefer::add(const std::shared_ptr<Citizen>& citizen_) {
     citizen[citizen_->name] = citizen_;
 }
 
-void CitizenRefer::loadCitizen(const std::shared_ptr<CountryManager>& country_manager,
-                               const std::shared_ptr<PermissionManager>& perm_mng) {
+std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryManager>& country_manager,
+                                                 const std::shared_ptr<PermissionManager>& perm_mng,
+                                                 const std::shared_ptr<PlayerIdentifyProvider>& identify) {
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     SQLite::Statement query(db,
                             R"(SELECT citizen.name, permission, citizen.country
     FROM citizen LEFT OUTER JOIN citizen_permission ON citizen.name = citizen_permission.name
     ORDER BY citizen.name)");
-
+    std::shared_ptr<CitizenRefer> refer_ = std::make_shared<CitizenRefer>(identify);
     // 無駄にスコープ広げてる、ごめん
     // whileで初期化式が使えないのが悪い（暴論）
     std::unordered_set<Permission> permission_list;
     std::string last_name;
-    std::shared_ptr<CitizenRefer> refer_(this);
     while (query.executeStep()) {
         std::string name = query.getColumn(0).getString();
         SQLite::Column permission = query.getColumn(1);
         int country = query.getColumn(2).getInt();
         if (name != last_name) {
-            Citizen::build(refer_, country_manager->getCountry(country), last_name, permission_list);
+            Citizen::build(refer_, country_manager->getCountry(country), identify->getIdentify(last_name), permission_list);
             permission_list.clear();
             last_name = name;
         }
         if (permission.isNull()) {
-            Citizen::build(refer_, country_manager->getCountry(country), name);
+            Citizen::build(refer_, country_manager->getCountry(country), identify->getIdentify(name));
             continue;
         }
         permission_list.insert(perm_mng->getSv(permission.getString()));
     }
 }
 
-CitizenRefer::CitizenRefer(const std::shared_ptr<CountryManager>& country,
-                           const std::shared_ptr<PermissionManager>& permission){
-    loadCitizen(country, permission);
+CitizenRefer::CitizenRefer(std::shared_ptr<PlayerIdentifyProvider> identify)
+    : identify_provider(std::move(identify)){
+
 }
 
 }

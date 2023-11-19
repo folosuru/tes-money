@@ -14,7 +14,7 @@ private:
     PlayerIdentifyClass(const PlayerIdentifyClass&) = delete;
     PlayerIdentifyClass& operator=(const PlayerIdentifyClass& ) = delete;
     PlayerIdentifyClass() = delete;
-    PlayerIdentifyClass(std::string name_) : name(name_){};
+    explicit PlayerIdentifyClass(std::string name_) : name(name_){};
 
     friend class PlayerIdentifyProvider;
 };

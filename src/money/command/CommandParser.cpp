@@ -2,6 +2,7 @@
 #ifndef DEBUG_WITHOUT_LLAPI
 #include <money/player/PlayerManager.hpp>
 #include <string>
+#include <DataManager.hpp>
 namespace tes {
 CommandParser::CommandParser(const CommandOrigin& origin,
                              CommandOutput& output,
@@ -10,19 +11,19 @@ CommandParser::CommandParser(const CommandOrigin& origin,
                              origin_language(origin.getPlayer()->getLanguageCode()) {}
 
 std::optional<Types::player_money> CommandParser::getOriginMoney() {
-    auto mng = PlayerManager::get();
-    std::string name = origin.getPlayer()->getRealName();
+    auto mng = tes::DataManager::get()->PlayerMoneyMng;
+    PlayerIdentify name = DataManager::get()->player_identify->getIdentifyByPlayer(origin);
     if (!mng->exists(name)) {
         output.error(
             Arrai18n::trl(origin_language,
-            "money.player_not_found", {name}));
+            "money.player_not_found", {name->name}));
         return std::nullopt;
     }
     return mng->getPlayer(name);
 }
 
 std::optional<Types::currency> CommandParser::getCurrency() {
-    auto mng = tes::CurrencyManager::get();
+    auto mng = tes::DataManager::get()->CurrencyMng;
     if (!results.contains("currency")) {
         return std::nullopt;
     }
@@ -48,15 +49,15 @@ std::optional<Types::money_value_t> CommandParser::getValue() {
 }
 
 std::optional<Types::player_money> CommandParser::getTargetMoney() {
-    auto mng = tes::PlayerManager::get();
+    auto mng = tes::DataManager::get()->PlayerMoneyMng;;
     if (!results.contains("to")) {
         return std::nullopt;
     }
-    auto name = results["to"].get<std::string>();
+    auto name = DataManager::get()->player_identify->getIdentify(results["to"].get<std::string>());
     if (!mng->exists(name)) {
         output.error(
             Arrai18n::trl(origin_language,
-                          "money.player_not_found", {name}));
+                          "money.player_not_found", {name->name}));
         return std::nullopt;
     }
     return mng->getPlayer(name);

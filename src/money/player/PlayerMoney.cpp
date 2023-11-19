@@ -4,20 +4,19 @@
 
 namespace tes {
 using Arrai18n::trl_text;
-    PlayerMoney::PlayerMoney(const nlohmann::json& j, const std::shared_ptr<CurrencyManager>& currency_manager)
-    : name(j["name"].get<std::string>()) {
-        /*
-         * {
-         *      "money" : {
-         *          "currency" : [value],...
-         *      }
-         * }
-         */
-        for (const auto& item : j["money"].items()) {
+
+    PlayerMoney::PlayerMoney(tes::PlayerIdentify name) : identify(name) {}
+
+    std::shared_ptr<PlayerMoney> PlayerMoney::init(const nlohmann::json& json,
+                                                   const std::shared_ptr<CurrencyManager>& currency_manager,
+                                                   const std::shared_ptr<PlayerIdentifyProvider>& identify) {
+        auto result = std::make_shared<PlayerMoney>(identify->getIdentify(json["name"].get<std::string>()));
+        for (const auto& item : json["money"].items()) {
             tes::Types::money_value_t value = item.value().get<tes::Types::money_value_t>();
             tes::Types::currency currency = currency_manager->getCurrency(item.key());
-            this->add(tes::Money(value, currency));
+            result->add(tes::Money(value, currency));
         }
+        return result;
     }
 
     bool PlayerMoney::has(const tes::Money &money_) const noexcept {
@@ -60,10 +59,6 @@ using Arrai18n::trl_text;
         money[money_.currency] = std::make_shared<Money>(money_);
     }
 
-    PlayerMoney::PlayerMoney() {
-        edited = true;
-    }
-
     nlohmann::json PlayerMoney::get_json() {
         nlohmann::json result;
         for (const auto& item : money) {
@@ -92,6 +87,6 @@ using Arrai18n::trl_text;
     }
 
     std::string PlayerMoney::getName() {
-        return name;
+        return identify->name;
     }
 }

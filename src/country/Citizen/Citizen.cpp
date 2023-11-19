@@ -10,7 +10,7 @@ bool Citizen::hasPermission(tes::Permission perm) {
     return this->permission.contains(perm);
 }
 
-Citizen::Citizen(const std::shared_ptr<Country>& country_,std::string name_)
+Citizen::Citizen(const std::shared_ptr<Country>& country_,PlayerIdentify name_)
     : country(country_), name(std::move(name_)) {
     if (country.lock()) {
         throw std::invalid_argument("country cannot be nullptr");
@@ -18,7 +18,7 @@ Citizen::Citizen(const std::shared_ptr<Country>& country_,std::string name_)
 }
 
 Citizen::Citizen(const std::shared_ptr<Country>& country_,
-                 std::string name_,
+                 PlayerIdentify name_,
                  std::unordered_set<Permission> permission_)
                  : Citizen(country_, std::move(name_)) {
     permission = std::move(permission_);
@@ -26,14 +26,14 @@ Citizen::Citizen(const std::shared_ptr<Country>& country_,
 void Citizen::addPermission(Permission perm) {
     if (!permission.contains(perm)) {
         permission.insert(perm);
-        AsyncTask::add_task(std::make_shared<AddPermissionTask>(name, perm));
+        AsyncTask::add_task(std::make_shared<AddPermissionTask>(name->name, perm));
     }
 }
 
 void Citizen::removePermission(Permission perm) {
     if (permission.contains(perm)) {
         permission.erase(perm);
-        AsyncTask::add_task(std::make_shared<RemovePermissionTask>(name, perm));
+        AsyncTask::add_task(std::make_shared<RemovePermissionTask>(name->name, perm));
     }
 }
 
@@ -47,7 +47,7 @@ const std::unordered_set<Permission>& Citizen::getAllPermission() const noexcept
 
 std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& refer,
                                         const std::shared_ptr<Country>& country_,
-                                        std::string name,
+                                        PlayerIdentify name,
                                         std::unordered_set<Permission> permission_) {
     std::shared_ptr<Citizen> ptr(new Citizen(country_,
                                              std::move(name),
@@ -58,7 +58,7 @@ std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& ref
 }
 std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& refer,
                                         const std::shared_ptr<Country>& country_,
-                                        std::string name) {
+                                        PlayerIdentify name) {
     std::shared_ptr<Citizen> ptr(new Citizen(country_, std::move(name)));
     refer->add(ptr);
     country_->getCitizenManager()->add(ptr);

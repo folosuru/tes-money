@@ -16,7 +16,7 @@ class TES_DLL CurrencyManager {
 public:
     CurrencyManager();
 
-    static std::shared_ptr<CurrencyManager> get();
+    static std::shared_ptr<CurrencyManager> load();
 
     void setCommandUpdater(CurrencyCommandUpdater*);
 
@@ -28,6 +28,7 @@ public:
 
     void addCurrency(const std::shared_ptr<Currency>& c, bool updateCommand = true);
 
+    [[nodiscard]]
     bool exists(std::string str) const noexcept;
 
     /**
@@ -35,8 +36,6 @@ public:
      * @return e.g. {"JPY","USD",...}
      */
     const std::vector<std::string>& getAllCurrencyList();
-
-    void loadAll();
 
     /**
      * 指定された名前の通貨の情報の保存をする
@@ -49,7 +48,7 @@ public:
 
 private:
     std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;
-    const std::string file_export_path = "plugins/tes/money/currency";
+    static const inline std::string file_export_path = "plugins/tes/money/currency";
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
     std::vector<std::string> currency_name_list;
 };

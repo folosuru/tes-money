@@ -15,6 +15,7 @@
 #include <util/minecraft/message.hpp>
 #include "Event.hpp"
 #include <money/player/PlayerManager.hpp>
+#include <DataManager.hpp>
 #include "command/CommandParser.hpp"
 namespace tes {
 namespace money {
@@ -150,20 +151,20 @@ void init_command() {
             }
         },  // The callback function
         CommandPermissionLevel::Any);  // The permission level
-    tes::CurrencyManager::get()->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
+    tes::DataManager::get()->CurrencyMng->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
 }
 void init() {
     using tes::Types::player_money;
     using tes::Types::currency;
     init_command();
     Arrai18n::load("plugins/tes/money/lang/ja-JP.txt");
-    tes::CurrencyManager::get()->loadAll();
-    tes::PlayerManager::get()->loadAll();
+    tes::DataManager::get();
 }
 
 bool onPlayerJoin(const Event::PlayerJoinEvent& event) {
     tes::util::sendText(event.mPlayer, "hoge");
-    tes::PlayerManager::get()->newPlayer(event.mPlayer->getRealName());
+    tes::DataManager::get()->PlayerMoneyMng->newPlayer(DataManager::get()->player_identify
+                                                        ->getIdentify(event.mPlayer->getRealName()));
     return true;
 }
 

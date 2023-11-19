@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_set>
 #include <string>
+#include <util/player_identify/PlayerIdentify.hpp>
 #include <util/dll_declspec.hpp>
 
 namespace tes {
@@ -12,15 +13,15 @@ class Country;
 class CitizenRefer;
 class TES_DLL Citizen {
 public:
-    const std::string name;
+    const PlayerIdentify name;
 
     static std::shared_ptr<Citizen> build(const std::shared_ptr<CitizenRefer>&,
                                           const std::shared_ptr<Country>&,
-                                          std::string name,
+                                          PlayerIdentify name,
                                           std::unordered_set<Permission> permission_);
     static std::shared_ptr<Citizen> build(const std::shared_ptr<CitizenRefer>&,
                                           const std::shared_ptr<Country>&,
-                                          std::string name);
+                                          PlayerIdentify name);
 
     bool hasPermission(Permission);
 
@@ -38,10 +39,10 @@ public:
 
 private:
     Citizen(const std::shared_ptr<Country>&,
-            std::string name);
+            PlayerIdentify name);
 
     Citizen(const std::shared_ptr<Country>&,
-            std::string name,
+            PlayerIdentify name,
             std::unordered_set<Permission> permission_);
 
     std::weak_ptr<Country> country;

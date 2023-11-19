@@ -15,6 +15,7 @@ class TES_DLL MoneyAccount {
 public:
     virtual std::string getName() = 0;
 
+    [[nodiscard]]
     virtual bool has(const Money& money) const noexcept = 0;
 
     /**

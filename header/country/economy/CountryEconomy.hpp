@@ -28,8 +28,9 @@ public:
 
     Types::money_value_t getValue(const std::string& trigger_name);
 
-    void runTrigger(std::string_view trigger_name, const std::string& player_name) noexcept;
+    void runTrigger(std::string_view trigger_name, std::shared_ptr<PlayerMoney> player) noexcept;
 
+    [[nodiscard]]
     bool existsTrigger(const std::string& name) const noexcept;
 
     void updateTrigger(const std::string& trigger_name, int value);

@@ -54,10 +54,10 @@ void createCurrency(Player *player,
         if (result.empty()) return;
 
         std::string name = result["currency_name"]->getString();
-        auto validation = CurrencyManager::get()->currencyNameValidation(name);
+        auto validation = DataManager::get()->CurrencyMng->currencyNameValidation(name);
         if (validation) {
             std::shared_ptr<Currency> new_currency = std::make_shared<Currency>(name);
-            CurrencyManager::get()->addCurrency(new_currency);
+            DataManager::get()->CurrencyMng->addCurrency(new_currency);
             citizen->getCountry()->getEconomyManager()->setCurrency(new_currency);
             player->sendText(Arrai18n::trl(player->getLanguageCode(),
                                            "country.currency.create.success",

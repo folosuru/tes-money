@@ -13,6 +13,8 @@
 #include <util/dll_declspec.hpp>
 #include <currency/CurrencyManager.hpp>
 #include <money/MoneyAccount.hpp>
+#include <util/player_identify/PlayerIdentify.hpp>
+#include <util/player_identify/PlayerIdentifyProvider.hpp.>
 
 namespace tes {
 class Money;
@@ -21,14 +23,21 @@ class TES_DLL PlayerMoney : public MoneyAccount {
 public:
     bool edited = false;
 
-    PlayerMoney();
+    explicit PlayerMoney(PlayerIdentify);
 
-    PlayerMoney(const nlohmann::json& json, const std::shared_ptr<CurrencyManager>& currency_manager);
+
+
+    static std::shared_ptr<PlayerMoney> init(const nlohmann::json& json,
+                                             const std::shared_ptr<CurrencyManager>& currency_manager,
+                                             const std::shared_ptr<PlayerIdentifyProvider>&);
 
     std::string getName() override;
 
+    const PlayerIdentify identify;
+
     nlohmann::json get_json();
 
+    [[nodiscard]]
     bool has(const Money& money) const noexcept final;
 
     void remove(const Money& money_) final;
@@ -51,7 +60,6 @@ public:
 
 private:
     std::unordered_map<Types::currency , std::shared_ptr<Money>> money;
-    std::string name;
 };
 
 }

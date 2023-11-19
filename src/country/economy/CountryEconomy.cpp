@@ -8,10 +8,9 @@
 
 namespace tes {
 
-void CountryEconomy::runTrigger(std::string_view trigger_name, const std::string& player_name) noexcept {
+void CountryEconomy::runTrigger(std::string_view trigger_name, std::shared_ptr<PlayerMoney> player) noexcept {
     if (money_add_trigger.contains(trigger_name)) {
-        PlayerManager::get()->getPlayer(player_name)
-            ->add(Money(money_add_trigger.at(trigger_name), currency.lock()));
+        player->add(Money(money_add_trigger.at(trigger_name), currency.lock()));
     }
 }
 

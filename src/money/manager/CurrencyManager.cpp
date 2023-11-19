@@ -31,18 +31,6 @@ bool CurrencyManager::exists(std::string str) const noexcept {
     return cur.contains(str);
 }
 
-void CurrencyManager::loadAll() {
-    std::filesystem::create_directories(this->file_export_path);
-    for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
-        if (!std::filesystem::is_regular_file(entry)) continue;
-        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-        this->addCurrency(std::make_shared<Currency>(j), false);
-    }
-    if (this->updater) {
-        this->updater->updateCurrencyList(getAllCurrencyList());
-    }
-}
-
 void CurrencyManager::save(const std::string& key) {
     std::filesystem::create_directories(file_export_path);
     nlohmann::json j = cur.at(key)->get_json();
@@ -58,5 +46,20 @@ util::OptionalMessage<void, Arrai18n::trl_text> CurrencyManager::currencyNameVal
     if (name.empty()) return return_type({"money.currency.validation.fail.empty",{}});
     if (exists(name)) return return_type({"money.currency.validation.fail.already_exist",{name}});
     return return_type();
+}
+
+std::shared_ptr<CurrencyManager> CurrencyManager::load() {
+    auto result = std::make_shared<CurrencyManager>();
+
+    std::filesystem::create_directories(CurrencyManager::file_export_path);
+    for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
+        if (!std::filesystem::is_regular_file(entry)) continue;
+        nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
+        result->addCurrency(std::make_shared<Currency>(j), false);
+    }
+    if (result->updater) {
+        result->updater->updateCurrencyList(result->getAllCurrencyList());
+    }
+    return nullptr;
 }
 }

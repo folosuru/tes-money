@@ -37,7 +37,7 @@ void PluginInit() {
         return true;
     });
     Event::ServerStoppedEvent::subscribe([](const Event::ServerStoppedEvent& event) {
-        tes::PlayerManager::get()->saveAll();
+        tes::DataManager::get()->PlayerMoneyMng->saveAll();
         return true;
     });
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {

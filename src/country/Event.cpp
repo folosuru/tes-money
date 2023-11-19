@@ -1,5 +1,6 @@
 #include "Event.hpp"
 #include <DataManager.hpp>
+#include <util/player_identify/PlayerIdentifyProvider.hpp>
 #include <llapi/mc/BlockInstance.hpp>
 #include <llapi/mc/Player.hpp>
 #include <llapi/mc/Block.hpp>
@@ -13,11 +14,13 @@ bool onBreak(const Event::PlayerDestroyBlockEvent& event) {
     if (!trigger) {
         return true;
     }
-    std::shared_ptr<Citizen> citizen = data->CitizenRefer->get(event.mPlayer->getRealName());
-    if (!citizen) {
+    PlayerIdentify player = PlayerIdentifyProvider::get()->getIdentifyByPlayer(event.mPlayer);
+    std::shared_ptr<Citizen> citizen = data->CitizenRefer->get(player);
+    std::shared_ptr<PlayerMoney> money = data->PlayerMoneyMng->getPlayer(player);
+    if ((!citizen) || (!money)) {
         return true;
     }
-    citizen->getCountry()->economy->runTrigger(trigger.value(), citizen->name);
+    citizen->getCountry()->economy->runTrigger(trigger.value(), money);
     return true;
 }
 }
