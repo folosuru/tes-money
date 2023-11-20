@@ -22,3 +22,5 @@ country.currency.trigger.category.SurfaceBlockBreak = "痴情のブロックを�
 country.currency.trigger.category.OreBlockBreak = "鉱石ブロックを壊したとき"
 country.currency.trigger.WoodBreak.description = "原木を壊した時"
 country.currency.trigger.StoneBreak.description = "石を壊した時"
+
+country.form.countryIndex.description = "｛1｝ページ中{0}ページ目を表示しています"

@@ -4,6 +4,7 @@
 #include <util/Resources.hpp>
 #include <country/citizen/permission/Perimission.hpp>
 #include "currency/CurrencyForm.hpp"
+#include "join_country/JoinCountry.hpp"
 namespace tes::UI::CountryForm {
 
 void countryMenu(Player* player, const std::shared_ptr<DataManager>& data) {
@@ -54,8 +55,10 @@ void countryJoinedMenu(Player* player,
 }
 void countryNotJoinedMenu(Player* player) {
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),"TODO"));
+    static_assert(false,"");
+    auto data = tes::DataManager::get();
     form.addButton("look country index", "", [](Player* pl){});
-    form.addButton("search country", "", [](Player* pl){});
+    form.addButton("search country", "", [data](Player* pl){ findCountry(pl, data);});
     form.addButton("create country", "", [](Player* pl){});
 }
 }

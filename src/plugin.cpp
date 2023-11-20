@@ -41,7 +41,7 @@ void PluginInit() {
         return true;
     });
     Event::PlayerJoinEvent::subscribe([](const Event::PlayerJoinEvent& event) {
-        if (!tes::money::onPlayerJoin(event)) return false;
+        if (!tes::money::onPlayerJoin(event)) [[unlikely]] return false;
         return true;
     });
 }

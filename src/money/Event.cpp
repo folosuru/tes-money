@@ -163,8 +163,9 @@ void init() {
 
 bool onPlayerJoin(const Event::PlayerJoinEvent& event) {
     tes::util::sendText(event.mPlayer, "hoge");
-    tes::DataManager::get()->PlayerMoneyMng->newPlayer(DataManager::get()->player_identify
-                                                        ->getIdentify(event.mPlayer->getRealName()));
+    auto player = DataManager::get()->player_identify->getIdentify(event.mPlayer->getRealName());
+    if (tes::DataManager::get()->PlayerMoneyMng->exists(player)) return true;
+    tes::DataManager::get()->PlayerMoneyMng->newPlayer(player);
     return true;
 }
 
