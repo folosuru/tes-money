@@ -25,6 +25,9 @@ public:
 
     void addCountry(const std::shared_ptr<Country>&);
 
+    [[nodiscard]]
+    const std::unordered_map<country_id, std::shared_ptr<Country>>& getAll() const noexcept;
+
     void saveAll();
 
 private:

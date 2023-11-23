@@ -39,7 +39,10 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
         SQLite::Column permission = query.getColumn(1);
         int country = query.getColumn(2).getInt();
         if (name != last_name) {
-            Citizen::build(refer_, country_manager->getCountry(country), identify->getIdentify(last_name), permission_list);
+            Citizen::build(refer_,
+                           country_manager->getCountry(country),
+                           identify->getIdentify(last_name),
+                           permission_list);
             permission_list.clear();
             last_name = name;
         }
@@ -52,8 +55,5 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
 }
 
 CitizenRefer::CitizenRefer(std::shared_ptr<PlayerIdentifyProvider> identify)
-    : identify_provider(std::move(identify)){
-
-}
-
+    : identify_provider(std::move(identify)) {}
 }

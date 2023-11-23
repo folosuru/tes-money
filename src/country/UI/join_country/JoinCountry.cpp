@@ -15,6 +15,11 @@ void showCountryIndex(Player* pl, const std::shared_ptr<DataManager>& data,int p
     Form::SimpleForm form("", Arrai18n::trl(pl->getLanguageCode(),
                                             "country.form.countryIndex.description",
                                             {std::to_string(page)}));
+    for (const auto& i : data->CountryManager->getAll()) {
+        form.addButton(i.second->getName(), "", [](Player* pl) {
+
+        });
+    }
 }
 
 }

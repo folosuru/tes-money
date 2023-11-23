@@ -39,4 +39,8 @@ void CountryManager::addCountry(const std::shared_ptr<Country>& country_) {
     country.insert({country_->id, country_});
 }
 
+const std::unordered_map<CountryManager::country_id, std::shared_ptr<Country>>& CountryManager::getAll() const noexcept {
+    return this->country;
+}
+
 }
