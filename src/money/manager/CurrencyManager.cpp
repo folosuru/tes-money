@@ -8,23 +8,23 @@
 
 namespace tes {
 
-    std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
-        std::transform(str.begin(), str.end(), str.begin(), tolower);
-        return cur.at(str);
-    }
+std::shared_ptr<Currency> CurrencyManager::getCurrency(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(), tolower);
+    return cur.at(str);
+}
 
-    const std::vector<std::string>& CurrencyManager::getAllCurrencyList() {
-        return currency_name_list;
-    }
+const std::vector<std::string>& CurrencyManager::getAllCurrencyList() {
+    return currency_name_list;
+}
 
-    void CurrencyManager::addCurrency(const std::shared_ptr<Currency>& c, bool updateCommand) {
-        std::string key = c->currency_name;
-        std::transform(key.begin(), key.end(), key.begin(), tolower);
-        cur[key] = c;
-        if (updateCommand && updater) {
-            this->updater->updateCurrencyList(getAllCurrencyList());
-        }
+void CurrencyManager::addCurrency(const std::shared_ptr<Currency>& c, bool updateCommand) {
+    std::string key = c->currency_name;
+    std::transform(key.begin(), key.end(), key.begin(), tolower);
+    cur[key] = c;
+    if (updateCommand && updater) {
+        this->updater->updateCurrencyList(getAllCurrencyList());
     }
+}
 
 bool CurrencyManager::exists(std::string str) const noexcept {
     std::transform(str.begin(), str.end(), str.begin(), tolower);
@@ -36,15 +36,18 @@ void CurrencyManager::save(const std::string& key) {
     nlohmann::json j = cur.at(key)->get_json();
     std::ofstream(std::format("{}/{}.json", file_export_path, cur.at(key)->currency_name)) << j << std::endl;
 }
+
 CurrencyManager::CurrencyManager() = default;
 
-void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater* upd) {
+void CurrencyManager::setCommandUpdater(CurrencyCommandUpdater *upd) {
     this->updater = std::shared_ptr<CurrencyCommandUpdater>(upd);
 }
-util::OptionalMessage<void, Arrai18n::trl_text> CurrencyManager::currencyNameValidation(const std::string& name) const noexcept {
-        typedef tes::util::OptionalMessage<void, Arrai18n::trl_text> return_type;
-    if (name.empty()) return return_type({"money.currency.validation.fail.empty",{}});
-    if (exists(name)) return return_type({"money.currency.validation.fail.already_exist",{name}});
+
+util::OptionalMessage<void,
+                      Arrai18n::trl_text> CurrencyManager::currencyNameValidation(const std::string& name) const noexcept {
+    typedef tes::util::OptionalMessage<void, Arrai18n::trl_text> return_type;
+    if (name.empty()) return return_type({"money.currency.validation.fail.empty", {}});
+    if (exists(name)) return return_type({"money.currency.validation.fail.already_exist", {name}});
     return return_type();
 }
 

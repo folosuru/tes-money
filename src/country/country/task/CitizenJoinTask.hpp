@@ -7,6 +7,7 @@
 #include <string>
 #include <country/CountryManager.hpp>
 #include <utility>
+
 namespace tes {
 
 class CitizenJoinTask : public AsyncTask::AsyncTaskBase {
@@ -29,6 +30,7 @@ public:
 
 private:
     std::string target_name;
+
     CountryManager::country_id country_id;
 };
 }  // tes

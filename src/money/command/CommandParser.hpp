@@ -9,6 +9,7 @@
 #include <llapi/DynamicCommandAPI.h>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
+
 namespace tes {
 class CommandParser {
 public:

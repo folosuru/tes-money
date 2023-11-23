@@ -5,6 +5,7 @@
 #include <AsyncTask/TaskManager.hpp>
 #include "task/AddPermissionTask.hpp"
 #include "task/RemovePermissionTask.hpp"
+
 namespace tes {
 bool Citizen::hasPermission(tes::Permission perm) {
     return this->permission.contains(perm);
@@ -20,9 +21,10 @@ Citizen::Citizen(const std::shared_ptr<Country>& country_, PlayerIdentify name_)
 Citizen::Citizen(const std::shared_ptr<Country>& country_,
                  PlayerIdentify name_,
                  std::unordered_set<Permission> permission_)
-                 : Citizen(country_, std::move(name_)) {
+    : Citizen(country_, std::move(name_)) {
     permission = std::move(permission_);
 }
+
 void Citizen::addPermission(Permission perm) {
     if (!permission.contains(perm)) {
         permission.insert(perm);
@@ -56,6 +58,7 @@ std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& ref
     country_->getCitizenManager()->add(ptr);
     return ptr;
 }
+
 std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& refer,
                                         const std::shared_ptr<Country>& country_,
                                         PlayerIdentify name) {

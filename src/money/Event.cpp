@@ -17,6 +17,7 @@
 #include <money/player/PlayerManager.hpp>
 #include <DataManager.hpp>
 #include "command/CommandParser.hpp"
+
 namespace tes {
 namespace money {
 void init_command() {
@@ -153,6 +154,7 @@ void init_command() {
         CommandPermissionLevel::Any);  // The permission level
     tes::DataManager::get()->CurrencyMng->setCommandUpdater(new tes::CurrencyCommandUpdater(money_normal, money_edit));
 }
+
 void init() {
     using tes::Types::player_money;
     using tes::Types::currency;

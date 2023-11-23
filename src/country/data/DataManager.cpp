@@ -11,8 +11,7 @@ DataManager::DataManager() :
     PermissionManager(std::make_shared<tes::PermissionManager>()),
     CitizenRefer(CitizenRefer::load(CountryManager,
                                     PermissionManager,
-                                    player_identify))
-     {}
+                                    player_identify)) {}
 
 std::shared_ptr<DataManager> DataManager::get() {
     if (instance == nullptr) {

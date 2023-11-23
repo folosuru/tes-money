@@ -5,9 +5,10 @@
 #include <util/Resources.hpp>
 #include <utility>
 #include <functional>
+
 namespace tes::UI::CountryForm {
 
-void currencySetting(Player* player,
+void currencySetting(Player *player,
                      const std::shared_ptr<Citizen>& citizen,
                      const std::shared_ptr<DataManager>& data) {
     if (!citizen->hasPermission(country_permission::currency)) {
@@ -50,7 +51,7 @@ void createCurrency(Player *player,
     form.addLabel("label",
                   Arrai18n::trl(player->getLanguageCode(),
                                 "country.form.currency.create.info"));
-    form.sendTo(player, [manager, citizen](Player* player, auto result){
+    form.sendTo(player, [manager, citizen](Player *player, auto result) {
         if (result.empty()) return;
 
         std::string name = result["currency_name"]->getString();
@@ -68,6 +69,7 @@ void createCurrency(Player *player,
 
     });
 }
+
 namespace {
 std::string getTriggerValueText(const std::shared_ptr<CountryEconomy>& economy, std::string trigger) {
     if (economy->existsTrigger(trigger)) {
@@ -75,6 +77,7 @@ std::string getTriggerValueText(const std::shared_ptr<CountryEconomy>& economy, 
     }
     return "0";
 }
+
 const std::string trigger_wood_break = "WoodBreak";
 const std::string trigger_stone_break = "StoneBreak";
 
@@ -115,26 +118,26 @@ void showTriggerSettingForm(const std::shared_ptr<CountryEconomy>& economy,
                             const std::function<void(void)>& callback) {
     Form::CustomForm form("");
     for (const auto& trigger : category->Child) {
-        form.addToggle("enable_"+trigger,
+        form.addToggle("enable_" + trigger,
                        Arrai18n::trl(pl->getLanguageCode(),
-                                     "country.currency.trigger."+trigger+".description"),
+                                     "country.currency.trigger." + trigger + ".description"),
                        economy->existsTrigger(trigger));
-        form.addInput(trigger+"_trigger_value",
+        form.addInput(trigger + "_trigger_value",
                       Arrai18n::trl(pl->getLanguageCode(),
                                     "country.currency.trigger.get_value"),
-                      getTriggerValueText(economy,trigger));
+                      getTriggerValueText(economy, trigger));
     }
 
-    form.sendTo(pl,[category, economy, callback](Player* player,
-                                                 std::map<string, std::shared_ptr<Form::CustomFormElement>> result){
+    form.sendTo(pl, [category, economy, callback](Player *player,
+                                                  std::map<string, std::shared_ptr<Form::CustomFormElement>> result) {
         if (result.empty()) {
             callback();
             return;
         }
         for (const auto& trigger : category->Child) {
-            if (result["enable_"+trigger]->getBool()) {
+            if (result["enable_" + trigger]->getBool()) {
                 try {
-                    int value = std::stoi(result[trigger+"_trigger_value"]->getString());
+                    int value = std::stoi(result[trigger + "_trigger_value"]->getString());
                     if (value <= 0) {
                         continue;
                     }
@@ -174,8 +177,8 @@ void editMoneyAddTrigger(Player *player,
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
                                             "country.currency.trigger.description"));
     for (const auto& category : data->MoneyAddTriggerMng->getAllWithCategory()) {
-        form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.currency.trigger.category."+category->name),
-                       "",[=](Player* pl){
+        form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.currency.trigger.category." + category->name),
+                       "", [=](Player *pl) {
                 showTriggerSettingForm(economy, category, pl, [=]() {
                     editMoneyAddTrigger(player, citizen, data);
                 });

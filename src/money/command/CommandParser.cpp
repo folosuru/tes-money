@@ -1,14 +1,16 @@
 #include "CommandParser.hpp"
+
 #ifndef DEBUG_WITHOUT_LLAPI
 #include <money/player/PlayerManager.hpp>
 #include <string>
 #include <DataManager.hpp>
+
 namespace tes {
 CommandParser::CommandParser(const CommandOrigin& origin,
                              CommandOutput& output,
                              std::unordered_map<string, DynamicCommand::Result>& results) :
-                             origin(origin), output(output), results(results),
-                             origin_language(origin.getPlayer()->getLanguageCode()) {}
+    origin(origin), output(output), results(results),
+    origin_language(origin.getPlayer()->getLanguageCode()) {}
 
 std::optional<Types::player_money> CommandParser::getOriginMoney() {
     auto mng = tes::DataManager::get()->PlayerMoneyMng;
@@ -16,7 +18,7 @@ std::optional<Types::player_money> CommandParser::getOriginMoney() {
     if (!mng->exists(name)) {
         output.error(
             Arrai18n::trl(origin_language,
-            "money.player_not_found", {name->name}));
+                          "money.player_not_found", {name->name}));
         return std::nullopt;
     }
     return mng->getPlayer(name);

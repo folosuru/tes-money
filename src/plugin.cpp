@@ -20,8 +20,7 @@
 #include <Nlohmann/json.hpp>
 #include "version.h"
 
-
- // We recommend using the global logger.
+// We recommend using the global logger.
 extern Logger logger;
 
 /**

@@ -5,9 +5,10 @@
 #include <country/citizen/permission/Perimission.hpp>
 #include "currency/CurrencyForm.hpp"
 #include "join_country/JoinCountry.hpp"
+
 namespace tes::UI::CountryForm {
 
-void countryMenu(Player* player, const std::shared_ptr<DataManager>& data) {
+void countryMenu(Player *player, const std::shared_ptr<DataManager>& data) {
     if (auto citizen = data->CitizenRefer->get(player->getRealName());citizen) {
         countryJoinedMenu(player, citizen, data);
         return;
@@ -16,7 +17,8 @@ void countryMenu(Player* player, const std::shared_ptr<DataManager>& data) {
         return;
     }
 }
-void countryJoinedMenu(Player* player,
+
+void countryJoinedMenu(Player *player,
                        const std::shared_ptr<Citizen>& citizen,
                        const std::shared_ptr<DataManager>& data) {
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
@@ -24,41 +26,42 @@ void countryJoinedMenu(Player* player,
                                             {citizen->getCountry()->getName()}));
     if (citizen->hasPermission(country_permission::currency)) {  // currency
         form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.top.currency"),
-                       "", [citizen,data](Player *pl) {
-            currencySetting(pl,citizen,data);
-        });
+                       "", [citizen, data](Player *pl) {
+                currencySetting(pl, citizen, data);
+            });
     }
-    form.addButton(Arrai18n::trl(player->getLanguageCode(),"country.form.top.left"),
-                   "",[citizen, data](Player* pl) {
-        Form::ModalForm form(Arrai18n::trl(pl->getLanguageCode(),
-                                           "country.form.left.title"),
-                             Arrai18n::trl(pl->getLanguageCode(),
-                                           "country.form.left.description",
-                                           {citizen->getCountry()->getName()}),
-                             Arrai18n::trl(pl->getLanguageCode(),"yes"),
-                             Arrai18n::trl(pl->getLanguageCode(),"no"));
+    form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.top.left"),
+                   "", [citizen, data](Player *pl) {
+            Form::ModalForm form(Arrai18n::trl(pl->getLanguageCode(),
+                                               "country.form.left.title"),
+                                 Arrai18n::trl(pl->getLanguageCode(),
+                                               "country.form.left.description",
+                                               {citizen->getCountry()->getName()}),
+                                 Arrai18n::trl(pl->getLanguageCode(), "yes"),
+                                 Arrai18n::trl(pl->getLanguageCode(), "no"));
 
-        form.sendTo(pl,[citizen, data](Player* player, bool isConfirm){
-            if (isConfirm) {
-                player->sendText(Arrai18n::trl(player->getLanguageCode(),
-                                               "country.left.complete",
-                                               {citizen->getCountry()->getName()}));
-                citizen->getCountry()->getCitizenManager()->ban(citizen->name);
-            } else {
-                countryJoinedMenu(player, citizen, data);
-            }
+            form.sendTo(pl, [citizen, data](Player *player, bool isConfirm) {
+                if (isConfirm) {
+                    player->sendText(Arrai18n::trl(player->getLanguageCode(),
+                                                   "country.left.complete",
+                                                   {citizen->getCountry()->getName()}));
+                    citizen->getCountry()->getCitizenManager()->ban(citizen->name);
+                } else {
+                    countryJoinedMenu(player, citizen, data);
+                }
+            });
         });
-    });
 
     form.addButton("Exit");
     form.sendTo(player);
 }
-void countryNotJoinedMenu(Player* player) {
-    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),"TODO"));
-    static_assert(false,"");
+
+void countryNotJoinedMenu(Player *player) {
+    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(), "TODO"));
+    static_assert(false, "");
     auto data = tes::DataManager::get();
-    form.addButton("look country index", "", [](Player* pl){});
-    form.addButton("search country", "", [data](Player* pl){ findCountry(pl, data);});
-    form.addButton("create country", "", [](Player* pl){});
+    form.addButton("look country index", "", [](Player *pl) {});
+    form.addButton("search country", "", [data](Player *pl) { findCountry(pl, data); });
+    form.addButton("create country", "", [](Player *pl) {});
 }
 }

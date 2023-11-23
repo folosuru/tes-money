@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <util/Resources.hpp>
 #include <SQLiteCpp/SQLiteCpp.h>
+
 namespace tes {
 
 std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) const {
@@ -26,20 +27,19 @@ std::shared_ptr<CountryManager> CountryManager::build(const std::shared_ptr<Mone
     return result;
 }
 
-
 void CountryManager::saveAll() {
     for (const auto& i : country) {
         std::ofstream(std::format("{}/{}.json", data_save_path, i.second->id))
-            << i.second->get_json()  << std::endl;
+            << i.second->get_json() << std::endl;
     }
 }
-
 
 void CountryManager::addCountry(const std::shared_ptr<Country>& country_) {
     country.insert({country_->id, country_});
 }
 
-const std::unordered_map<CountryManager::country_id, std::shared_ptr<Country>>& CountryManager::getAll() const noexcept {
+const std::unordered_map<CountryManager::country_id,
+                         std::shared_ptr<Country>>& CountryManager::getAll() const noexcept {
     return this->country;
 }
 

@@ -8,6 +8,7 @@
 #include <types/GeneralTypes.hpp>
 #include <string>
 #include <utility>
+
 namespace tes {
 class RemovePermissionTask : public AsyncTask::AsyncTaskBase {
 public:
@@ -28,9 +29,9 @@ public:
 
 private:
     Types::player_name name;
+
     std::string permission_name;
 };
-
 
 }
 #endif //TES_COUNTRY_SRC_CITIZEN_TASK_REMOVEPERMISSIONTASK_HPP_

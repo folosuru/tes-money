@@ -9,12 +9,12 @@
 #include <country/Country.hpp>
 
 namespace tes::UI::CountryForm {
-    void countryMenu(Player *, const std::shared_ptr<DataManager>&);
+void countryMenu(Player *, const std::shared_ptr<DataManager>&);
 
-    void countryJoinedMenu(Player*,
-                           const std::shared_ptr<Citizen>&,
-                           const std::shared_ptr<DataManager>&);
+void countryJoinedMenu(Player *,
+                       const std::shared_ptr<Citizen>&,
+                       const std::shared_ptr<DataManager>&);
 
-    void countryNotJoinedMenu(Player *);
+void countryNotJoinedMenu(Player *);
 }
 #endif  // TES_MONEY_COUNTRY_SRC_UI_GENERAL_HPP_

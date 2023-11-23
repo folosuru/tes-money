@@ -14,7 +14,6 @@ void CountryEconomy::runTrigger(std::string_view trigger_name, std::shared_ptr<P
     }
 }
 
-
 std::shared_ptr<Currency> CountryEconomy::getCurrency() {
     return currency.lock();
 }
@@ -26,6 +25,7 @@ void CountryEconomy::setCurrency(const std::shared_ptr<Currency>& new_cur) {
 Types::money_value_t CountryEconomy::getValue(const std::string& trigger_name) {
     return money_add_trigger.at(trigger_name);
 }
+
 bool CountryEconomy::existsTrigger(const std::string& name) const noexcept {
     return money_add_trigger.contains(name);
 }

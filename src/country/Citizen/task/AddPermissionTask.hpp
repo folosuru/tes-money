@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 #include <types/GeneralTypes.hpp>
+
 namespace tes {
 
 class AddPermissionTask : public AsyncTask::AsyncTaskBase {
@@ -30,6 +31,7 @@ public:
 
 private:
     Types::player_name name;
+
     std::string permission_name;
 };
 }  // tes

@@ -6,11 +6,12 @@
 #include <util/Resources.hpp>
 #include <string>
 #include <utility>
+
 namespace tes {
 
 class CitizenBanTask : public AsyncTask::AsyncTaskBase {
 public:
-    explicit CitizenBanTask(std::string name)  : target_name(std::move(name)) {}
+    explicit CitizenBanTask(std::string name) : target_name(std::move(name)) {}
 
     void onRun() override {
         SQLite::Database db(country_db_file,

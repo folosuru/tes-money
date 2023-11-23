@@ -17,14 +17,18 @@ PlayerIdentify PlayerIdentifyProvider::getIdentify(const std::string& name) {
     this->identify.insert({{new_identify->name.begin(), new_identify->name.end()}, new_identify});
     return new_identify;
 }
+
 #ifndef DEBUG_WITHOUT_LLAPI
+
 template<class T>
 PlayerIdentify PlayerIdentifyProvider::getIdentifyByPlayer(T& pl) {
     return getIdentify(pl.getRealName());
 }
+
 template<class T>
-PlayerIdentify PlayerIdentifyProvider::getIdentifyByPlayer(T* pl) {
+PlayerIdentify PlayerIdentifyProvider::getIdentifyByPlayer(T *pl) {
     return getIdentify(pl->getRealName());
 }
+
 #endif
 }

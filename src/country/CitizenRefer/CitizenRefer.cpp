@@ -3,6 +3,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <util/Resources.hpp>
 #include <utility>
+
 namespace tes {
 std::shared_ptr<Citizen> CitizenRefer::get(Types::player_name_view name) {
     return this->get(this->identify_provider->getIdentify(name));
