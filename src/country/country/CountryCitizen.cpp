@@ -29,4 +29,8 @@ void CountryCitizen::ban(const PlayerIdentify& name) {
     citizens.erase(name);
 }
 
+size_t CountryCitizen::getCitizenCount() const noexcept {
+    return citizens.size();
+}
+
 }

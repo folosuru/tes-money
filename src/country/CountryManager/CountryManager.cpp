@@ -17,7 +17,6 @@ std::shared_ptr<CountryManager> CountryManager::build(const std::shared_ptr<Mone
     SQLite::Database db(country_db_file,
                         SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     db.exec("CREATE TABLE IF NOT EXISTS country (name string, country int);");
-
     SQLite::Statement query(db, "SELECT name, country FROM country");
     while (query.executeStep()) {
         std::string name = query.getColumn(0).getString();
@@ -41,6 +40,10 @@ void CountryManager::addCountry(const std::shared_ptr<Country>& country_) {
 const std::unordered_map<CountryManager::country_id,
                          std::shared_ptr<Country>>& CountryManager::getAll() const noexcept {
     return this->country;
+}
+
+CountryManager::country_id CountryManager::genNextCountryId() const noexcept {
+    return this->country.size();
 }
 
 }

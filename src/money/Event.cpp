@@ -1,3 +1,4 @@
+#ifndef DEBUG_WITHOUT_LLAPI
 /**
  * @file plugin.cpp
  * @brief The main file of the plugin
@@ -173,3 +174,4 @@ bool onPlayerJoin(const Event::PlayerJoinEvent& event) {
 
 }
 }
+#endif

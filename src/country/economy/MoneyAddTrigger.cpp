@@ -3,23 +3,34 @@
 #include <fstream>
 
 namespace tes {
-std::optional<std::string_view> MoneyAddTriggerManager::getTriggerOnBreak(int id, int data) {
-    if (trigger_on_break.contains({id, data})) {
-        return trigger_on_break.at({id, data});
+std::optional<MoneyAddTriggerKey> MoneyAddTriggerManager::getTriggerOnBreak(int id, int data) {
+    if (auto id_map = trigger_on_break.find(id); id_map != trigger_on_break.end()) {
+        if (auto result = id_map->second.find(data); result != id_map->second.end()) {
+            return result->second;
+        }
     }
     return std::nullopt;
 }
 
 void MoneyAddTriggerManager::load() {
     nlohmann::json data = nlohmann::json::parse(std::ifstream(trigger_define_file));
-    for (const auto& category : data.items()) {
-        std::vector<std::string> triggers;
-        for (const auto& trigger : category.value().items()) {
-            triggers.push_back(trigger.key());
-            for (const auto& block : trigger.value()) {
-                std::shared_ptr<std::string> key_ptr;
-                all_key.insert({*key_ptr, key_ptr});
-                trigger_on_break.insert({block.get<std::pair<int, int>>(), trigger.key()});
+    /*
+     * {
+     *  "SurfaceBlockBreak" : {
+     *      "DirtBreak" : [
+     *          [2,0],
+     *          [3,0]
+     *      ],
+     *   }
+     *  }
+     */
+    for (const auto& category : data.items()) {  // foreach category
+        std::vector<MoneyAddTriggerKey> triggers;  // contain triggers in category
+        for (const auto& trigger : category.value().items()) { // foreach block
+            MoneyAddTriggerKey key_ptr = std::make_shared<std::string>(trigger.key());
+            triggers.push_back(key_ptr);
+            for (const auto& block : trigger.value()) {  // foreach block id
+                trigger_on_break[block.at(0).get<int>()][ block.at(1).get<int>()] = key_ptr;
             }
         }
         all_trigger.push_back(std::make_shared<MoneyAddTriggerCategory>(category.key(), triggers));
@@ -29,4 +40,9 @@ void MoneyAddTriggerManager::load() {
 const std::vector<std::shared_ptr<MoneyAddTriggerCategory>>& MoneyAddTriggerManager::getAllWithCategory() {
     return all_trigger;
 }
+
+MoneyAddTriggerKey MoneyAddTriggerManager::getKey(const std::string& name) const {
+    return trigger_by_name.at(name);
+}
+
 }

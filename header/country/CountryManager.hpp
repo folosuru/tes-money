@@ -28,6 +28,8 @@ public:
     [[nodiscard]]
     const std::unordered_map<country_id, std::shared_ptr<Country>>& getAll() const noexcept;
 
+    country_id genNextCountryId() const noexcept;
+
     void saveAll();
 
 private:

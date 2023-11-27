@@ -1,3 +1,4 @@
+#ifndef DEBUG_WITHOUT_LLAPI
 #include "CountryForm.hpp"
 #include <llapi/FormUI.h>
 #include <CppArrai18n/Arrai18n.hpp>
@@ -58,10 +59,15 @@ void countryJoinedMenu(Player *player,
 
 void countryNotJoinedMenu(Player *player) {
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(), "TODO"));
-    static_assert(false, "");
     auto data = tes::DataManager::get();
-    form.addButton("look country index", "", [](Player *pl) {});
-    form.addButton("search country", "", [data](Player *pl) { findCountry(pl, data); });
-    form.addButton("create country", "", [](Player *pl) {});
+    form.addButton("look country index", "", [data](Player *pl) {
+        showCountryIndex(pl, data);
+    });
+    //form.addButton("search country", "", [data](Player *pl) { findCountry(pl, data); });
+    form.addButton("create country", "", [data](Player *pl) {
+        createCountry(pl, data->CountryManager, data->player_identify, data->CitizenRefer);
+    });
+    form.sendTo(player);
 }
 }
+#endif

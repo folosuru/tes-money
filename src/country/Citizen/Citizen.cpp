@@ -13,7 +13,7 @@ bool Citizen::hasPermission(tes::Permission perm) {
 
 Citizen::Citizen(const std::shared_ptr<Country>& country_, PlayerIdentify name_)
     : country(country_), name(std::move(name_)) {
-    if (country.lock()) {
+    if (!country.lock()) {
         throw std::invalid_argument("country cannot be nullptr");
     }
 }

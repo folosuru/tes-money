@@ -14,6 +14,8 @@ Country::Country(std::string name_,
 
 }
 
+Country::Country(std::string name_, Country::country_id id_)
+    : name(std::move(name_)), id(id_), citizen(std::make_shared<CountryCitizen>()), economy(std::make_shared<CountryEconomy>()) {}
 nlohmann::json Country::get_json() {
     nlohmann::json result;
     result["id"] = id;
@@ -46,4 +48,5 @@ std::shared_ptr<Country> Country::load(const std::string& name,
                                      std::make_shared<CountryCitizen>(),
                                      CountryEconomy::load(id_, trigger, currency));
 }
+
 }

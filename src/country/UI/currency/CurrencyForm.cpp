@@ -1,3 +1,4 @@
+#ifndef DEBUG_WITHOUT_LLAPI
 #include "CurrencyForm.hpp"
 #include <llapi/FormUI.h>
 #include <CppArrai18n/Arrai18n.hpp>
@@ -5,7 +6,6 @@
 #include <util/Resources.hpp>
 #include <utility>
 #include <functional>
-
 namespace tes::UI::CountryForm {
 
 void currencySetting(Player *player,
@@ -71,7 +71,7 @@ void createCurrency(Player *player,
 }
 
 namespace {
-std::string getTriggerValueText(const std::shared_ptr<CountryEconomy>& economy, std::string trigger) {
+std::string getTriggerValueText(const std::shared_ptr<CountryEconomy>& economy, const MoneyAddTriggerKey& trigger) {
     if (economy->existsTrigger(trigger)) {
         return std::to_string(economy->getValue(trigger));
     }
@@ -118,11 +118,11 @@ void showTriggerSettingForm(const std::shared_ptr<CountryEconomy>& economy,
                             const std::function<void(void)>& callback) {
     Form::CustomForm form("");
     for (const auto& trigger : category->Child) {
-        form.addToggle("enable_" + trigger,
+        form.addToggle("enable_" + *trigger,
                        Arrai18n::trl(pl->getLanguageCode(),
-                                     "country.currency.trigger." + trigger + ".description"),
+                                     "country.currency.trigger." + *trigger + ".description"),
                        economy->existsTrigger(trigger));
-        form.addInput(trigger + "_trigger_value",
+        form.addInput(*trigger + "_trigger_value",
                       Arrai18n::trl(pl->getLanguageCode(),
                                     "country.currency.trigger.get_value"),
                       getTriggerValueText(economy, trigger));
@@ -135,9 +135,9 @@ void showTriggerSettingForm(const std::shared_ptr<CountryEconomy>& economy,
             return;
         }
         for (const auto& trigger : category->Child) {
-            if (result["enable_" + trigger]->getBool()) {
+            if (result["enable_" + *trigger]->getBool()) {
                 try {
-                    int value = std::stoi(result[trigger + "_trigger_value"]->getString());
+                    int value = std::stoi(result[*trigger + "_trigger_value"]->getString());
                     if (value <= 0) {
                         continue;
                     }
@@ -187,3 +187,4 @@ void editMoneyAddTrigger(Player *player,
     form.sendTo(player);
 }
 }
+#endif

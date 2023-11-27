@@ -1,5 +1,6 @@
 #ifndef TES_SRC_COUNTRY_UI_JOIN_COUNTRY_JOINCOUNTRY_HPP_
 #define TES_SRC_COUNTRY_UI_JOIN_COUNTRY_JOINCOUNTRY_HPP_
+#ifndef DEBUG_WITHOUT_LLAPI
 #include <functional>
 #include <string>
 #include <memory>
@@ -11,5 +12,13 @@ namespace tes::UI::CountryForm {
 void findCountry(Player *, const std::shared_ptr<DataManager>&);
 
 void showCountryIndex(Player *, const std::shared_ptr<DataManager>&, int page = 0);
+
+void countryJoinConfirm(Player *, const std::shared_ptr<Country>&, const std::shared_ptr<CitizenRefer>);
+
+void createCountry(Player *player,
+                   const std::shared_ptr<CountryManager>& mng,
+                   const std::shared_ptr<PlayerIdentifyProvider>& identify_prov,
+                   std::shared_ptr<CitizenRefer> ref);
 }
+#endif
 #endif //TES_SRC_COUNTRY_UI_JOIN_COUNTRY_JOINCOUNTRY_HPP_

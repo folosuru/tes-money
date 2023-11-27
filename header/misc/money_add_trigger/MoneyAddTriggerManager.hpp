@@ -5,28 +5,27 @@
 #include <map>
 #include <memory>
 #include <unordered_map>
-#include <string_view>
+#include <string>
 #include "MoneyAddTriggerCategory.hpp"
 namespace tes {
-using MoneyAddTriggerKey = std::string_view;
+using MoneyAddTriggerKey = std::shared_ptr<std::string>;
 class MoneyAddTriggerManager {
 public:
 
     [[nodiscard]]
-    std::optional<std::string_view> getTriggerOnBreak(int id, int data);
+    std::optional<MoneyAddTriggerKey> getTriggerOnBreak(int id, int data);
 
     void load();
 
     const std::vector<std::shared_ptr<MoneyAddTriggerCategory>>& getAllWithCategory();
 
-    std::optional<MoneyAddTriggerKey> getKey(const std::string&);
-
-    MoneyAddTriggerKey getOrGenKey(const std::string&);
+    [[nodiscard]]
+    MoneyAddTriggerKey getKey(const std::string&) const;
 
 private:
     std::vector<std::shared_ptr<MoneyAddTriggerCategory>> all_trigger;
-    std::map<std::pair<int,int>, std::string_view> trigger_on_break;
-    std::unordered_map<std::string_view, std::shared_ptr<std::string>> all_key;
+    std::unordered_map<std::string, MoneyAddTriggerKey> trigger_by_name;
+    std::unordered_map<int,std::unordered_map<int, MoneyAddTriggerKey>> trigger_on_break;
     static const inline std::string trigger_define_file = "plugin/tes/country/MoneyTrigger.json";
 };
 }

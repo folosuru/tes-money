@@ -53,8 +53,11 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
         }
         permission_list.insert(perm_mng->getSv(permission.getString()));
     }
+    return refer_;
 }
 
 CitizenRefer::CitizenRefer(std::shared_ptr<PlayerIdentifyProvider> identify)
     : identify_provider(std::move(identify)) {}
+
+
 }

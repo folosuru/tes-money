@@ -27,12 +27,7 @@ public:
     ~Country() = default;
 
     explicit Country(std::string name_,
-                     country_id id_,
-                     const std::shared_ptr<MoneyAddTriggerManager>& trigger,
-                     const std::shared_ptr<CurrencyManager>& currency);
-    explicit Country(std::string name_,
-                     country_id id_,
-                     const std::shared_ptr<MoneyAddTriggerManager>& trigger);
+                     country_id id_);
     explicit Country(std::string name_,
                      country_id id_,
                      std::shared_ptr<CountryCitizen>  citizen,
@@ -60,6 +55,7 @@ public:
 private:
     // TODO: メンバをconstのpublicにしてgetXX関数を破壊する
     std::string name;
+    std::string description;
     std::shared_ptr<CountryCitizen> citizen;
 };
 }

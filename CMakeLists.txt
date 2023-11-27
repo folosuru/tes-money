@@ -34,3 +34,5 @@ target_link_libraries(${project_name_}
 target_include_directories(${project_name_} PRIVATE
         ${CMAKE_SOURCE_DIR}/header/
         )
+
+add_subdirectory(test)

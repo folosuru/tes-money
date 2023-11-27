@@ -1,3 +1,5 @@
+
+#ifndef DEBUG_WITHOUT_LLAPI
 #include "Event.hpp"
 #include <DataManager.hpp>
 #include <util/player_identify/PlayerIdentifyProvider.hpp>
@@ -25,3 +27,4 @@ bool onBreak(const Event::PlayerDestroyBlockEvent& event) {
 }
 }
 }
+#endif

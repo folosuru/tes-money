@@ -26,24 +26,25 @@ public:
                                                 const std::shared_ptr<CurrencyManager>& currency_mng);
     void setCurrency(const std::shared_ptr<Currency>&);
 
-    Types::money_value_t getValue(const std::string& trigger_name);
+    Types::money_value_t getValue(const MoneyAddTriggerKey& trigger_name);
 
-    void runTrigger(std::string_view trigger_name, std::shared_ptr<PlayerMoney> player) noexcept;
+    void runTrigger(MoneyAddTriggerKey trigger_name, std::shared_ptr<PlayerMoney> player) noexcept;
 
     [[nodiscard]]
-    bool existsTrigger(const std::string& name) const noexcept;
+    bool existsTrigger(const MoneyAddTriggerKey& name) const noexcept;
 
-    void updateTrigger(const std::string& trigger_name, int value);
+    void updateTrigger(const MoneyAddTriggerKey& trigger_name, int value);
 
-    void removeTrigger(const std::string& trigger_name);
+    void removeTrigger(const MoneyAddTriggerKey& trigger_name);
 
 private:
     CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
                    std::weak_ptr<Currency> currency,
-                   std::weak_ptr<MoneyAddTriggerManager>);
+                   std::weak_ptr<Country>);
+    explicit CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
+                            std::weak_ptr<Country>);
     // money_value_type
     std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> money_add_trigger;
-    std::weak_ptr<MoneyAddTriggerManager> trigger_mng;
     std::weak_ptr<Currency> currency;
     std::weak_ptr<Country> country;
 };

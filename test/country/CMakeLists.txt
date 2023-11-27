@@ -3,8 +3,12 @@ project(${project_name_})
 set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE files
         ${${project_name_}_SOURCE_DIR}
-        ${PROJECT_SOURCE_DIR}/../src/*/*.cpp
-        ${PROJECT_SOURCE_DIR}/../src/*/*.hpp
+        ${CMAKE_SOURCE_DIR}/src/country/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/country/*.hpp
+        ${CMAKE_SOURCE_DIR}/src/misc/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/money/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/money/*.hpp
+
 )
 add_definitions(
         -D DEBUG_WITHOUT_LLAPI
@@ -27,5 +31,5 @@ target_link_libraries(${project_name_}
         sqlite3
 )
 target_include_directories(${project_name_} PRIVATE
-        ${${project_name_}_SOURCE_DIR}/../header/country/
+        ${CMAKE_SOURCE_DIR}/header/
 )

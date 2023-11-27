@@ -1,8 +1,11 @@
 [ja-JP]
 yes = "はい"
 no = "いいえ"
+country.form.return = "戻る"
 
 country.joined = "{0}に参加しました"
+country.join = "参加する"
+country.join.confirm = "{0}に参加しますか？"
 country.form.joined.top = "現在{0}に所属しています"
 country.form.top.left = "脱退する"
 country.form.top.currency = "通貨の設定"
@@ -16,6 +19,9 @@ country.form.currency.create.info = "通貨の名前はコマンドなどで入�
 country.currency.create.success = "通貨{0}を作成しました！"
 country.left.complete = "{0}を脱退しました"
 
+country.form.create.description = "国家の作成"
+country.form.create.name = "国家の名前"
+
 country.currency.trigger.description = "国民が特定の行動をした時にお金を手に入れられるように設定できます。"
 country.currency.trigger.get_value = "入手額"
 country.currency.trigger.category.SurfaceBlockBreak = "痴情のブロックを壊したとき"
@@ -24,3 +30,4 @@ country.currency.trigger.WoodBreak.description = "原木を壊した時"
 country.currency.trigger.StoneBreak.description = "石を壊した時"
 
 country.form.countryIndex.description = "｛1｝ページ中{0}ページ目を表示しています"
+country.form.countryDetail = ""
