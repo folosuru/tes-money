@@ -9,6 +9,12 @@ namespace tes {
 
     void init_Database();
 
+    /**
+     * delete all data in DB.
+     * Do not use without debug...
+     */
+    void reset_Database();
+
     SQLite::Database getCountryDB();
 }
 #endif  // TES_COUNTRY_HEADER_COUNTRY_UTIL_RESOURCES_HPP_

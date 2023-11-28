@@ -12,7 +12,7 @@
 #include "task/TriggerRemoveTask.hpp"
 namespace tes {
 
-void CountryEconomy::runTrigger(MoneyAddTriggerKey trigger_name, std::shared_ptr<PlayerMoney> player) noexcept {
+void CountryEconomy::runTrigger(const MoneyAddTriggerKey& trigger_name, std::shared_ptr<PlayerMoney> player) noexcept {
     if (money_add_trigger.contains(trigger_name)) {
         player->add(Money(money_add_trigger.at(trigger_name), currency.lock()));
     }
@@ -24,7 +24,7 @@ std::shared_ptr<Currency> CountryEconomy::getCurrency() {
 
 void CountryEconomy::setCurrency(const std::shared_ptr<Currency>& new_cur) {
     currency = new_cur;
-    AsyncTask::add_task(std::make_shared<task::CurrencyRegistrationTask>(new_cur->currency_name, country.lock()->id));
+    AsyncTask::add_task(std::make_shared<task::CurrencyRegistrationTask>(new_cur->currency_name, country.id));
 }
 
 Types::money_value_t CountryEconomy::getValue(const MoneyAddTriggerKey& trigger_name) {
@@ -38,22 +38,22 @@ bool CountryEconomy::existsTrigger(const MoneyAddTriggerKey& name) const noexcep
 void CountryEconomy::updateTrigger(const MoneyAddTriggerKey& trigger_name, int value) {
     if (value <= 0) return;
     money_add_trigger[trigger_name] = value;
-    AsyncTask::add_task(std::make_shared<task::TriggerUpsertTask>(*trigger_name, value, country.lock()->id));
+    AsyncTask::add_task(std::make_shared<task::TriggerUpsertTask>(*trigger_name, value, country.id));
 }
 
 void CountryEconomy::removeTrigger(const MoneyAddTriggerKey& trigger_name) {
     if (money_add_trigger.contains(trigger_name)) {
         money_add_trigger.erase(trigger_name);
-        AsyncTask::add_task(std::make_shared<task::TriggerRemoveTask>(*trigger_name, country.lock()->id));
+        AsyncTask::add_task(std::make_shared<task::TriggerRemoveTask>(*trigger_name, country.id));
     }
 }
 
-std::shared_ptr<CountryEconomy> CountryEconomy::load(int country_id,
+std::shared_ptr<CountryEconomy> CountryEconomy::load(const Country& country,
                                                      const std::shared_ptr<MoneyAddTriggerManager>& trigger_mng,
                                                      const std::shared_ptr<CurrencyManager>& currency_mng) {
     SQLite::Database db = getCountryDB();
     SQLite::Statement query(db, R"(SELECT trigger, add_value from country_money_trigger where country = ?;)");
-    query.bind(1, country_id);
+    query.bind(1, country.id);
     std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> triggers;
     while (query.executeStep()) {
         std::string trigger = query.getColumn(0).getString();
@@ -61,22 +61,27 @@ std::shared_ptr<CountryEconomy> CountryEconomy::load(int country_id,
         triggers.insert({trigger_mng->getKey(trigger), value});
     }
     SQLite::Statement getCurrencyQuery(db, R"(select currency from country where id=?)");
-    getCurrencyQuery.bind(1, country_id);
+    getCurrencyQuery.bind(1, country.id);
     getCurrencyQuery.executeStep();
     if (getCurrencyQuery.executeStep()) {
         std::shared_ptr<Currency> currency = currency_mng->getCurrency(getCurrencyQuery.getColumn(0));
-        return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, currency, std::weak_ptr<Country>()));
+        return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, currency, country));
     }
-    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, std::weak_ptr<Country>()));
+    return std::shared_ptr<CountryEconomy>(new CountryEconomy(triggers, country));
 }
 
 CountryEconomy::CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
-                               std::weak_ptr<Country> country) :
-    money_add_trigger(std::move(trigger)), country(std::move(country)) {}
+                               const Country& country) :
+    money_add_trigger(std::move(trigger)), country(country) {}
 
 CountryEconomy::CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
                                std::weak_ptr<Currency> currency,
-                               std::weak_ptr<Country> country) :
-    money_add_trigger(std::move(trigger)), currency(std::move(currency)), country(std::move(country)) {}
+                               const Country& country) :
+    money_add_trigger(std::move(trigger)), currency(std::move(currency)), country(country) {}
+
+CountryEconomy::CountryEconomy(const Country& country)
+: country(country){
+
+}
 
 }

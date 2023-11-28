@@ -15,7 +15,8 @@ Country::Country(std::string name_,
 }
 
 Country::Country(std::string name_, Country::country_id id_)
-    : name(std::move(name_)), id(id_), citizen(std::make_shared<CountryCitizen>()), economy(std::make_shared<CountryEconomy>()) {}
+    : name(std::move(name_)), id(id_), citizen(std::make_shared<CountryCitizen>()),
+    economy(std::make_shared<CountryEconomy>(*this)) {}
 nlohmann::json Country::get_json() {
     nlohmann::json result;
     result["id"] = id;
@@ -28,7 +29,7 @@ Country::Country(nlohmann::json data,
                  const std::shared_ptr<CurrencyManager>& currency)
     : id(data["id"].get<country_id>()),
       name(data["name"].get<std::string>()),
-      economy(CountryEconomy::load(id, trigger, currency)) {
+      economy(CountryEconomy::load(*this, trigger, currency)) {
 }
 
 const std::string& Country::getName() {
@@ -43,10 +44,18 @@ std::shared_ptr<Country> Country::load(const std::string& name,
                                        Country::country_id id_,
                                        const std::shared_ptr<MoneyAddTriggerManager>& trigger,
                                        const std::shared_ptr<CurrencyManager>& currency) {
-    return std::make_shared<Country>(name,
-                                     id_,
-                                     std::make_shared<CountryCitizen>(),
-                                     CountryEconomy::load(id_, trigger, currency));
+    return std::shared_ptr<Country>(new Country(name,id_,trigger,currency));
+}
+
+Country::Country(std::string  name_,
+                 Country::country_id id_,
+                 const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+                 const std::shared_ptr<CurrencyManager>& currency)
+                 : name(std::move(name_)),
+                   citizen(std::make_shared<CountryCitizen>()),
+                   id(id_),
+                   economy(CountryEconomy::load(*this, trigger, currency)){
+
 }
 
 }

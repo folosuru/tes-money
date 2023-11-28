@@ -53,7 +53,10 @@ public:
     std::shared_ptr<CountryCitizen> getCitizenManager() { return citizen; }
 
 private:
-    // TODO: メンバをconstのpublicにしてgetXX関数を破壊する
+    Country(std::string  name,
+            Country::country_id id_,
+            const std::shared_ptr<MoneyAddTriggerManager>& trigger,
+            const std::shared_ptr<CurrencyManager>& currency);
     std::string name;
     std::string description;
     std::shared_ptr<CountryCitizen> citizen;

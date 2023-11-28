@@ -21,7 +21,7 @@ std::shared_ptr<CountryManager> CountryManager::build(const std::shared_ptr<Mone
     while (query.executeStep()) {
         std::string name = query.getColumn(0).getString();
         int country_id = query.getColumn(1);
-        result->addCountry(Country::load(std::string(), country_id, trigger, currency));
+        result->addCountry(Country::load(name, country_id, trigger, currency));
     }
     return result;
 }

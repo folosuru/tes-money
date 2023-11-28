@@ -15,7 +15,7 @@ public:
     [[nodiscard]]
     std::optional<MoneyAddTriggerKey> getTriggerOnBreak(int id, int data);
 
-    void load();
+    void load(std::ifstream file);
 
     const std::vector<std::shared_ptr<MoneyAddTriggerCategory>>& getAllWithCategory();
 
