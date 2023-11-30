@@ -11,6 +11,7 @@
 #include <currency/Currency.hpp>
 #include <util/dll_declspec.hpp>
 #include <misc/CurrencyCommandUpdater.hpp>
+
 namespace tes {
 class TES_DLL CurrencyManager {
 public:
@@ -18,7 +19,7 @@ public:
 
     static std::shared_ptr<CurrencyManager> load();
 
-    void setCommandUpdater(CurrencyCommandUpdater*);
+    void setCommandUpdater(CurrencyCommandUpdater *);
 
     /**
      * 入力に対応する通貨を返す
@@ -44,12 +45,15 @@ public:
     void save(const std::string& key);
 
     [[nodiscard]]
-    util::OptionalMessage<void,Arrai18n::trl_text> currencyNameValidation(const std::string&) const noexcept;
+    util::OptionalMessage<void, Arrai18n::trl_text> currencyNameValidation(const std::string&) const noexcept;
 
 private:
     std::shared_ptr<CurrencyCommandUpdater> updater = nullptr;
+
     static const inline std::string file_export_path = "plugins/tes/money/currency";
+
     std::unordered_map<std::string, std::shared_ptr<Currency>> cur;
+
     std::vector<std::string> currency_name_list;
 };
 }  // tes

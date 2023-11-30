@@ -35,7 +35,7 @@ void PluginInit() {
     tes::money::init();
     tes::country::init();
     Arrai18n::setDefaultLanguage("ja-JP");
-    logger.info(Arrai18n::trl("ja-JP","country.lang.test"));
+    logger.info(Arrai18n::trl("ja-JP", "country.lang.test"));
     Event::PlayerDestroyBlockEvent::subscribe([](const Event::PlayerDestroyBlockEvent& event) {
         tes::country::onBreak(event);
         // event.mBlockInstance;

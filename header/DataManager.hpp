@@ -11,6 +11,7 @@
 #include <util/player_identify/PlayerIdentifyProvider.hpp>
 #include <misc/PermissionManager.hpp>
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
+
 namespace tes {
 class PermissionManager;
 class CitizenRefer;
@@ -19,7 +20,7 @@ class CurrencyManager;
 class MoneyAddTriggerManager;
 class PlayerManager;
 class PlayerIdentifyProvider;
-class DataManager : public std::enable_shared_from_this<DataManager>{
+class DataManager : public std::enable_shared_from_this<DataManager> {
 public:
     static std::shared_ptr<DataManager> get();
 
@@ -36,8 +37,10 @@ public:
     const std::shared_ptr<PermissionManager> PermissionManager;
 
     const std::shared_ptr<CitizenRefer> CitizenRefer;
+
 private:
     DataManager();
+
     static inline std::shared_ptr<DataManager> instance;
 };
 }

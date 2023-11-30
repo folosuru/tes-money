@@ -10,6 +10,7 @@
 #include "task/TriggerUpssetTask.hpp"
 #include "task/CurrencyRegistrationTask.hpp"
 #include "task/TriggerRemoveTask.hpp"
+
 namespace tes {
 
 void CountryEconomy::runTrigger(const MoneyAddTriggerKey& trigger_name, std::shared_ptr<PlayerMoney> player) noexcept {
@@ -80,7 +81,7 @@ CountryEconomy::CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::mon
     money_add_trigger(std::move(trigger)), currency(std::move(currency)), country(country) {}
 
 CountryEconomy::CountryEconomy(const Country& country)
-: country(country){
+    : country(country) {
 
 }
 

@@ -9,6 +9,7 @@ class CountryEconomy;
 #include <optional>
 #include <DataManager.hpp>
 #include <types/MoneyTypes.hpp>
+
 namespace tes {
 class Country;
 class DataManager;
@@ -24,6 +25,7 @@ public:
     static std::shared_ptr<CountryEconomy> load(const Country&,
                                                 const std::shared_ptr<MoneyAddTriggerManager>& trigger_mng,
                                                 const std::shared_ptr<CurrencyManager>& currency_mng);
+
     void setCurrency(const std::shared_ptr<Currency>&);
 
     Types::money_value_t getValue(const MoneyAddTriggerKey& trigger_name);
@@ -41,11 +43,15 @@ private:
     CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
                    std::weak_ptr<Currency> currency,
                    const Country&);
+
     explicit CountryEconomy(std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> trigger,
                             const Country&);
+
     // money_value_type
     std::unordered_map<MoneyAddTriggerKey, Types::money_value_t> money_add_trigger;
+
     std::weak_ptr<Currency> currency;
+
     const Country& country;
 };
 }

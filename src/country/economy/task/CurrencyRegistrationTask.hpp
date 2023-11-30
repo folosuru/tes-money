@@ -17,7 +17,7 @@ public:
 
     void onRun() override {
         SQLite::Database db = getCountryDB();
-        SQLite::Statement query1(db,"update country SET currency = ? where id = ?;");
+        SQLite::Statement query1(db, "update country SET currency = ? where id = ?;");
         query1.bind(1, currency);
         query1.bind(2, country_id);
         query1.exec();

@@ -13,7 +13,7 @@ std::shared_ptr<Citizen> CountryCitizen::getCitizen(const PlayerIdentify& name) 
     }
 }
 
-void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_,  bool writeDB) {
+void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_, bool writeDB) {
     if (citizens.contains(citizen_->name)) {
         throw std::runtime_error("citizen already exists!");
     }

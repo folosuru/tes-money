@@ -38,18 +38,21 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
         std::string name = query.getColumn(0).getString();
         SQLite::Column permission = query.getColumn(1);
         int country = query.getColumn(2).getInt();
-        if (name != last_name ) {
+        if (name != last_name) {
             if (!last_name.empty()) {
                 Citizen::buildFromLoad(refer_,
-                               country_manager->getCountry(country),
-                               identify->getIdentify(last_name),
-                               permission_list);
+                                       country_manager->getCountry(country),
+                                       identify->getIdentify(last_name),
+                                       permission_list);
             }
             permission_list.clear();
             last_name = name;
         }
         if (permission.isNull()) {
-            Citizen::buildFromLoad(refer_, country_manager->getCountry(country), identify->getIdentify(name), std::unordered_set<Permission>());
+            Citizen::buildFromLoad(refer_,
+                                   country_manager->getCountry(country),
+                                   identify->getIdentify(name),
+                                   std::unordered_set<Permission>());
             continue;
         }
         permission_list.insert(perm_mng->getSv(permission.getString()));

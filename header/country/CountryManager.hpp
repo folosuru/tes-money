@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <country/Country.hpp>
 #include <util/dll_declspec.hpp>
+
 namespace tes {
 class TES_DLL CountryManager {
 public:
@@ -34,7 +35,9 @@ public:
 
 private:
     std::unordered_map<country_id, std::shared_ptr<Country>> country;
+
     inline static std::shared_ptr<CountryManager> instance = nullptr;
+
     inline static const std::string data_save_path = "plugins/tes/country/country";
 };
 }

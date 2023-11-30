@@ -25,8 +25,6 @@ public:
 
     explicit PlayerMoney(PlayerIdentify);
 
-
-
     static std::shared_ptr<PlayerMoney> init(const nlohmann::json& json,
                                              const std::shared_ptr<CurrencyManager>& currency_manager,
                                              const std::shared_ptr<PlayerIdentifyProvider>&);
@@ -50,7 +48,7 @@ public:
 
     void send(const std::shared_ptr<MoneyAccount>& to, const Money& money_) final;
 
-    void receive(const MoneyAccount* from, const Money& money_) final;
+    void receive(const MoneyAccount *from, const Money& money_) final;
 
     [[nodiscard]]
     Money get(const Types::currency& cur) const noexcept final;
@@ -59,7 +57,7 @@ public:
     const std::unordered_map<Types::currency, std::shared_ptr<Money>>& getAll() const noexcept;
 
 private:
-    std::unordered_map<Types::currency , std::shared_ptr<Money>> money;
+    std::unordered_map<Types::currency, std::shared_ptr<Money>> money;
 };
 
 }

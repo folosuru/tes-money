@@ -6,6 +6,7 @@
 #include <util/Resources.hpp>
 #include <utility>
 #include <functional>
+
 namespace tes::UI::CountryForm {
 
 void currencySetting(Player *player,

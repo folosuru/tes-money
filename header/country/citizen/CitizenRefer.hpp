@@ -20,6 +20,7 @@ public:
     explicit CitizenRefer(std::shared_ptr<PlayerIdentifyProvider>);
 
     std::shared_ptr<Citizen> get(const PlayerIdentify&);
+
     std::shared_ptr<Citizen> get(Types::player_name_view);
 
     void add(const std::shared_ptr<Citizen>&);
@@ -30,9 +31,9 @@ public:
                                               const std::shared_ptr<PermissionManager>&,
                                               const std::shared_ptr<PlayerIdentifyProvider>&);
 
-
 private:
     std::unordered_map<PlayerIdentify, std::shared_ptr<Citizen>> citizen;
+
     const std::shared_ptr<PlayerIdentifyProvider> identify_provider;
 };
 }

@@ -45,7 +45,7 @@ public:
      * @param from
      * @param money_
      */
-    virtual void receive(const MoneyAccount* from, const Money& money_) = 0;
+    virtual void receive(const MoneyAccount *from, const Money& money_) = 0;
 
     /**
      * curで指定された通貨のMoneyを返す

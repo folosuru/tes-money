@@ -30,7 +30,7 @@ void MoneyAddTriggerManager::load(std::ifstream file) {
             MoneyAddTriggerKey key_ptr = std::make_shared<std::string>(trigger.key());
             triggers.push_back(key_ptr);
             for (const auto& block : trigger.value()) {  // foreach block id
-                trigger_on_break[block.at(0).get<int>()][ block.at(1).get<int>()] = key_ptr;
+                trigger_on_break[block.at(0).get<int>()][block.at(1).get<int>()] = key_ptr;
             }
         }
         all_trigger.push_back(std::make_shared<MoneyAddTriggerCategory>(category.key(), triggers));

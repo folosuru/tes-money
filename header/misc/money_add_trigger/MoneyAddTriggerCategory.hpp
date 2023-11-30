@@ -4,11 +4,14 @@
 #include <vector>
 #include <string>
 #include <memory>
+
 namespace tes {
 using MoneyAddTriggerKey = std::shared_ptr<std::string>;
 struct MoneyAddTriggerCategory {
     const std::string name;
+
     const std::vector<MoneyAddTriggerKey> Child;
+
     MoneyAddTriggerCategory(std::string name_,
                             std::vector<MoneyAddTriggerKey> child_);
 };

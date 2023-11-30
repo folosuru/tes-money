@@ -5,6 +5,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <AsyncTask/TaskManager.hpp>
 #include "task/CountryCreateTask.hpp"
+
 namespace tes {
 
 std::shared_ptr<Country> CountryManager::getCountry(CountryManager::country_id id) const {
@@ -33,7 +34,7 @@ void CountryManager::saveAll() {
     }
 }
 
-void CountryManager::addCountry(const std::shared_ptr<Country>& country_ ,bool writeDB ) {
+void CountryManager::addCountry(const std::shared_ptr<Country>& country_, bool writeDB) {
     country.insert({country_->id, country_});
     if (writeDB) {
         AsyncTask::add_task(std::make_shared<CountryCreateTask>(country_->getName(), country_->id));

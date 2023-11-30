@@ -160,7 +160,7 @@ void init() {
     using tes::Types::player_money;
     using tes::Types::currency;
     init_command();
-    Arrai18n::load(tes::resource::resource_directory+"lang/money/ja-JP.txt");
+    Arrai18n::load(tes::resource::resource_directory + "lang/money/ja-JP.txt");
 }
 
 bool onPlayerJoin(const Event::PlayerJoinEvent& event) {

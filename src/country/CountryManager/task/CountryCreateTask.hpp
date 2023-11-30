@@ -10,12 +10,12 @@ namespace tes {
 
 class CountryCreateTask : public AsyncTask::AsyncTaskBase {
 public:
-    explicit CountryCreateTask(std::string name, int id) : name(std::move(name)) , id(id){}
+    explicit CountryCreateTask(std::string name, int id) : name(std::move(name)), id(id) {}
 
     void onRun() override {
         SQLite::Database db(getCountryDB());
         SQLite::Statement query(db,
-                                 "insert into country (id, name) values (?,?);");
+                                "insert into country (id, name) values (?,?);");
         query.bind(1, id);
         query.bind(2, name);
         query.exec();
@@ -25,6 +25,7 @@ public:
 
 private:
     std::string name;
+
     int id;
 };
 }  // tes

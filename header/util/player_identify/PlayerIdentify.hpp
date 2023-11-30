@@ -2,6 +2,7 @@
 #define TES_HEADER_PLAYER_PLAYER
 #include <memory>
 #include <string>
+
 namespace tes {
 class PlayerIdentifyClass;
 using PlayerIdentify = std::shared_ptr<PlayerIdentifyClass>;
@@ -12,9 +13,12 @@ public:
 
 private:
     PlayerIdentifyClass(const PlayerIdentifyClass&) = delete;
-    PlayerIdentifyClass& operator=(const PlayerIdentifyClass& ) = delete;
+
+    PlayerIdentifyClass& operator=(const PlayerIdentifyClass&) = delete;
+
     PlayerIdentifyClass() = delete;
-    explicit PlayerIdentifyClass(std::string name_) : name(name_){};
+
+    explicit PlayerIdentifyClass(std::string name_) : name(name_) {};
 
     friend class PlayerIdentifyProvider;
 };

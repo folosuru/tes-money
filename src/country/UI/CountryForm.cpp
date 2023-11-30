@@ -25,7 +25,8 @@ void countryJoinedMenu(Player *player,
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
                                             "country.form.joined.top",
                                             {citizen->getCountry()->getName()}));
-    if (citizen->hasPermission(country_permission::currency) || citizen->hasPermission(country_permission::any)) {  // currency
+    if (citizen->hasPermission(country_permission::currency)
+        || citizen->hasPermission(country_permission::any)) {  // currency
         form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.top.currency"),
                        "", [citizen, data](Player *pl) {
                 currencySetting(pl, citizen, data);
@@ -62,12 +63,13 @@ void countryJoinedMenu(Player *player,
 void countryNotJoinedMenu(Player *player) {
     Form::SimpleForm form("", "");
     auto data = tes::DataManager::get();
-    form.addButton(Arrai18n::trl(player->getLanguageCode(),"country.form.not_joined.look_index")
-                   , "", [data](Player *pl) {
-        showCountryIndex(pl, data);
-    });
+    form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.not_joined.look_index"),
+                   "",
+                   [data](Player *pl) {
+                       showCountryIndex(pl, data);
+                   });
     //form.addButton("search country", "", [data](Player *pl) { findCountry(pl, data); });
-    form.addButton(Arrai18n::trl(player->getLanguageCode(),"country.form.not_joined.create"), "", [data](Player *pl) {
+    form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.not_joined.create"), "", [data](Player *pl) {
         createCountry(pl,
                       data->CountryManager,
                       data->player_identify,

@@ -16,6 +16,7 @@ class PlayerMoney;  // これ消すとなぜか動かない。消すな
 class TES_DLL PlayerManager {
 public:
     PlayerManager() = delete;
+
     explicit PlayerManager(std::shared_ptr<CurrencyManager>);
 
     static std::shared_ptr<PlayerManager> load(const std::shared_ptr<CurrencyManager>&,
@@ -35,7 +36,9 @@ public:
 
 private:
     static const inline std::string file_export_path = "plugins/tes/money/player";
+
     std::unordered_map<PlayerIdentify, std::shared_ptr<PlayerMoney>> players;
+
     std::shared_ptr<CurrencyManager> currency_manager_;
 };
 }

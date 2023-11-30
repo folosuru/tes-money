@@ -7,6 +7,7 @@
 #include <llapi/mc/Player.hpp>
 #include <llapi/mc/Block.hpp>
 #include "UI/CountryForm.hpp"
+
 namespace tes {
 namespace country {
 bool onBreak(const Event::PlayerDestroyBlockEvent& event) {
@@ -27,7 +28,7 @@ bool onBreak(const Event::PlayerDestroyBlockEvent& event) {
 }
 
 void init() {
-    Arrai18n::load(tes::resource::resource_directory+"lang/country/ja-JP.txt");
+    Arrai18n::load(tes::resource::resource_directory + "lang/country/ja-JP.txt");
     command::init_command();
 }
 
@@ -51,7 +52,7 @@ void init_command() {
             CommandOutput& output,
             std::unordered_map<std::string, DynamicCommand::Result>& results
         ) {
-                    UI::CountryForm::countryMenu(origin.getPlayer(), DataManager::get());
+            UI::CountryForm::countryMenu(origin.getPlayer(), DataManager::get());
 
         },  // The callback function
         CommandPermissionLevel::Any);  // The permission level

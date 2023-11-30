@@ -12,7 +12,7 @@ namespace tes::task {
 
 class TriggerRemoveTask : public AsyncTask::AsyncTaskBase {
 public:
-    TriggerRemoveTask(std::string_view trigger,CountryManager::country_id id)
+    TriggerRemoveTask(std::string_view trigger, CountryManager::country_id id)
         : trigger(trigger), country_id(id) {}
 
     void onRun() override {
@@ -28,6 +28,7 @@ public:
 
 private:
     std::string_view trigger;
+
     CountryManager::country_id country_id;
 };
 }  // tes

@@ -4,6 +4,7 @@
 #include <memory>
 #include <utility>
 #include <cstdint>
+
 namespace tes {
 class PlayerMoney;
 class Currency;

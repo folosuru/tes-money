@@ -9,6 +9,7 @@
 #include <fstream>
 #include "../../util/Resources.hpp"
 #include "MoneyAddTriggerCategory.hpp"
+
 namespace tes {
 using MoneyAddTriggerKey = std::shared_ptr<std::string>;
 class MoneyAddTriggerManager {
@@ -26,9 +27,12 @@ public:
 
 private:
     std::vector<std::shared_ptr<MoneyAddTriggerCategory>> all_trigger;
+
     std::unordered_map<std::string, MoneyAddTriggerKey> trigger_by_name;
-    std::unordered_map<int,std::unordered_map<int, MoneyAddTriggerKey>> trigger_on_break;
-    static const inline std::string trigger_define_file = resource::resource_directory+"MoneyTrigger.json";
+
+    std::unordered_map<int, std::unordered_map<int, MoneyAddTriggerKey>> trigger_on_break;
+
+    static const inline std::string trigger_define_file = resource::resource_directory + "MoneyTrigger.json";
 };
 }
 #endif  // TES_COUNTRY_HEADER_COUNTRY_ECONOMY_MONEYADDTRIGGERMANAGER_HPP_

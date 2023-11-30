@@ -31,7 +31,9 @@ public:
 
 private:
     std::string_view trigger;
+
     Types::money_value_t add_value;
+
     CountryManager::country_id country_id;
 };
 }  // tes

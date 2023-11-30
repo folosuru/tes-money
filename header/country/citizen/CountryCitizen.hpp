@@ -22,6 +22,7 @@ public:
     void ban(const PlayerIdentify& name);
 
     [[nodiscard]] size_t getCitizenCount() const noexcept;
+
 private:
     std::unordered_map<PlayerIdentify, std::shared_ptr<Citizen>> citizens;
 

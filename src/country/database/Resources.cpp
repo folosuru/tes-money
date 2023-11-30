@@ -8,7 +8,8 @@ void init_Database() {
     db.exec("CREATE TABLE IF NOT EXISTS citizen (name string, country int);");
     db.exec("CREATE TABLE IF NOT EXISTS citizen_permission (name string, permission text, unique(name,permission));");
     db.exec("CREATE TABLE IF NOT EXISTS country (id int, name text, description text, currency text, unique(id));");
-    db.exec("CREATE TABLE IF NOT EXISTS country_money_trigger (trigger text, add_value int, country int, unique(country,trigger));");
+    db.exec(
+        "CREATE TABLE IF NOT EXISTS country_money_trigger (trigger text, add_value int, country int, unique(country,trigger));");
 }
 
 SQLite::Database getCountryDB() {

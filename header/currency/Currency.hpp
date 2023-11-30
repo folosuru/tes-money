@@ -9,15 +9,19 @@
 namespace tes {
 class TES_DLL Currency {
 public:
-    explicit Currency(std::string name) noexcept : currency_name(std::move(name)) {}
+    explicit Currency(std::string name) noexcept: currency_name(std::move(name)) {}
+
     explicit Currency(nlohmann::json json);
+
     nlohmann::json get_json();
 
     const std::string currency_name;
 
     Currency() = delete;
-    Currency & operator = ( const Currency & ) = delete;
-    Currency( const Currency & ) = delete;
+
+    Currency& operator=(const Currency&) = delete;
+
+    Currency(const Currency&) = delete;
 };
 }  // tes
 #endif  // PLUGIN_CURRENCY_HPP
