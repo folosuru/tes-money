@@ -6,6 +6,8 @@
 #include <memory>
 #include <unordered_map>
 #include <string>
+#include <fstream>
+#include "../../util/Resources.hpp"
 #include "MoneyAddTriggerCategory.hpp"
 namespace tes {
 using MoneyAddTriggerKey = std::shared_ptr<std::string>;
@@ -15,7 +17,7 @@ public:
     [[nodiscard]]
     std::optional<MoneyAddTriggerKey> getTriggerOnBreak(int id, int data);
 
-    void load(std::ifstream file);
+    void load(std::ifstream file = std::ifstream(trigger_define_file));
 
     const std::vector<std::shared_ptr<MoneyAddTriggerCategory>>& getAllWithCategory();
 
@@ -26,7 +28,7 @@ private:
     std::vector<std::shared_ptr<MoneyAddTriggerCategory>> all_trigger;
     std::unordered_map<std::string, MoneyAddTriggerKey> trigger_by_name;
     std::unordered_map<int,std::unordered_map<int, MoneyAddTriggerKey>> trigger_on_break;
-    static const inline std::string trigger_define_file = "plugin/tes/country/MoneyTrigger.json";
+    static const inline std::string trigger_define_file = resource::resource_directory+"MoneyTrigger.json";
 };
 }
 #endif  // TES_COUNTRY_HEADER_COUNTRY_ECONOMY_MONEYADDTRIGGERMANAGER_HPP_

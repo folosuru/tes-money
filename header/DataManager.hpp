@@ -25,17 +25,17 @@ public:
 
     const std::shared_ptr<PlayerIdentifyProvider> player_identify;
 
-    const std::shared_ptr<PermissionManager> PermissionManager;
-
-    const std::shared_ptr<CitizenRefer> CitizenRefer;
-
-    const std::shared_ptr<CountryManager> CountryManager;
+    const std::shared_ptr<MoneyAddTriggerManager> MoneyAddTriggerMng;
 
     const std::shared_ptr<CurrencyManager> CurrencyMng;
 
-    const std::shared_ptr<MoneyAddTriggerManager> MoneyAddTriggerMng;
-
     const std::shared_ptr<PlayerManager> PlayerMoneyMng;
+
+    const std::shared_ptr<CountryManager> CountryManager;
+
+    const std::shared_ptr<PermissionManager> PermissionManager;
+
+    const std::shared_ptr<CitizenRefer> CitizenRefer;
 private:
     DataManager();
     static inline std::shared_ptr<DataManager> instance;

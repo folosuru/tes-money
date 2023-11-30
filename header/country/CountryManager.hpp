@@ -23,7 +23,7 @@ public:
     [[nodiscard]]
     std::shared_ptr<Country> getCountry(country_id id) const;
 
-    void addCountry(const std::shared_ptr<Country>&);
+    void addCountry(const std::shared_ptr<Country>&, bool writeDB = true);
 
     [[nodiscard]]
     const std::unordered_map<country_id, std::shared_ptr<Country>>& getAll() const noexcept;

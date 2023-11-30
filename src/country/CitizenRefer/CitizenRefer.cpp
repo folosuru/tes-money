@@ -24,8 +24,7 @@ void CitizenRefer::add(const std::shared_ptr<Citizen>& citizen_) {
 std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryManager>& country_manager,
                                                  const std::shared_ptr<PermissionManager>& perm_mng,
                                                  const std::shared_ptr<PlayerIdentifyProvider>& identify) {
-    SQLite::Database db(country_db_file,
-                        SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    SQLite::Database db(getCountryDB());
     SQLite::Statement query(db,
                             R"(SELECT citizen.name, permission, citizen.country
     FROM citizen LEFT OUTER JOIN citizen_permission ON citizen.name = citizen_permission.name
@@ -39,16 +38,18 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
         std::string name = query.getColumn(0).getString();
         SQLite::Column permission = query.getColumn(1);
         int country = query.getColumn(2).getInt();
-        if (name != last_name) {
-            Citizen::build(refer_,
-                           country_manager->getCountry(country),
-                           identify->getIdentify(last_name),
-                           permission_list);
+        if (name != last_name ) {
+            if (!last_name.empty()) {
+                Citizen::buildFromLoad(refer_,
+                               country_manager->getCountry(country),
+                               identify->getIdentify(last_name),
+                               permission_list);
+            }
             permission_list.clear();
             last_name = name;
         }
         if (permission.isNull()) {
-            Citizen::build(refer_, country_manager->getCountry(country), identify->getIdentify(name));
+            Citizen::buildFromLoad(refer_, country_manager->getCountry(country), identify->getIdentify(name), std::unordered_set<Permission>());
             continue;
         }
         permission_list.insert(perm_mng->getSv(permission.getString()));
@@ -59,5 +60,8 @@ std::shared_ptr<CitizenRefer> CitizenRefer::load(const std::shared_ptr<CountryMa
 CitizenRefer::CitizenRefer(std::shared_ptr<PlayerIdentifyProvider> identify)
     : identify_provider(std::move(identify)) {}
 
+void CitizenRefer::remove(const PlayerIdentify& identify) {
+    citizen.erase(identify);
+}
 
 }

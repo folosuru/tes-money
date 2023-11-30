@@ -15,6 +15,7 @@
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
 #include <DataManager.hpp>
+#include <util/Resources.hpp>
 #include "country/Event.hpp"
 #include "money/Event.hpp"
 #include <Nlohmann/json.hpp>
@@ -29,7 +30,12 @@ extern Logger logger;
  */
 void PluginInit() {
     // TODO: moneyのlangファイルもロードするようにする
-
+    tes::init_Database();
+    tes::DataManager::get();
+    tes::money::init();
+    tes::country::init();
+    Arrai18n::setDefaultLanguage("ja-JP");
+    logger.info(Arrai18n::trl("ja-JP","country.lang.test"));
     Event::PlayerDestroyBlockEvent::subscribe([](const Event::PlayerDestroyBlockEvent& event) {
         tes::country::onBreak(event);
         // event.mBlockInstance;

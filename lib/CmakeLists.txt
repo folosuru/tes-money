@@ -1,5 +1,6 @@
 add_subdirectory(SQLiteCpp)
 add_subdirectory(AsyncTask)
+add_subdirectory(CppArrai18n)
 function(include_thirdparty_libraries)
     include_directories(
         ${CMAKE_SOURCE_DIR}/lib/AsyncTask/include

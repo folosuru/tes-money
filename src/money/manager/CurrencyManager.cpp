@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <filesystem>
 #include <fstream>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 
 namespace tes {
 
@@ -63,6 +63,6 @@ std::shared_ptr<CurrencyManager> CurrencyManager::load() {
     if (result->updater) {
         result->updater->updateCurrencyList(result->getAllCurrencyList());
     }
-    return nullptr;
+    return result;
 }
 }

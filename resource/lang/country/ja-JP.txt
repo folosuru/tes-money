@@ -13,6 +13,9 @@ country.form.top.citizen = "国民の管理"
 country.form.left.title = "国家を脱退する"
 country.form.left.description = "本当に{0}を脱退しますか？"
 
+country.form.not_joined.look_index = "国家の一覧を見る"
+country.form.not_joined.create = "国家を作成する"
+
 country.form.currency.name = "通貨の名前"
 country.form.currency.create = "通貨の作成"
 country.form.currency.create.info = "通貨の名前はコマンドなどで入力するため、入力しやすい物にしてください。"
@@ -21,6 +24,7 @@ country.left.complete = "{0}を脱退しました"
 
 country.form.create.description = "国家の作成"
 country.form.create.name = "国家の名前"
+
 
 country.currency.trigger.description = "国民が特定の行動をした時にお金を手に入れられるように設定できます。"
 country.currency.trigger.get_value = "入手額"
@@ -31,3 +35,5 @@ country.currency.trigger.StoneBreak.description = "石を壊した時"
 
 country.form.countryIndex.description = "｛1｝ページ中{0}ページ目を表示しています"
 country.form.countryDetail = ""
+
+country.lang.test = "これは言語対応ライブラリのテストです"

@@ -58,17 +58,19 @@ void countryJoinConfirm(Player *pl, const std::shared_ptr<Country>& country, con
 void createCountry(Player *player,
                    const std::shared_ptr<CountryManager>& mng,
                    const std::shared_ptr<PlayerIdentifyProvider>& identify_prov,
-                   std::shared_ptr<CitizenRefer> ref) {
+                   std::shared_ptr<CitizenRefer> ref,
+                   const std::shared_ptr<PermissionManager>& perm) {
     Form::CustomForm form("");
     form.addInput("name", Arrai18n::trl(player->getLanguageCode(), "country.form.create.name"));
-    form.sendTo(player, [mng, ref, identify_prov](Player *player, auto result) {
+    form.sendTo(player, [mng, ref, identify_prov, perm](Player *player, auto result) {
         if (result.empty()) return;
         auto country = std::make_shared<Country>(
             result["name"]->getString(),
             mng->genNextCountryId()
         );
         mng->addCountry(country);
-        Citizen::build(ref, country, identify_prov->getIdentifyByPlayer(player));
+        std::shared_ptr<Citizen> citizen = Citizen::build(ref, country, identify_prov->getIdentifyByPlayer(player));
+        citizen->addPermission(perm->getSv(country_permission::any));
     });
 }
 

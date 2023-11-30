@@ -68,4 +68,16 @@ std::shared_ptr<Citizen> Citizen::build(const std::shared_ptr<CitizenRefer>& ref
     return ptr;
 }
 
+std::shared_ptr<Citizen> Citizen::buildFromLoad(const std::shared_ptr<CitizenRefer>& refer,
+                                                const std::shared_ptr<Country>& country_,
+                                                PlayerIdentify name,
+                                                std::unordered_set<Permission> permission_) {
+    std::shared_ptr<Citizen> ptr(new Citizen(country_,
+                                             std::move(name),
+                                             std::move(permission_)));
+    refer->add(ptr);
+    country_->getCitizenManager()->add(ptr, false);
+    return ptr;
+}
+
 }

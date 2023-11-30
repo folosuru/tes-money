@@ -18,7 +18,8 @@ void countryJoinConfirm(Player *, const std::shared_ptr<Country>&, const std::sh
 void createCountry(Player *player,
                    const std::shared_ptr<CountryManager>& mng,
                    const std::shared_ptr<PlayerIdentifyProvider>& identify_prov,
-                   std::shared_ptr<CitizenRefer> ref);
+                   std::shared_ptr<CitizenRefer> ref,
+                   const std::shared_ptr<PermissionManager>& perm);
 }
 #endif
 #endif //TES_SRC_COUNTRY_UI_JOIN_COUNTRY_JOINCOUNTRY_HPP_

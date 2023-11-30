@@ -30,6 +30,7 @@ target_link_libraries(${project_name_}
         AsyncTask
         SQLiteCpp
         sqlite3
+        CppArrai18n
         )
 target_include_directories(${project_name_} PRIVATE
         ${CMAKE_SOURCE_DIR}/header/

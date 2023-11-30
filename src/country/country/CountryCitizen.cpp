@@ -13,11 +13,13 @@ std::shared_ptr<Citizen> CountryCitizen::getCitizen(const PlayerIdentify& name) 
     }
 }
 
-void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_) {
+void CountryCitizen::add(const std::shared_ptr<Citizen>& citizen_,  bool writeDB) {
     if (citizens.contains(citizen_->name)) {
         throw std::runtime_error("citizen already exists!");
     }
-    AsyncTask::add_task(std::make_shared<CitizenJoinTask>(citizen_->name->name, citizen_->getCountry()->id));
+    if (writeDB) {
+        AsyncTask::add_task(std::make_shared<CitizenJoinTask>(citizen_->name->name, citizen_->getCountry()->id));
+    }
     citizens.insert({citizen_->name, citizen_});
 }
 

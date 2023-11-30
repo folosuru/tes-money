@@ -36,7 +36,17 @@ void load_citizen() {
 }
 
 void dataLoad_test() {
-
+    cpptf::change_section("dataLoad");
+    tes::reset_Database();
+    tes::init_Database();
+    auto db = tes::getCountryDB();
+    /*db.exec("insert into country (id, name, description, currency) values (0,'test-name','test country', 'JPY');");
+    db.exec("insert into citizen (name, country) values ('tanaka', 0)");*/
+    auto data = tes::DataManager::get();
+    cpptf::isSame("get country", data->CountryManager->getCountry(0)->getName(), "test-name");
+    cpptf::isSame("get citizen from refer", data->CitizenRefer->get("tanaka")->getCountry(),data->CountryManager->getCountry(0));
+    tes::DataManager::get();
+    tes::DataManager::get();
 }
 
 void permission_manager_test() {
@@ -98,10 +108,13 @@ void countryEconomy_test() {
 
 int main() {
     tes::init_Database();
+    tes::DataManager::get();
+    tes::init_Database();
     permission_manager_test();
     Citizen_test();
     moneyAddTrigger_test();
     countryEconomy_test();
+    dataLoad_test();
     cpptf::complete();
     return 0;
 }

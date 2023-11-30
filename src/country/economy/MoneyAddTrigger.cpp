@@ -12,7 +12,7 @@ std::optional<MoneyAddTriggerKey> MoneyAddTriggerManager::getTriggerOnBreak(int 
     return std::nullopt;
 }
 
-void MoneyAddTriggerManager::load(std::ifstream file = std::ifstream(trigger_define_file)) {
+void MoneyAddTriggerManager::load(std::ifstream file) {
     nlohmann::json data = nlohmann::json::parse(file);
     /*
      * {

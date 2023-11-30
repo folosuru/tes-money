@@ -12,7 +12,7 @@
 #include <llapi/mc/Level.hpp>
 #include <llapi/mc/CommandOrigin.hpp>
 #include <llapi/mc/CommandOutput.hpp>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 #include <util/minecraft/message.hpp>
 #include "Event.hpp"
 #include <money/player/PlayerManager.hpp>
@@ -160,8 +160,7 @@ void init() {
     using tes::Types::player_money;
     using tes::Types::currency;
     init_command();
-    Arrai18n::load("plugins/tes/money/lang/ja-JP.txt");
-    tes::DataManager::get();
+    Arrai18n::load(tes::resource::resource_directory+"lang/money/ja-JP.txt");
 }
 
 bool onPlayerJoin(const Event::PlayerJoinEvent& event) {

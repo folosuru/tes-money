@@ -6,12 +6,18 @@
 
 namespace tes {
 namespace country {
+void init();
+
 /**
  * Add Money if trigger set
  * @return
  */
 bool onBreak(const Event::PlayerDestroyBlockEvent&);
+
+namespace command {
+void init_command();
 }
 }
-#endif
+}
 #endif //TES_SRC_COUNTRY_EVENT_HPP_
+#endif

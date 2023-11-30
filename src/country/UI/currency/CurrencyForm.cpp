@@ -1,7 +1,7 @@
 #ifndef DEBUG_WITHOUT_LLAPI
 #include "CurrencyForm.hpp"
 #include <llapi/FormUI.h>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 #include <currency/CurrencyManager.hpp>
 #include <util/Resources.hpp>
 #include <utility>
@@ -11,7 +11,7 @@ namespace tes::UI::CountryForm {
 void currencySetting(Player *player,
                      const std::shared_ptr<Citizen>& citizen,
                      const std::shared_ptr<DataManager>& data) {
-    if (!citizen->hasPermission(country_permission::currency)) {
+    if (!citizen->hasPermission(country_permission::currency) && !citizen->hasPermission(country_permission::any)) {
         return;
     }
     if (!citizen->getCountry()->getEconomyManager()->getCurrency()) {

@@ -1,7 +1,7 @@
 #ifndef DEBUG_WITHOUT_LLAPI
 #include "CountryForm.hpp"
 #include <llapi/FormUI.h>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 #include <util/Resources.hpp>
 #include <country/citizen/permission/Perimission.hpp>
 #include "currency/CurrencyForm.hpp"
@@ -25,12 +25,13 @@ void countryJoinedMenu(Player *player,
     Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(),
                                             "country.form.joined.top",
                                             {citizen->getCountry()->getName()}));
-    if (citizen->hasPermission(country_permission::currency)) {  // currency
+    if (citizen->hasPermission(country_permission::currency) || citizen->hasPermission(country_permission::any)) {  // currency
         form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.top.currency"),
                        "", [citizen, data](Player *pl) {
                 currencySetting(pl, citizen, data);
             });
     }
+
     form.addButton(Arrai18n::trl(player->getLanguageCode(), "country.form.top.left"),
                    "", [citizen, data](Player *pl) {
             Form::ModalForm form(Arrai18n::trl(pl->getLanguageCode(),
@@ -47,6 +48,7 @@ void countryJoinedMenu(Player *player,
                                                    "country.left.complete",
                                                    {citizen->getCountry()->getName()}));
                     citizen->getCountry()->getCitizenManager()->ban(citizen->name);
+                    data->CitizenRefer->remove(citizen->name);
                 } else {
                     countryJoinedMenu(player, citizen, data);
                 }
@@ -58,14 +60,19 @@ void countryJoinedMenu(Player *player,
 }
 
 void countryNotJoinedMenu(Player *player) {
-    Form::SimpleForm form("", Arrai18n::trl(player->getLanguageCode(), "TODO"));
+    Form::SimpleForm form("", "");
     auto data = tes::DataManager::get();
-    form.addButton("look country index", "", [data](Player *pl) {
+    form.addButton(Arrai18n::trl(player->getLanguageCode(),"country.form.not_joined.look_index")
+                   , "", [data](Player *pl) {
         showCountryIndex(pl, data);
     });
     //form.addButton("search country", "", [data](Player *pl) { findCountry(pl, data); });
-    form.addButton("create country", "", [data](Player *pl) {
-        createCountry(pl, data->CountryManager, data->player_identify, data->CitizenRefer);
+    form.addButton(Arrai18n::trl(player->getLanguageCode(),"country.form.not_joined.create"), "", [data](Player *pl) {
+        createCountry(pl,
+                      data->CountryManager,
+                      data->player_identify,
+                      data->CitizenRefer,
+                      data->PermissionManager);
     });
     form.sendTo(player);
 }

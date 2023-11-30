@@ -24,6 +24,8 @@ public:
 
     void add(const std::shared_ptr<Citizen>&);
 
+    void remove(const PlayerIdentify&);
+
     static std::shared_ptr<CitizenRefer> load(const std::shared_ptr<CountryManager>&,
                                               const std::shared_ptr<PermissionManager>&,
                                               const std::shared_ptr<PlayerIdentifyProvider>&);

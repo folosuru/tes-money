@@ -17,7 +17,7 @@ public:
 
     ~CountryCitizen() = default;
 
-    void add(const std::shared_ptr<Citizen>&);
+    void add(const std::shared_ptr<Citizen>&, bool writeDB = true);
 
     void ban(const PlayerIdentify& name);
 

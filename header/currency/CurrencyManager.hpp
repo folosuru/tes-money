@@ -7,7 +7,7 @@
 #include <vector>
 #include <optional>
 #include <util/OptionalMessage.hpp>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 #include <currency/Currency.hpp>
 #include <util/dll_declspec.hpp>
 #include <misc/CurrencyCommandUpdater.hpp>

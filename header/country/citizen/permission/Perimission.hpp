@@ -7,6 +7,7 @@ typedef std::string_view Permission;
 
 namespace country_permission {
 const inline std::string currency = "currency";
+const inline std::string any = "any";
 }
 }
 

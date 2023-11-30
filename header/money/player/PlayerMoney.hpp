@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 #include <Nlohmann/json.hpp>
-#include <CppArrai18n/Arrai18n.hpp>
+#include <CppArrai18n/Arrai18n_def.hpp>
 #include <util/OptionalMessage.hpp>
 #include <money/Money.hpp>
 #include <types/MoneyTypes.hpp>

@@ -19,6 +19,11 @@ public:
                                           const std::shared_ptr<Country>&,
                                           PlayerIdentify name,
                                           std::unordered_set<Permission> permission_);
+    static std::shared_ptr<Citizen> buildFromLoad(const std::shared_ptr<CitizenRefer>&,
+                                         const std::shared_ptr<Country>&,
+                                         PlayerIdentify name,
+                                         std::unordered_set<Permission> permission_);
+
     static std::shared_ptr<Citizen> build(const std::shared_ptr<CitizenRefer>&,
                                           const std::shared_ptr<Country>&,
                                           PlayerIdentify name);

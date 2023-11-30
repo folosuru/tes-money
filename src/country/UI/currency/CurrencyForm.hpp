@@ -5,7 +5,7 @@
 #include <llapi/mc/Player.hpp>
 #include <DataManager.hpp>
 #include <country/Country.hpp>
-#include "CppArrai18n/Arrai18n.hpp"
+#include "CppArrai18n/Arrai18n_def.hpp"
 
 namespace tes::UI::CountryForm {
 
