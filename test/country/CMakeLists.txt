@@ -2,13 +2,13 @@ set(project_name_ tes-country-test)
 project(${project_name_})
 set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE files
-        ${${project_name_}_SOURCE_DIR}
+        ${${project_name_}_SOURCE_DIR}/*.cpp
+        ${${project_name_}_SOURCE_DIR}/*.hpp
         ${CMAKE_SOURCE_DIR}/src/country/*.cpp
         ${CMAKE_SOURCE_DIR}/src/country/*.hpp
         ${CMAKE_SOURCE_DIR}/src/misc/*.cpp
         ${CMAKE_SOURCE_DIR}/src/money/*.cpp
         ${CMAKE_SOURCE_DIR}/src/money/*.hpp
-
 )
 add_definitions(
         -D DEBUG_WITHOUT_LLAPI

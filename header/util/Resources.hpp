@@ -11,6 +11,7 @@ inline const std::string country_data_directory{"plugins/tes/country/"};
 }
 
 const inline std::string country_db_file = resource::country_data_directory + "country.sqlite";
+const inline std::string dominion_db_file = resource::country_data_directory + "dominion.sqlite";
 
 void init_Database();
 
@@ -21,6 +22,7 @@ void init_Database();
 void reset_Database();
 
 SQLite::Database getCountryDB();
+SQLite::Database getDominionDB();
 
 }
 #endif  // TES_COUNTRY_HEADER_COUNTRY_UTIL_RESOURCES_HPP_

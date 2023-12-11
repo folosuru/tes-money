@@ -9,6 +9,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <misc/money_add_trigger/MoneyAddTriggerManager.hpp>
 #include <util/Resources.hpp>
+#include "test/Dominion.hpp"
 
 void Citizen_test() {
     using namespace tes;
@@ -108,13 +109,14 @@ void countryEconomy_test() {
 
 int main() {
     tes::init_Database();
-    tes::DataManager::get();
-    tes::init_Database();
+    //tes::DataManager::get();
+    //tes::init_Database();
     permission_manager_test();
     Citizen_test();
     moneyAddTrigger_test();
     countryEconomy_test();
-    dataLoad_test();
+    //dataLoad_test();
+    dominionRange_test();
     cpptf::complete();
     return 0;
 }

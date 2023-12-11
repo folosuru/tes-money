@@ -7,6 +7,7 @@
 #include <llapi/mc/Player.hpp>
 #include <llapi/mc/Block.hpp>
 #include "UI/CountryForm.hpp"
+#include "../dominion/Event.hpp"
 
 namespace tes {
 namespace country {

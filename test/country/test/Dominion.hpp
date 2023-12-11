@@ -1,0 +1,7 @@
+#ifndef TES_TEST_COUNTRY_TEST_DOMINION_HPP_
+#define TES_TEST_COUNTRY_TEST_DOMINION_HPP_
+
+void dominionRange_test();
+
+
+#endif //TES_TEST_COUNTRY_TEST_DOMINION_HPP_

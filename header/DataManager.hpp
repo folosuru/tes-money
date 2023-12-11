@@ -20,6 +20,8 @@ class CurrencyManager;
 class MoneyAddTriggerManager;
 class PlayerManager;
 class PlayerIdentifyProvider;
+class DominionManager;
+class LandManager;
 class DataManager : public std::enable_shared_from_this<DataManager> {
 public:
     static std::shared_ptr<DataManager> get();
@@ -37,6 +39,10 @@ public:
     const std::shared_ptr<PermissionManager> PermissionManager;
 
     const std::shared_ptr<CitizenRefer> CitizenRefer;
+
+    const std::shared_ptr<DominionManager> DominionMng;
+
+    const std::shared_ptr<LandManager> LandMng;
 
 private:
     DataManager();

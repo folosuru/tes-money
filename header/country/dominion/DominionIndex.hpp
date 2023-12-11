@@ -1,0 +1,9 @@
+#ifndef TES_HEADER_COUNTRY_DOMINION_DOMINIONINDEX_HPP_
+#define TES_HEADER_COUNTRY_DOMINION_DOMINIONINDEX_HPP_
+namespace tes {
+struct DominionIndex {
+    int x;
+    int z;
+};
+}
+#endif //TES_HEADER_COUNTRY_DOMINION_DOMINIONINDEX_HPP_
