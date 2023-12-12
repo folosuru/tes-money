@@ -2,18 +2,20 @@
 #ifndef TES_HEADER_UTIL_GEOMETRY_GEOMETRY_HPP_
 #define TES_HEADER_UTIL_GEOMETRY_GEOMETRY_HPP_
 #include <utility>
+#ifndef DEBUG_WITHOUT_LLAPI
+#include <llapi/mc/Vec3.hpp>
+#endif
 namespace tes::geometry {
 
 struct Point2D {
     int x;
     int z;
 
-    Point2D(int x_, int z_) : x(x_),z(z_) {}
+    constexpr Point2D(int x_, int z_) : x(x_),z(z_) {}
     Point2D() = delete;
 
 #ifndef DEBUG_WITHOUT_LLAPI
-    Point2D(Vec3 vec) {
-        return {vec.x, vec.z};
+    Point2D(const Vec3& vec) : x((int)vec.x), z((int)vec.z) {
     }
 #endif
 };

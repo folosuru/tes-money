@@ -1,7 +1,12 @@
 #include "Serve.hpp"
 #include <unordered_map>
 #include <util/geometry/Geometry.hpp>
-#include <misc/player_identify/PlayerIdentifyProvider.hpp>
+#include <util/player_identify/PlayerIdentifyProvider.hpp>
+#include <memory>
+#include <llapi/DynamicCommandAPI.h>
+#include <llapi/FormUI.h>
+#include <DataManager.hpp>
+#include <country/dominion/land/LandManager.hpp>
 
 namespace tes {
 namespace dominion {
@@ -23,11 +28,11 @@ void Serve(DynamicCommand const& command,
     auto action = results["serve_stat"].get<std::string>();
     auto IdentifyProvider = /**/;
     auto origin_identify = IdentifyProvider->getIdentify(origin.getName());
-    geometry::Point2D current_pos = geometry::Point2D(origin.getPlayer().getPosition());
+    geometry::Point2D current_pos = geometry::Point2D{origin.getPlayer()->getPosition()};
     auto landMng = DataManager::get()->LandMng;
 
     if (auto land = DataManager::get()->LandMng->getLand(current_pos);
-        std::holds_alternative<LandManager::LandFoundStatus>) {  // 戻り値がLandFoundStatus
+        std::holds_alternative<LandManager::LandFoundStatus>(land)) {  // 戻り値がLandFoundStatus
         switch (std::get<LandManager::LandFoundStatus>(land)) {
             case (LandManager::LandFoundStatus::not_dominion): {
                 output.error(/**/);
@@ -49,8 +54,8 @@ void Serve(DynamicCommand const& command,
         case (do_hash("end")): {
             if (auto history = point_history.find(origin_identify);
                 history != point_history.end()) {
-                auto order = LandMng->prepareServe(origin_identify, geometry::Area2D(*history.second,current_pos);
-                if (std::holds_alternative<ServeLandOrder::ErrorCode>) {
+                auto order = landMng->prepareServe(origin_identify, geometry::Area2D(*history.second,current_pos);
+                if (std::holds_alternative<ServeLandOrder::ErrorCode>(order)) {
                     //...
                     output.error();
                     return;
@@ -71,8 +76,8 @@ void serveConfirmForm(Player* pl, std::shared_ptr<ServeLandOrder> order) {
                         Arrai18n::trl(pl->getLanguageCode(),
                                 "dominion.form.serve.description",
                                 {order->getPrice().getText(),
-                                    order->area->getWidth(),
-                                     order->area->getHeight()}),
+                                    std::to_string(order->area.getWidth()),
+                                    std::to_string(order->area.getHeight())}),
                   Arrai18n::trl(pl->getLanguageCode(), "yes"),
                   Arrai18n::trl(pl->getLanguageCode(), "no"));
 }
