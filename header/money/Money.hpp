@@ -46,6 +46,8 @@ public:
 
     Money operator-(const Money& money) const;
 
+    Money operator*(int count) const;
+
     Money() = delete;
 };
 }

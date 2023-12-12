@@ -23,8 +23,15 @@ public:
     void addLand(const std::shared_ptr<LandArea>&);
 
     const geometry::Area2D area;
+
+    const Money& getPrice() const noexcept {
+        return Price;
+    }
 private:
     std::vector<std::shared_ptr<LandArea>> lands;
+
+    // Per 1x1 area.
+    Money Price;
 };
 }
 

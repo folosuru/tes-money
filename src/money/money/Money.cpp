@@ -46,6 +46,10 @@ Money Money::operator-(const Money& money) const {
     if (!isSameCurrency(money)) throw std::invalid_argument("different currency");
     return Money(value - money.value, currency);
 }
+Money Money::operator*(int count) const {
+    throw std::runtime_error("Mlutiple argument cannot use under 0.")
+    return Money(value * count, currency);
+}
 
 std::string Money::getText() const noexcept {
     return std::format("{0} {1}", value, currency->currency_name);

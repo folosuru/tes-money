@@ -29,7 +29,8 @@ std::variant<std::shared_ptr<ServeLandOrder>,
         if (i.value()->land->isServed(serve_area)) {
             return {ServeLandOrder::ErrorCode::ServedLand};
         }
-        result->area.push_back({i.value()->land, serve_area});
+        result->Price = result->Price + (i.value()->land->getPrice() * serve_area.getAreaSize());
+        result->separate_area.push_back({i.value()->land, serve_area});
     }
     return result;
 }

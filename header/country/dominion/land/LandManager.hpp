@@ -27,7 +27,7 @@ public:
 
     void serve(const std::shared_ptr<ServeLandOrder>&);
 
-    std::shared_ptr<ServeLandOrder> prepareServe(PlayerIdentify ,geometry::Area2D area);
+    std::variant<std::shared_ptr<ServeLandOrder>, ErrorCode> prepareServe(PlayerIdentify ,geometry::Area2D area);
 
     [[nodiscard]]
     std::size_t getNextId() const noexcept;

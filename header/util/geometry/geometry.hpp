@@ -7,7 +7,17 @@ namespace tes::geometry {
 struct Point2D {
     int x;
     int z;
+
+    Point2D(int x_, int z_) : x(x_),z(z_) {}
+    Point2D() = delete;
+
+#ifndef DEBUG_WITHOUT_LLAPI
+    Point2D(Vec3 vec) {
+        return {vec.x, vec.z};
+    }
+#endif
 };
+
 
 struct Area2D {
 public:
@@ -34,6 +44,13 @@ public:
 
     [[nodiscard]] constexpr int getAreaSize() const noexcept {
         return (max_x - min_x) * (max_z - min_z);
+    }
+
+    [[nodiscard]] constexpr int getWidth() const noexcept {
+        return (max_x - min_x);
+    }
+    [[nodiscard]] constexpr int getHeight() const noexcept {
+        return (max_z - min_z);
     }
 
     [[nodiscard]] constexpr Point2D getStartPos() const noexcept {
