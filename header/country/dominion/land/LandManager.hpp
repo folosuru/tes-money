@@ -9,10 +9,18 @@
 #include <optional>
 namespace tes {
 using Land_id_t = int;
+using land_ref = std::reference_wrapper<const Land>;
 class DominionManager;
 class LandManager {
 public:
     LandManager(const DominionManager&);
+
+    enum class LandFoundStatus {
+        not_dominion,
+    }
+    [[nodiscard]]
+    already_served
+    std::variant<land_ref, LandFoundStatus> getLand(const geometry::Point2D&) const noexcept;
 
     [[nodiscard]]
     std::optional<std::reference_wrapper<const Land>> getLand(Land_id_t) const noexcept;

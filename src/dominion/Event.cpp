@@ -17,21 +17,21 @@ void commandInit() {
         "money_edit",  // The command
         "edit money",  // The description
         {
-            {"enum_2", {"serve"}},
             {"enum_3", {"show"}},
-            {"currency name", {}},
+            {"serve", {"serve"}},
+            {"serve_stat", {"start, end"}},
+            {"", {}},
         },  // The enumeration
         {
-            Param("mode", ParamType::Enum, false, "enum_2"),
+            Param("mode", ParamType::Enum, false, "serve"),
             Param("mode", ParamType::Enum, false, "enum_3"),
-            Param("currency", ParamType::SoftEnum, false, "currency name"),
+            Param("position", ParamType::Enum, false, "enum_4"),
             Param("value", ParamType::Int, false),
             Param("to", ParamType::String, false)
         },  // The parameters
         {
             // overloads{ (type == Enum ? enumOptions : name) ...}
-            {"enum_2", "to", "value", "currency name"},  // serve [String: to] [Int: value] <currency>
-            {"enum_3", "to", "currency name"},  // money show [to] <currency>
+            {"enum_2", "enum_4"},  // serve [start | end]
         },  // The overloads
         [](
             DynamicCommand const& command,
@@ -41,12 +41,7 @@ void commandInit() {
         ) {
             auto action = results["mode"].get<std::string>();
             switch (do_hash(action.c_str())) {
-                case do_hash("show"): {
-                    auto target = parser.getTargetMoney();
-                    auto currency = parser.getCurrency();
-                    if (target && currency) {
-                        output.success(target.value()->get(currency.value()).getText());
-                    }
+                case do_hash("serve"): {
                     break;
                 }
 
