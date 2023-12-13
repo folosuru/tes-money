@@ -19,6 +19,10 @@ public:
         not_dominion,
         already_served
     };
+
+    [[nodiscard]]
+    static Arrai18n::trl_text getStatusText(const LandFoundStatus&) noexcept;
+
     [[nodiscard]]
     std::variant<land_ref, LandFoundStatus> getLand(const geometry::Point2D&) const noexcept;
 

@@ -2,3 +2,4 @@
 dominion.form.serve.title = ""
 
 dominion.form.serve.description = "{0}でこの土地を購入しますか？（{1}x{2}ブロック）"
+dominion.command.serve.before_use_start = "先に/land serve start を使って始点を設定してください"

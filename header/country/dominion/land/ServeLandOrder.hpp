@@ -7,6 +7,7 @@
 #include <util/player_identify/PlayerIdentify.hpp>
 #include <country/dominion/land/DominionLand.hpp>
 #include "country/dominion/DominionManager.hpp"
+#include <CppArrai18n/Arrai18n_def.hpp>
 
 namespace tes {
 class ServeLandOrder {
@@ -17,6 +18,7 @@ public:
         ContainNotCountryDominion,
         ServedLand
     };
+    static Arrai18n::trl_text errorCodeToText(ErrorCode) noexcept;
 
     static std::variant<std::shared_ptr<ServeLandOrder>, ErrorCode> build(const DominionManager&,
                                                                           PlayerIdentify owner,

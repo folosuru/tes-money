@@ -33,17 +33,8 @@ void Serve(DynamicCommand const& command,
 
     if (auto land = DataManager::get()->LandMng->getLand(current_pos);
         std::holds_alternative<LandManager::LandFoundStatus>(land)) {  // 戻り値がLandFoundStatus
-        switch (std::get<LandManager::LandFoundStatus>(land)) {
-            case (LandManager::LandFoundStatus::not_dominion): {
-                output.error(/**/);
-                break;
-            }
-            case (LandManager::LandFoundStatus::already_served): {
-                output.error(/**/);
-                break;
-            }
-            default: break;
-        }
+        output.error(Arrai18n::trl(origin.getPlayer()->getLanguageCode(),
+                     LandManager::getStatusText(std::get<LandManager::LandFoundStatus>(land))));
         return;
     }
     switch (do_hash(action.c_str())) {
@@ -56,13 +47,13 @@ void Serve(DynamicCommand const& command,
                 history != point_history.end()) {
                 auto order = landMng->prepareServe(origin_identify, geometry::Area2D(*history.second,current_pos);
                 if (std::holds_alternative<ServeLandOrder::ErrorCode>(order)) {
-                    //...
-                    output.error();
+                    output.error(Arrai18n::trl(origin.getPlayer()->getLanguageCode(),
+                                               ServeLandOrder::errorCodeToText(std::get<ServeLandOrder::ErrorCode>(order))));
                     return;
                 }
-                output.getPlayer()
+                serveConfirmForm(output.getPlayer(), std::get<std::shared_ptr<ServeLandOrder>>(order));
             } else {
-                output.error(/* please use start before use! */);
+                output.error(Arrai18n::trl(origin.getPlayer()->getLanguageCode(), "dominion.command.serve.before_use_start"));
             }
         }
         default:
