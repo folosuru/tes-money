@@ -37,5 +37,12 @@ private:
         }
     }
 };
+
+template<class... Args>
+std::shared_ptr<SQLiteExecTask<Args...>> make_SQLiteTask(std::function<SQLite::Database()> db,
+                                                         std::string statement,
+                                                         Args... args_) {
+    return {new SQLiteExecTask<Args...>(db,statement, args_...)};
+}
 }  // tes
 #endif //TES_HEADER_UTIL_TASK_SQLITEEXECTASK_HPP_

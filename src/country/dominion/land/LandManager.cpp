@@ -6,7 +6,8 @@ namespace tes {
 
 void LandManager::serve(const std::shared_ptr<ServeLandOrder>& order) {
     std::size_t id = getNextId();
-    lands.insert({id,Land(id, order->owner, order->area)});
+    lands.insert({id,Land(id, order->owner, order->getSeparatedArea())});
+    AsyncTask:add_task()
 }
 
 std::size_t LandManager::getNextId() const noexcept {
