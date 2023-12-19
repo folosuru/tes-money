@@ -32,7 +32,6 @@ void init_command() {
         {
             {"enum_2", {"set"}},
             {"enum_3", {"show"}},
-            {"enum_4", {"help"}}
             {"currency name", {}},
         },  // The enumeration
         {
@@ -76,9 +75,6 @@ void init_command() {
                     }
                     break;
                 }
-                case do_hash("help"): {
-                    output.addMessage(Arrai18n::trl());
-                }
                 default:break;
             }
         },  // The callback function
@@ -91,6 +87,7 @@ void init_command() {
             {"enum_2", {"list"}},
             {"enum_3", {"show"}},
             {"enum_4", {"send"}},
+            {"enum_5", {"help"}},
             {"currency name", {}},
         },  // The enumeration
         {
@@ -153,6 +150,10 @@ void init_command() {
                                                        result.get_fail()));
                         }
                     }
+                    break;
+                }
+                case do_hash("help"): {
+                    output.addMessage(tes::util::trl(origin, {"money.command.help",{}}));
                     break;
                 }
                 default:break;

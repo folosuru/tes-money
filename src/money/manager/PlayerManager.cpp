@@ -65,9 +65,9 @@ std::shared_ptr<PlayerManager> PlayerManager::load(const std::shared_ptr<Currenc
     for (const auto& entry : std::filesystem::directory_iterator(file_export_path)) {
         if (!std::filesystem::is_regular_file(entry)) continue;
         nlohmann::json j = nlohmann::json::parse(std::ifstream(entry.path()));
-        std::string player_name = j["name"].get<std::string>();
-        std::shared_ptr<tes::PlayerMoney> player_money(PlayerMoney::init(j, manager, identify));
-        result->addPlayer(identify->getIdentify(player_name), player_money);
+        PlayerIdentify player_identify = identify->getIdentify(j["name"].get<std::string>());
+        std::shared_ptr<tes::PlayerMoney> player_money(PlayerMoney::init(j, manager, player_identify));
+        result->addPlayer(player_identify, player_money);
     }
     return result;
 }
