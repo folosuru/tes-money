@@ -37,6 +37,7 @@ void init_command() {
         {
             Param("mode", ParamType::Enum, false, "enum_2"),
             Param("mode", ParamType::Enum, false, "enum_3"),
+            Param("mode", ParamType::Enum, false, "enum_4"),
             Param("currency", ParamType::SoftEnum, false, "currency name"),
             Param("value", ParamType::Int, false),
             Param("to", ParamType::String, false)
@@ -45,6 +46,7 @@ void init_command() {
             // overloads{ (type == Enum ? enumOptions : name) ...}
             {"enum_2", "to", "value", "currency name"},  // money_edit [String: to] [Int: value] <currency>
             {"enum_3", "to", "currency name"},  // money show [to] <currency>
+            {"enum_4"}  // money help
         },  // The overloads
         [](
             DynamicCommand const& command,
@@ -85,6 +87,7 @@ void init_command() {
             {"enum_2", {"list"}},
             {"enum_3", {"show"}},
             {"enum_4", {"send"}},
+            {"enum_5", {"help"}},
             {"currency name", {}},
         },  // The enumeration
         {
@@ -147,6 +150,10 @@ void init_command() {
                                                        result.get_fail()));
                         }
                     }
+                    break;
+                }
+                case do_hash("help"): {
+                    output.addMessage(tes::util::trl(origin, {"money.command.help",{}}));
                     break;
                 }
                 default:break;

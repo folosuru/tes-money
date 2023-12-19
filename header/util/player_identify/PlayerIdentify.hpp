@@ -13,15 +13,10 @@ public:
     const std::string name;
 
     PlayerIdentifyClass(const PlayerIdentifyClass&) = delete;
-
     PlayerIdentifyClass& operator=(const PlayerIdentifyClass&) = delete;
-
     PlayerIdentifyClass() = delete;
 
-private:
     explicit PlayerIdentifyClass(std::string name_) : name(std::move(name_)) {};
-
-    friend class PlayerIdentifyProvider;
 };
 }
 

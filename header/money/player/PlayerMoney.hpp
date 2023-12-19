@@ -27,7 +27,7 @@ public:
 
     static std::shared_ptr<PlayerMoney> init(const nlohmann::json& json,
                                              const std::shared_ptr<CurrencyManager>& currency_manager,
-                                             const std::shared_ptr<PlayerIdentifyProvider>&);
+                                             PlayerIdentify);
 
     std::string getName() override;
 

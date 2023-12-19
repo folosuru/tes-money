@@ -13,11 +13,18 @@ inline void sendText(Player *player, std::string text) {
     }
 }
 
-
-inline void sendText(Player *player, const Arrai18n::trl_text& text) {
+inline void sendTrlText(Player *player, const Arrai18n::trl_text& trl_text) {
     if (player != nullptr) {
-        player->sendText(Arrai18n::trl(player->getLanguageCode(), text));
+        player->sendText(Arrai18n::trl(player->getLanguageCode(), trl_text));
     }
+}
+
+inline std::string trl(const CommandOrigin& origin, const Arrai18n::trl_text& text) {
+    if (Player* player_ptr = origin.getPlayer();
+        player_ptr != nullptr) {
+        return Arrai18n::trl(player_ptr->getLanguageCode(), text);
+    }
+    return Arrai18n::trl("", text);
 }
 }
 
