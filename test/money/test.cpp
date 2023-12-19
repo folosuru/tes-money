@@ -1,8 +1,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <fstream>
-#include <money/player/PlayerManager.hpp>
-#include <currency/CurrencyManager.hpp>
+#include <DataManager.hpp>
 #include <cpptf/Cpptf.hpp>
 
 
@@ -13,23 +12,24 @@ void checkLoadJson() {
     currency->addCurrency(std::make_shared<tes::Currency>(std::string("ACP")));
     std::string json_t = R"({"money" : { "JPY" : 130, "ACP" : 254 }})";
     auto json = nlohmann::json::parse(json_t);
-    auto money = tes::PlayerMoney(json, currency);
-    cpptf::isTrue("json_load", money.get(currency->getCurrency("jpy")).value == 130 &&
-                               money.get(currency->getCurrency("acp")).value == 254);
+    auto money = tes::PlayerMoney::init(json, currency, std::make_shared<tes::PlayerIdentifyClass>("Taro"));
+    cpptf::isTrue("json_load", money->get(currency->getCurrency("jpy")).value == 130 &&
+                                 money->get(currency->getCurrency("acp")).value == 254);
 }
 
 void PlayerMng() {
     cpptf::change_section("PlayerManager");
     cpptf::except_any("unknown player access", [](){
-        tes::PlayerManager(std::make_shared<tes::CurrencyManager>()).getPlayer("Yoshida");
+        tes::PlayerManager(std::make_shared<tes::CurrencyManager>()).getPlayer(tes::PlayerIdentify());
     });
     cpptf::isSame("player money access", []() {
         auto mng = tes::PlayerManager(std::make_shared<tes::CurrencyManager>());
-        auto m = std::make_shared<tes::PlayerMoney>();
-        mng.addPlayer("Taro", m);
+        tes::PlayerIdentify player = std::make_shared<tes::PlayerIdentifyClass>("Taro");
+        auto m = std::make_shared<tes::PlayerMoney>(player);
+        mng.addPlayer(player, m);
         auto currency = std::make_shared<tes::Currency>(std::string("jpy"));
         m->add(tes::Money(100, currency));
-        return mng.getPlayer("Taro")->get(currency).value;
+        return mng.getPlayer(player)->get(currency).value;
     }(), 100);
     checkLoadJson();
 }
@@ -38,8 +38,9 @@ void PlayerMoney() {
     cpptf::change_section("PlayerMoney");
     std::shared_ptr<tes::CurrencyManager> currency_manager = std::make_shared<tes::CurrencyManager>();
     std::shared_ptr<tes::PlayerManager> player_manager = std::make_shared<tes::PlayerManager>(currency_manager);
-    player_manager->addPlayer("Yoshida", std::make_shared<tes::PlayerMoney>());
-    std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer("Yoshida");
+    tes::PlayerIdentify player1 = std::make_shared<tes::PlayerIdentifyClass>("Yoshida");
+    player_manager->addPlayer(player1, std::make_shared<tes::PlayerMoney>(player1));
+    std::shared_ptr<tes::PlayerMoney> money = player_manager->getPlayer(player1);
     currency_manager->addCurrency(std::make_shared<tes::Currency>(std::string("JPY")));
 
     std::shared_ptr<tes::Currency> cur = currency_manager->getCurrency("jpY");
@@ -49,9 +50,9 @@ void PlayerMoney() {
 
     money->remove(tes::Money(50, cur));
     cpptf::isSame("remove money", money->get(cur), tes::Money(50, cur));
-
-    player_manager->addPlayer("Shinada", std::make_shared<tes::PlayerMoney>());
-    std::shared_ptr<tes::PlayerMoney> money2 = player_manager->getPlayer("Shinada");
+    tes::PlayerIdentify player2 = std::make_shared<tes::PlayerIdentifyClass>("Yoshida");
+    player_manager->addPlayer(player2, std::make_shared<tes::PlayerMoney>(player2));
+    std::shared_ptr<tes::PlayerMoney> money2 = player_manager->getPlayer(player2);
 
     money->send(money2, tes::Money(10, cur));
     cpptf::isSame("send from", money->get(cur), tes::Money(40, cur));
@@ -90,6 +91,17 @@ void money() {
     cpptf::except_any("money under 0", [currency1]() {
         tes::Money(100, currency1) - (tes::Money(200, currency1));
     });
+    cpptf::isSame("mlutiple", tes::Money(500, currency1) * 3, tes::Money(1500, currency1));
+    cpptf::except_any("mlutiple under 0", [currency1]() {
+        tes::Money(100, currency1) * -1;
+    });
+    cpptf::isSame("add to empty", tes::Money(500, currency1),[currency1]() {
+        tes::Money result;
+        for (int i=0; i < 5 ; i++) {
+            result = result + tes::Money(100, currency1);
+        }
+        return result;
+    }());
 }
 
 int main() {

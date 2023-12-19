@@ -9,8 +9,8 @@ PlayerMoney::PlayerMoney(tes::PlayerIdentify name) : identify(name) {}
 
 std::shared_ptr<PlayerMoney> PlayerMoney::init(const nlohmann::json& json,
                                                const std::shared_ptr<CurrencyManager>& currency_manager,
-                                               const std::shared_ptr<PlayerIdentifyProvider>& identify) {
-    auto result = std::make_shared<PlayerMoney>(identify->getIdentify(json["name"].get<std::string>()));
+                                               PlayerIdentify identify) {
+    auto result = std::make_shared<PlayerMoney>(identify);
     for (const auto& item : json["money"].items()) {
         tes::Types::money_value_t value = item.value().get<tes::Types::money_value_t>();
         tes::Types::currency currency = currency_manager->getCurrency(item.key());

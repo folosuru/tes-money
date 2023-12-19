@@ -1,6 +1,7 @@
 [ja-JP]
 currency.not_found = "{0}という通貨は見つかりませんでした"
 
+money.command.help = "/money list : 所持金の一覧を表示します。\n/money show [通貨名] : 指定した通貨の所持量を表示します。\n/money send [送り先] [額] [通貨] : 指定した舐めのプレイヤーに指定額を送金します。"
 money.money.cannot_under_0 = "金額を0以下にすることはできません。"
 money.player_not_found = "{0}というプレイヤーは見つかりませんでした。"
 money.send.not_enough = "所持金が足りません。"

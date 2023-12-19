@@ -30,9 +30,9 @@ public:
     std::string getText() const noexcept;
 
     [[nodiscard]]
-    inline bool isSameCurrency(const Money& money) const noexcept;
+    inline bool isCompatible(const Money& money) const noexcept;
 
-    bool operator==(const Money& compare) const;
+    bool operator==(const Money& compare) const noexcept;
 
     bool operator<(const Money& compare) const;
 
@@ -42,11 +42,16 @@ public:
 
     bool operator>=(const Money& compare) const;
 
+    explicit operator bool() const noexcept;
+    bool operator!() const noexcept;
+
     Money operator+(const Money& money) const;
 
     Money operator-(const Money& money) const;
 
-    Money() = delete;
+    Money operator*(std::int64_t count) const;
+
+    Money();
 };
 }
 #endif  // PLUGIN_MONEY_HPP
