@@ -50,6 +50,7 @@ public:
     Money operator-(const Money& money) const;
 
     Money operator*(std::int64_t count) const;
+    Money& operator=(const Money& money);
 
     Money();
 };

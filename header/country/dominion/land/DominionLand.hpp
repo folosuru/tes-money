@@ -1,20 +1,21 @@
 #pragma once
 #ifndef TES_HEADER_COUNTRY_DOMINION_LAND_DOMINIONLAND_HPP_
 #define TES_HEADER_COUNTRY_DOMINION_LAND_DOMINIONLAND_HPP_
+#include <money/Money.hpp>
 #include "LandArea.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <util/geometry/geometry.hpp>
+#include <types/LandTypes.hpp>
 namespace tes {
-using land_type = LandArea;
 class DominionLand {
 public:
     explicit DominionLand(geometry::Area2D);
 
     [[nodiscard]]
-    std::optional<std::reference_wrapper<const land_type>> getLand(int x, int y) const noexcept;
+    std::optional<std::reference_wrapper<const Types::land_area>> getLand(int x, int y) const noexcept;
 
     [[nodiscard]]
-    inline std::optional<std::reference_wrapper<const land_type>> getLand(const geometry::Point2D& point) const noexcept {
+    inline std::optional<Types::land_area_ref> getLand(const geometry::Point2D& point) const noexcept {
         return getLand(point.x, point.z);
     }
 
@@ -24,7 +25,7 @@ public:
 
     const geometry::Area2D area;
 
-    const Money& getPrice() const noexcept {
+    [[nodiscard]] const Money& getPrice() const noexcept {
         return Price;
     }
 private:

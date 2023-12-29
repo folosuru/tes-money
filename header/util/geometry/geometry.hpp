@@ -62,6 +62,22 @@ public:
     [[nodiscard]] constexpr Point2D getEndPos() const noexcept {
         return Point2D(max_x,max_z);
     }
+
+    auto operator<=>(const Area2D&) const = default;
+
+    [[nodiscard]]
+    constexpr Area2D getDuplicateArea(Area2D area) const {
+        return  {{
+                std::max(area.min_x, min_x),
+                std::max(area.min_z, min_z)
+            },
+            {
+                std::min(area.max_x, max_x),
+                std::min(area.max_z, max_z)
+            }
+        };
+    }
+
 };
 }
 

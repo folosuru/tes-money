@@ -9,7 +9,7 @@ namespace tes {
 std::optional<std::shared_ptr<Dominion>> DominionManager::get(DominionIndex index) const noexcept {
     if (auto x_find = dominion.find(index.x);
         x_find != dominion.end()) {
-        if (auto z_find = x_find->second.find(index.x);
+        if (auto z_find = x_find->second.find(index.z);
             z_find != x_find->second.end()) {
             return z_find->second;
         }
@@ -48,7 +48,7 @@ std::size_t DominionManager::getNextId() const noexcept {
 }
 
 DominionRange DominionManager::getRange(DominionIndex start,
-                                                                                DominionIndex end) const {
+                                        DominionIndex end) const {
     return DominionRange(*this,start, end);
 }
 }

@@ -18,6 +18,7 @@ void init_Database() {
         db.exec("CREATE TABLE IF NOT EXISTS land_area (x1 int, x2 int, z1 int, z2 int, id int)");
         db.exec("CREATE TABLE IF NOT EXISTS land_owner (owner text, id int, unique(id))");
         db.exec("CREATE TABLE IF NOT EXISTS land_share (share text, id int, unique(share,id))");
+
         db.exec("CREATE INDEX IF NOT EXISTS id_index_area ON land_area (id);");
         db.exec("CREATE INDEX IF NOT EXISTS name_index_owner ON land_owner (owner);");
         db.exec("CREATE INDEX IF NOT EXISTS name_index_share ON land_share (share);");
@@ -30,11 +31,20 @@ SQLite::Database getCountryDB() {
 }
 
 void reset_Database() {
-    SQLite::Database db(getCountryDB());
-    db.exec("drop table citizen");
-    db.exec("drop table citizen_permission");
-    db.exec("drop table country");
-    db.exec("drop table country_money_trigger");
+    {
+        SQLite::Database db{country_db_file, SQLite::OPEN_READWRITE };
+        db.exec("drop table IF EXISTS citizen");
+        db.exec("drop table IF EXISTS citizen_permission");
+        db.exec("drop table IF EXISTS country");
+        db.exec("drop table IF EXISTS country_money_trigger");
+    }
+    {
+        SQLite::Database db(getDominionDB());
+        db.exec("drop table IF EXISTS dominion");
+        db.exec("drop table IF EXISTS land_area");
+        db.exec("drop table IF EXISTS land_owner");
+        db.exec("drop table IF EXISTS land_share");
+    }
 }
 
 SQLite::Database getDominionDB() {

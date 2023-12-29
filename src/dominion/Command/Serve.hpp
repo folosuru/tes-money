@@ -1,5 +1,7 @@
 #ifndef TES_SRC_DOMINION_COMMAND_SERVE_HPP
 #define TES_SRC_DOMINION_COMMAND_SERVE_HPP
+#include <llapi/DynamicCommandAPI.h>
+#include <llapi/mc/CommandOutput.hpp>
 
 namespace tes {
 namespace dominion {

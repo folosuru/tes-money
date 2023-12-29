@@ -1,5 +1,11 @@
 [ja-JP]
 dominion.form.serve.title = ""
 
-dominion.form.serve.description = "{0}でこの土地を購入しますか？（{1}x{2}ブロック）"
-dominion.command.serve.before_use_start = "先に/land serve start を使って始点を設定してください"
+land.form.serve.description = "{0}でこの土地を購入しますか？（{1}x{2}ブロック）"
+land.command.serve.before_use_start = "先に/land serve start を使って始点を設定してください"
+land.serve.complete = "#{0}を購入しました！"
+
+land.found_status.already_served = "すでに所有されている土地です"
+land.found_status.not_dominion = "国の領土ではありません"
+land.found_status.not_served = "まだ誰も"
+

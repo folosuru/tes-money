@@ -1,3 +1,4 @@
+#include <iostream>
 #include <country/dominion/range/DominionRange.hpp>
 #include <country/dominion/DominionManager.hpp>
 
@@ -17,40 +18,39 @@ DominionRangeEnd DominionRange::end() {
 }
 
 DominionRangeIter& DominionRangeIter::operator++() {
-    width++;
-    if (width + std::min(start.x, end.x) == 0) {
-        width++;
-    }
-    if (width > std::max(start.x, end.x) - std::min(start.x, end.x)) {
-        width = 0;
+    if (width == end.x) {
+        width = start.x;
         height++;
-        if (std::min(start.z, end.z) + height) {
-            height++;
-        }
+    } else {
+        width++;
     }
     return *this;
 }
 
 bool DominionRangeIter::operator==(const DominionRangeEnd& other) const {
-    if (height > std::max(start.z, end.z) - std::min(start.z, end.z)) {
+    if (height > end.z) {
         return true;
     }
     return false;
 }
 
 bool DominionRangeIter::operator!=(const DominionRangeEnd& other) const {
-    if (height > std::max(start.z, end.z) - std::min(start.z, end.z)) {
-        return false;
-    }
-    return true;
+    return !operator==(other);
 }
 
 std::optional<std::shared_ptr<Dominion>> DominionRangeIter::operator*() const {
-    return mng.get({std::min(start.x, end.x) + width, std::min(start.z, end.z) + height});
+    return mng.get({width,height});
+}
+
+DominionIndex getMin(const DominionIndex v1, const DominionIndex v2) {
+    return DominionIndex{std::min(v1.x, v2.x), std::min(v1.z, v2.z)};
+}
+DominionIndex getMax(const DominionIndex v1, const DominionIndex v2) {
+    return DominionIndex{std::max(v1.x, v2.x), std::max(v1.z, v2.z)};
 }
 
 DominionRangeIter::DominionRangeIter(const DominionManager& mng_, DominionIndex start, DominionIndex end)
- : mng(mng_), start(start), end(end){
+ : mng(mng_), start(getMin(start, end)), end(getMax(start,end)), width(start.x), height(start.z){
 
 }
 }

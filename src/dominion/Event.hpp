@@ -3,7 +3,7 @@
 #define TES_SRC_DOMINION_EVENT_HPP_
 #include <llapi/EventAPI.h>
 namespace tes {
-namespace country {
+namespace dominion {
 void init();
 
 /**

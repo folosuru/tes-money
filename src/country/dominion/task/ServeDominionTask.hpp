@@ -8,7 +8,7 @@ namespace tes {
 
 class ServeDominionTask : public AsyncTask::AsyncTaskBase {
 public:
-    explicit ServeDominionTask(int x, int z, int country, int id) : x(x), z(z), country(country), id(id) {}
+    explicit ServeDominionTask(int x, int z, int country, std::size_t id) : x(x), z(z), country(country), id(id) {}
 
     void onRun() override {
         SQLite::Database db(getDominionDB());
@@ -16,14 +16,15 @@ public:
         query1.bind(1, x);
         query1.bind(2, z);
         query1.bind(3, country);
-        query1.bind(4, id);
+        query1.bind(4, static_cast<std::int64_t>(id));
         query1.exec();
     }
 
     void onComplete() override {}
 
 private:
-    int x, z, country, id;
+    int x, z, country;
+    std::size_t id;
 };
 }
 #endif //TES_SRC_COUNTRY_DOMINION_TASK_SERVEDOMINIONTASK_HPP_

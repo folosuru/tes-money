@@ -6,7 +6,7 @@ DominionLand::DominionLand(geometry::Area2D area) : area(area) {
 
 }
 
-std::optional<std::reference_wrapper<const land_type>> DominionLand::getLand(int x, int z) const noexcept {
+std::optional<std::reference_wrapper<const Types::land_area>> DominionLand::getLand(int x, int z) const noexcept {
     for (const auto& i : lands) {
         if (i->area.contains(x, z)) {
             return std::cref(*i);

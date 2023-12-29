@@ -10,6 +10,7 @@
 
 namespace tes {
 class Dominion;
+constexpr int convertIndex(int);
 class DominionManager {
 public:
     static constexpr int dominion_size = 100;
@@ -36,6 +37,7 @@ public:
     [[nodiscard]]
     DominionRange getRange(DominionIndex start, DominionIndex end) const;
 
+
 private:
     std::unordered_map<int,
         std::unordered_map<int, std::shared_ptr<Dominion>>> dominion;
@@ -43,10 +45,9 @@ private:
     std::size_t dominion_count = 0;
 
     void add_without_WriteDB(int x,int z, const std::shared_ptr<Dominion>&);
-
-    static constexpr int convertIndex(int value) {
-        return (value < 0) ? (value / DominionManager::dominion_size) - 1 : value / DominionManager::dominion_size;
-    }
 };
+constexpr int convertIndex(int value) {
+    return (value < 0) ? (value / DominionManager::dominion_size) - 1 : value / DominionManager::dominion_size;
+}
 }
 #endif //TES_HEADER_COUNTRY_DOMINION_DOMINIONMANAGER_HPP_

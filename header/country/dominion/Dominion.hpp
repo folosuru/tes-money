@@ -24,7 +24,17 @@ public:
 private:
     std::size_t id;
 };
+template<class T>
+constexpr T convertIndexToPosMax(T value) {
+    return (value < 0) ? ((value + 1) * DominionManager::dominion_size) -1:
+                         ((value + 1) * DominionManager::dominion_size) -1;
 
+}
+template<class T>
+constexpr T convertIndexToPosMin(T value) {
+    return (value < 0) ? ((value) * DominionManager::dominion_size)+1 :
+                         ((value) * DominionManager::dominion_size);
+}
 }
 
 #endif //TES_HEADER_COUNTRY_DOMINION_DOMINION_HPP_

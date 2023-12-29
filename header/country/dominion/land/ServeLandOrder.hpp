@@ -24,24 +24,19 @@ public:
                                                                           PlayerIdentify owner,
                                                                           geometry::Area2D area);
 
-    ErrorCode canServe() const noexcept;
+    [[nodiscard]] ErrorCode canServe() const noexcept;
 
-    const std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>> & getSeparatedArea() const noexcept {
-        return separate_area;
-    }
-
-    const Money& getPrice() const noexcept {
-        return Price;
-    }
 
     const geometry::Area2D area;
-
     const PlayerIdentify owner;
-
+    const std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>> separate_area;
+    const Money Price;
 private:
-    Money Price;
-    explicit ServeLandOrder(PlayerIdentify player) : owner(std::move(player)) {}
-    std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>> separate_area;
+    explicit ServeLandOrder(PlayerIdentify player,
+                            std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>>,
+                            const geometry::Area2D& area);
+
+
 };
 }
 

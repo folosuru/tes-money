@@ -9,22 +9,18 @@ Dominion::Dominion(const std::shared_ptr<Country>& country, std::size_t id, Domi
 
 }
 namespace {
-template<class T>
-constexpr T convertIndexToPosAbsMax(T value) {
-    return (value < 0) ? (value * DominionManager::dominion_size) +1  :
-                         (value * DominionManager::dominion_size) -1;
 
 }
-template<class T>
-constexpr T convertIndexToPosAbsMin(T value) {
-    return (value < 0) ? ((value+1) * DominionManager::dominion_size)-1 :
-                         ((value-1) * DominionManager::dominion_size);
-}
-}
 constexpr geometry::Area2D Dominion::indexToArea(DominionIndex index) {
-    return {convertIndexToPosAbsMax(index.x),
-                            convertIndexToPosAbsMax(index.z),
-                            convertIndexToPosAbsMin(index.x),
-                            convertIndexToPosAbsMin(index.z)};
+    return {
+        {
+            convertIndexToPosMax(index.x),
+                           convertIndexToPosMax(index.z)
+        },
+        {
+                            convertIndexToPosMin(index.x),
+                            convertIndexToPosMin(index.z)
+        }
+    };
 }
 }

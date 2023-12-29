@@ -20,6 +20,7 @@
 #include "money/Event.hpp"
 #include <Nlohmann/json.hpp>
 #include "version.h"
+#include "dominion/Event.hpp"
 
 // We recommend using the global logger.
 extern Logger logger;
@@ -34,10 +35,12 @@ void PluginInit() {
     tes::DataManager::get();
     tes::money::init();
     tes::country::init();
+    tes::dominion::init();
     Arrai18n::setDefaultLanguage("ja-JP");
     logger.info(Arrai18n::trl("ja-JP", "country.lang.test"));
     Event::PlayerDestroyBlockEvent::subscribe([](const Event::PlayerDestroyBlockEvent& event) {
-        tes::country::onBreak(event);
+        if (!tes::dominion::onBreak(event)) return false;
+        if (!tes::country::onBreak(event)) return false;
         // event.mBlockInstance;
         return true;
     });

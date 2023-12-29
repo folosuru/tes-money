@@ -3,18 +3,30 @@
 #include <util/player_identify/PlayerIdentify.hpp>
 #include <country/dominion/land/LandArea.hpp>
 #include <unordered_set>
+#include <country/dominion/DominionManager.hpp>
 #include "DominionLand.hpp"
+#include <types/LandTypes.hpp>
+#include <memory>
 
 namespace tes {
 class Land {
 public:
     const PlayerIdentify owner;
 
-    std::size_t id;
+    Land(const Land &) = delete;
+    Land & operator=(const Land&)= delete;
 
-    Land(std::size_t id, PlayerIdentify owner, geometry::Area2D area);
+    const Types::Land_id_t id;
 
-    Land(std::size_t id, PlayerIdentify owner, const std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>>&);
+    static std::unique_ptr<Land> load(Types::Land_id_t id,
+                                      PlayerIdentify owner,
+                                      const DominionManager& dominion,
+                                      std::shared_ptr<PlayerIdentifyProvider>);
+
+    Land(std::size_t id,
+         PlayerIdentify owner,
+         const std::vector<std::pair<std::shared_ptr<DominionLand>, geometry::Area2D>>&,
+         std::unordered_set<PlayerIdentify> share = {});
 
     [[nodiscard]] bool is_owner(const PlayerIdentify&) const noexcept;
 

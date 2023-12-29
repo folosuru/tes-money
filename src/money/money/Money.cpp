@@ -22,8 +22,14 @@ Money::Money(Types::money_value_t value_, Types::currency currency_) : value(val
     }
 }
 
+Money& Money::operator=(const Money& money) {
+    const_cast<Types::money_value_t&>(value) = money.value;
+    const_cast<Types::currency&>(currency) = money.currency;
+    return *this;
+}
+
 bool Money::isCompatible(const Money& money) const noexcept {
-    return (this->currency == money.currency);
+    return (this->currency == money.currency) || money.currency == nullptr || this->currency == nullptr;
 }
 
 bool Money::operator==(const Money& compare) const noexcept {
@@ -74,10 +80,6 @@ Money Money::operator*(std::int64_t count) const {
 }
 
 Money::Money() : value(0), currency(nullptr) {
-}
-Money Money::operator*(int count) const {
-    throw std::runtime_error("Mlutiple argument cannot use under 0.")
-    return Money(value * count, currency);
 }
 
 std::string Money::getText() const noexcept {

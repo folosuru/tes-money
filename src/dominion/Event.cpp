@@ -6,14 +6,14 @@
 #include <country/dominion/land/Land.hpp>
 
 namespace tes {
-namespace country {
+namespace dominion {
 void commandInit() {
 
     using ParamType = DynamicCommand::ParameterType;
     using Param = DynamicCommand::ParameterData;
     const DynamicCommandInstance *money_normal;
     const DynamicCommandInstance *money_edit;
-    money_edit = DynamicCommand::setup(
+    DynamicCommand::setup(
         "money_edit",  // The command
         "edit money",  // The description
         {
@@ -42,16 +42,6 @@ void commandInit() {
             auto action = results["mode"].get<std::string>();
             switch (do_hash(action.c_str())) {
                 case do_hash("serve"): {
-                    break;
-                }
-
-                case do_hash("set"): {
-                    auto target = parser.getTargetMoney();
-                    auto value = parser.getValue();
-                    auto currency = parser.getCurrency();
-                    if (target && value && currency) {
-                        target.value()->set(tes::Money(value.value(), currency.value()));
-                    }
                     break;
                 }
                 default:
