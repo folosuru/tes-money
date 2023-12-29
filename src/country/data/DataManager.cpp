@@ -1,4 +1,6 @@
 #include <DataManager.hpp>
+#include <country/dominion/DominionManager.hpp>
+#include <country/dominion/land/LandManager.hpp>
 
 namespace tes {
 
@@ -11,7 +13,9 @@ DataManager::DataManager() :
     PermissionManager(std::make_shared<tes::PermissionManager>()),
     CitizenRefer(CitizenRefer::load(CountryManager,
                                     PermissionManager,
-                                    player_identify)) {
+                                    player_identify)),
+    DominionMng(DominionManager::load(CountryManager)),
+    LandMng(LandManager::load(*DominionMng, player_identify)){
     MoneyAddTriggerMng->load();
 }
 

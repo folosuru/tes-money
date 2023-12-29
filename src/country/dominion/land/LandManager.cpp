@@ -1,5 +1,6 @@
 #include <country/dominion/land/LandManager.hpp>
 #include <algorithm>
+#include <iostream>
 #include <AsyncTask/TaskManager.hpp>
 #include <country/dominion/DominionManager.hpp>
 #include <country/dominion/land/Land.hpp>
@@ -46,6 +47,12 @@ void LandManager::loadFromDB(const std::shared_ptr<PlayerIdentifyProvider>& prov
         Types::Land_id_t id{getLandsQuery.getColumn(1)};
         lands.insert({id, Land::load(id, provider->getIdentify(owner), dominion_mng, provider)});
     }
+}
+
+std::shared_ptr<LandManager> LandManager::load(const DominionManager& dominion_manager, std::shared_ptr<PlayerIdentifyProvider> identify) {
+    auto result = std::make_shared<LandManager>(dominion_manager);
+    result->loadFromDB(identify);
+    return result;
 }
 
 LandManager::LandManager(const DominionManager& dominion)  : dominion_mng(dominion){

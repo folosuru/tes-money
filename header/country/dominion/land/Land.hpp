@@ -7,7 +7,7 @@
 #include "DominionLand.hpp"
 #include <types/LandTypes.hpp>
 #include <memory>
-
+#include <iostream>
 namespace tes {
 class Land {
 public:

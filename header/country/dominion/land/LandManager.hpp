@@ -40,6 +40,8 @@ public:
 
     void loadFromDB(const std::shared_ptr<PlayerIdentifyProvider>&);
 
+    static std::shared_ptr<LandManager> load(const DominionManager&, std::shared_ptr<PlayerIdentifyProvider>);
+
 private:
     std::unordered_map<Types::Land_id_t, std::unique_ptr<Land>> lands;
     const DominionManager& dominion_mng;

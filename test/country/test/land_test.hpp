@@ -13,7 +13,6 @@ inline void land_test() {
     using namespace land_test_ns;
     cpptf::change_section("Land");
     serve();
-
 }
 
 #endif //LAND_TEST_HPP
