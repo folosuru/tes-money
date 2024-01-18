@@ -5,36 +5,38 @@
 #include <llapi/mc/BlockInstance.hpp>
 #include <country/dominion/land/Land.hpp>
 
+#include "Command/CommandAction.hpp"
+
 namespace tes {
 namespace dominion {
 void commandInit() {
     using ParamType = DynamicCommand::ParameterType;
     using Param = DynamicCommand::ParameterData;
-    const DynamicCommandInstance* money_normal;
-    const DynamicCommandInstance* money_edit;
     DynamicCommand::setup(
-        "money_edit",
+        "land",
         // The command
-        "edit money",
+        "edit land",
         // The description
         {
             {"enum_3", {"show"}},
             {"serve", {"serve"}},
             {"serve_stat", {"start, end"}},
-            {"", {}},
+            {"info", {"info"}},
+            {"here", {"here"}}
         },
         // The enumeration
         {
             Param("mode", ParamType::Enum, false, "serve"),
-            Param("mode", ParamType::Enum, false, "enum_3"),
-            Param("position", ParamType::Enum, false, "enum_4"),
-            Param("value", ParamType::Int, false),
-            Param("to", ParamType::String, false)
+            Param("mode", ParamType::Enum, false, "info"),
+            Param("mode", ParamType::Enum, false, "here"),
+            Param("position", ParamType::Enum, false, "serve_stat"),
         },
         // The parameters
         {
             // overloads{ (type == Enum ? enumOptions : name) ...}
-            {"enum_2", "enum_4"}, // serve [start | end]
+            {"serve", "serve_stat"}, // serve [start | end]
+            {"info"},  // info
+            {"here"},  // here
         },
         // The overloads
         [](
@@ -46,6 +48,15 @@ void commandInit() {
             auto action = results["mode"].get<std::string>();
             switch (do_hash(action.c_str())) {
                 case do_hash("serve"): {
+                    command::Serve(command,origin,output,results);
+                    break;
+                }
+                case do_hash("info"): {
+                    command::info(command,origin,output,results);
+                    break;
+                }
+                case do_hash("here"): {
+                    command::here(command,origin,output,results);
                     break;
                 }
                 default:
