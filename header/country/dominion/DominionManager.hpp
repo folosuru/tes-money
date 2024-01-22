@@ -30,6 +30,8 @@ public:
 
     void serve(const std::shared_ptr<Country>&, DominionIndex);
 
+    void serveCompletely(const std::shared_ptr<Country>&, DominionIndex);
+
     static std::shared_ptr<DominionManager> load(const std::shared_ptr<CountryManager> &mng);
 
     [[nodiscard]] std::size_t getNextId() const noexcept;
